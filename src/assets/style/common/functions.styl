@@ -1,0 +1,25 @@
+
+bg(uri, size=100%) {
+  background-image url(uri)
+  background-repeat no-repeat
+  background-position center
+  background-size size
+}
+
+/* 半圆 */
+leftCircle(rds = 0.15rem) {
+  border-top-left-radius rds
+  border-bottom-left-radius rds
+}
+rightCircle(rds = 0.15rem) {
+  border-top-right-radius rds
+  border-bottom-right-radius rds
+}
+
+pageContainer() {
+  width $page-main-width
+  min-height 8.26rem
+  margin 0 auto
+  border $home-pg-border
+  background-color $home-pg-color
+}

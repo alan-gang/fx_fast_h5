@@ -1,0 +1,36 @@
+.ludan-menu-view {
+  border-top solid 0.01rem $ludan-sub-menu-bd-color
+  border-left solid 0.01rem $ludan-sub-menu-bd-color
+  border-right solid 0.01rem $ludan-sub-menu-bd-color
+  .menu {
+    margin-top 0.05rem
+    padding-bottom 0.05rem
+    .menu-item {
+      flex 1
+      cursor pointer
+      border solid 0.01rem $ludan-menu-item-bd-color
+      box-sizing border-box
+      margin 0 0.04rem
+    }
+    .selected {
+      color $ludan-menu-item-selected-color
+      background-color $ludan-menu-item-selected-bg-color
+      border solid 0.01rem $ludan-menu-item-selected-bg-color
+    }
+  }
+  .sub-menu {
+    height 0.3rem
+    background-color $ludan-sub-menu-bg-color
+    border solid 0.01rem $ludan-sub-menu-bd-color
+    box-sizing border-box
+    .sub-menu-item {
+      width 1.8rem
+      cursor pointer
+    }
+    .selected {
+      color $theme-txt-color-6
+      background-color $ludan-sub-menu-item-selected-color
+      border-top solid 0.02rem $theme-txt-color-6
+    }
+  }
+}

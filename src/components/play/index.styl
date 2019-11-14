@@ -1,0 +1,195 @@
+.play-view {
+  margin-top 0.1rem
+  .pos-lebel {
+    background-color $theme-bg-color-2
+    text-align center
+    height 0.32rem
+    line-height 0.32rem
+    box-sizing border-box
+    border-bottom solid 0.01rem $theme-bd-color-1
+    &.hide {
+      display none
+    }
+  }
+  .method {
+    border solid 0.01rem $theme-bd-color-1
+    margin-bottom 0.08rem
+    &.col {
+      display flex
+    }
+    .ant-row {
+      flex 1
+      border-right dashed 0.01rem $theme-bd-color-2
+    }
+    .ant-row:last-child {
+      border-right none
+    }
+    .method-item {
+      display flex
+      height 0.32rem
+      align-items center
+      padding-left 0.15rem
+      &.selected {
+        background-color $play-method-item-selected-bg-color
+      }
+    }
+    &::after {
+      clear both
+    }
+    .col5 {
+      width 20%
+      float left
+    }
+    &.no-b-m {
+      border-bottom none
+      margin-bottom 0
+    }
+    &.no-t-b {
+      border-top none
+    }
+    &.min-auto-w {
+      .method-item-name {
+        padding 0 0.08rem
+        border-radius 0.2rem
+      }
+    }
+    &.m-lh {
+      border none
+      .ant-row {
+        border solid 0.01rem $theme-bd-color-1
+        margin-bottom 0.08rem
+      }
+    }
+    &.yzzh {
+      width 2.08rem
+      float left
+      margin-right 0.16rem
+      &:last-child {
+        margin 0;
+      }
+    }
+    &.layout-c-2 {
+      width 4.35rem
+      float left
+      &.left {
+       margin-right 0.1rem 
+      }
+    }
+    &.one-line-balls {
+      padding 0.2rem 0
+      .pos-lebel {
+        height 0.66rem
+        line-height 0.66rem
+        background-color $theme-txt-color-4
+        border-bottom none
+      }
+      .method-item {
+        height 0.66rem
+        float left
+        padding-left 0.08rem
+        &.selected {
+          background-color transparent
+        }
+      }
+      .method-item-name {
+        width 0.46rem
+        height 0.46rem
+        font-size 0.24rem
+      }
+    }
+    .icon {
+      height 0.7rem
+      .method-item-name {
+        height 0.7rem
+        background-color transparent
+        border-radius 0
+        border none
+      }
+      .ant-input {
+        width 0.9rem
+      }
+    }
+    .white-bg-img {
+      height 0.7rem
+      .method-item-name {
+        width 1.6rem
+        height 0.5rem
+        background $play-white-bg-img
+        border solid 0.01rem $theme-bd-color-1
+        border-radius 0.08rem
+        font-weight bold
+      }
+      .ant-input {
+        width 0.9rem
+      }
+    }
+    &.no-bd-b-pos-label {
+      .pos-lebel {
+        border-bottom none
+      }
+    }
+  }
+  .mi-pl-50 {
+    .method-item {
+      padding-left 0.5rem
+    }
+  }
+  .odd {
+    min-width 0.5rem
+    color $theme-txt-color-6
+    padding 0 0.04rem
+  }
+  .method-item-name {
+    min-width 0.25rem
+    height 0.25rem
+    line-height 0.25rem
+    border-radius 50%
+    background-color $theme-bg-color-3
+    color $theme-txt-color-5
+    border solid 0.01rem $play-method-name-bd-color
+    cursor pointer
+    display flex
+    align-items center
+    justify-content center
+  }
+  .method-item.selected {
+    .method-item-name {
+      // background $play-method-name-selected-bg-color
+      // color $theme-txt-color-4
+      // border-color $play-method-name-selected-bg-color
+    }
+  }
+  .method-item.icon.selected {
+    .method-item-name {
+      background-color transparent
+      border-color transparent
+    }
+  }
+  &.k3 {
+    dice() {
+      display inline-block
+      width 0.5rem
+      height 0.5rem
+      background-size 0.5rem
+      margin-right 0.04rem
+    }
+    for num in 1 2 3 4 5 6 {
+      .icon .method-item-name .icon-item-{num} {
+        background url("../../assets/images/default/dice-" + num + "@2x.png") center no-repeat
+        dice()
+      }
+      // .method-item.selected.icon {
+      //   .method-item-name .icon-item-{num} {
+      //     background url("../../assets/images/default/dice-red-" + num + "@2x.png") center no-repeat
+      //     dice()
+      //   }
+      // }
+    }
+  }
+
+  .ant-input {
+    width 0.6rem
+    height 0.2rem
+    border-radius 0.02rem
+  }
+}

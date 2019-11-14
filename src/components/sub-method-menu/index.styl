@@ -1,0 +1,57 @@
+.sub-method-menu-view {
+  padding 0.16rem 0 0 0
+  .sub-method-item-ls {
+    background-color $sub-method-menu-item-bg-color
+    border solid 0.01rem $theme-bd-color-3
+  }
+  .sub-method-item {
+    background-color $sub-method-menu-item-bg-color
+    border-right solid 0.01rem $theme-bd-color-3
+    cursor pointer
+    &.no-bd-r {
+      border-right none
+    }
+    // &:last-child {
+    //   border-right none
+    // }
+    &.selected {
+      background-color $sub-method-menu-item-selected-bg-color
+      .method-name {
+        color $theme-txt-color-4
+      }
+      .odd {
+        color $theme-txt-color-4
+      }
+    }
+    &.layout-ud {
+      text-align center
+    }
+    &.w110 {
+      width 1.1rem
+    }
+    &.w180 {
+      width 1.8rem
+    }
+    &.h60 {
+      height 0.6rem
+    }
+    &.h40 {
+      height 0.4rem
+    }
+  }
+  .pd-t-12 {
+    padding-top 0.12rem
+  }
+  .odd-pd-l-5 .odd {
+    padding-left 0.05rem
+  }
+  .method-name {
+    color $theme-txt-color-5
+  }
+  .odd {
+    color $theme-txt-color-6
+  }
+  .layout-lr {
+    display flex
+  }
+}

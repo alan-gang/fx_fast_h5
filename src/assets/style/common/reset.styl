@@ -1,0 +1,49 @@
+/*- 初始化 -*/
+html,body,div,span,img,a,h1,h2,h3,h4,h5,h6,p,em,i,strong,sub,sup,br,center,dl,dt,dd,ol,ul,li,form,label,input,button,textarea,select,option,table,tr,th,td,header,nav,article,section,aside,footer,time,hr,::before,::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+html {
+    min-height: 100%;
+    font-family: HiraginoSansGB-W3,'Microsoft Yahei',Tahoma,Arial,sans-serif;
+}
+@media all and (max-width: 360px){
+    html {
+        font-size: 14px;
+    }
+}
+input,button,textarea,select,optgroup,option,a {
+    font: inherit;
+    color: inherit;
+}
+input,button,textarea,select,optgroup,option,::-webkit-search-cancel-button,::-webkit-search-results-button,::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+a {
+    -webkit-touch-callout:none;
+    text-decoration:none;
+}
+img {
+    max-width: 100%;
+}
+ol,ul {
+    list-style: none;
+}
+em,i {
+    font-style: normal;
+}
+table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.my-popover.el-popover {
+  border-radius 0
+  padding 0
+  border none 
+  background transparent
+}
