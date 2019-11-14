@@ -4,7 +4,7 @@ import GameHeader from 'comp/game-header';
 import MethodMenu from 'comp/method-menu';
 import SubMethodMenu from 'comp/sub-method-menu';
 import Play from 'comp/play';
-import OrderBar from 'comp/order-bar';
+// import OrderBar from 'comp/order-bar';
 import { RouteComponentProps } from "react-router-dom";
 import { getGameTypeByGameId } from '../../game/games';
 import calc from '../../game/calc';
@@ -16,7 +16,7 @@ import { countRepeat } from '../../utils/game';
 import { GameCommonDataContext } from '../../context/gameContext';
 import Ludan from 'comp/ludan';
 import { getLunDanTabByName, getTabsByType } from '../../utils/ludan';
-import LimitSetDialog from 'comp/limit-set-dialog';
+// import LimitSetDialog from 'comp/limit-set-dialog';
 import Socket from '../../socket';
 import Bus from '../../utils/eventBus'
 
@@ -444,7 +444,7 @@ class Game extends Component<Props, object> {
               defaultInitMethodItemAmount={this.state.defaultInitMethodItemAmount}
               updateMethdItem={this.updateMethdItem} 
             />
-            <OrderBar 
+            {/* <OrderBar 
               gameId={this.id} 
               curIssue={this.state.curIssue} 
               betCount={this.state.totalBetCount} 
@@ -454,7 +454,7 @@ class Game extends Component<Props, object> {
               updateDefaultInitMethodItemAmount={this.updateDefaultInitMethodItemAmount} 
               orderFinishCB={this.orderFinishCB}
               resetSelectedOfAllMethodItem={this.resetSelectedOfAllMethodItem}
-            />
+            /> */}
             {this.state.isShowLudan &&
               <Ludan 
                 gameId={this.id} 
@@ -469,7 +469,7 @@ class Game extends Component<Props, object> {
             }
           </section>
         </GameCommonDataContext.Provider>
-        <LimitSetDialog isShow={this.state.isShowLimitSetDialog} gameId={this.id} limitLevelList={this.state.limitLevelList} onLimitChoiceCB={this.onLimitChoiceCB} onCloseHandler={this.onCloseLimitChoiceHandler} />
+        {/* <LimitSetDialog isShow={this.state.isShowLimitSetDialog} gameId={this.id} limitLevelList={this.state.limitLevelList} onLimitChoiceCB={this.onLimitChoiceCB} onCloseHandler={this.onCloseLimitChoiceHandler} /> */}
       </article>
     );
   }

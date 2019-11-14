@@ -1,7 +1,7 @@
 import React, { Component, ChangeEvent } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Row, Col, Input, Button, message, Modal } from 'antd-mobile';
-import CoinSet from '../coin-set';
+import { Button } from 'antd-mobile';
+// import CoinSet from '../coin-set';
 import APIs from '../../http/APIs';
 import calc from '../../game/calc';
 import { removeRepeat2DArray, countRepeat } from '../../utils/game';
@@ -50,28 +50,28 @@ class OrderBar extends Component<Props, object> {
     this.props.updateDefaultInitMethodItemAmount(value);
   }
   onResetHandler = () => {
-    Modal.confirm({
-      centered: true,
-      title: '您确定要重置选中的投注？',
-      content: '',
-      okText: '确认',
-      cancelText: '取消',
-      onOk: () => {
-        this.props.resetSelectedOfAllMethodItem();
-      }
-    });
+    // Modal.confirm({
+    //   centered: true,
+    //   title: '您确定要重置选中的投注？',
+    //   content: '',
+    //   okText: '确认',
+    //   cancelText: '取消',
+    //   onOk: () => {
+    //     this.props.resetSelectedOfAllMethodItem();
+    //   }
+    // });
   }
   onOrderHandler = () => {
     this.order();
   }
   validate(params: any): boolean {
     if (!params.issue) {
-      message.warning('获取游戏期号失败，请刷新后重试！');
+      // message.warning('获取游戏期号失败，请刷新后重试！');
       return false;
     } else if(!params.betList || params.betList.length <= 0) {
       return false;
     } else if (params.errorMsg) {
-      message.warning(params.errorMsg);
+      // message.warning(params.errorMsg);
       return false;
     }
     return true;
@@ -238,18 +238,18 @@ class OrderBar extends Component<Props, object> {
       this.showLoading = false;
       if (success === 1) {
         this.props.store.user.updateBalance();
-        Modal.success({
-          centered: true,
-          title: '投注成功',
-          content: ''
-        });
+        // Modal.success({
+        //   centered: true,
+        //   title: '投注成功',
+        //   content: ''
+        // });
         this.props.orderFinishCB(true);
       } else {
-        Modal.error({
-          centered: true,
-          title: msg || '投注失败',
-          content: ''
-        });
+        // Modal.error({
+        //   centered: true,
+        //   title: msg || '投注失败',
+        //   content: ''
+        // });
         this.props.orderFinishCB(false);
       }
     });
@@ -269,22 +269,22 @@ class OrderBar extends Component<Props, object> {
   render() {
     return (
       <section className="order-bar-view">
-        <Row className="flex ai-c ">
-          <Col span={4}>
+        <div className="flex ai-c ">
+          <div>
             <div className="flex ai-c fast-amount-wp">
               <span className="flex ai-c jc-c">快速金额</span>
-              <Input className="fast-amount" value={this.state.amount} onChange={this.onAmountChanged} onBlur={this.onAmountChanged} />
+              <input className="fast-amount" value={this.state.amount} onChange={this.onAmountChanged} onBlur={this.onAmountChanged} />
             </div>  
-          </Col>
-          <Col span={10}><CoinSet coinChoosed={this.coinChoosed} /></Col>
-          <Col span={5} className="txt-r">
+          </div>
+          {/* <div span={10}><CoinSet coinChoosed={this.coinChoosed} /></Col> */}
+          <div className="txt-r">
             已选 <span className="txt-red">{this.props.betCount}</span> 注 共 <span className="txt-red"> {(this.props.amount).toFixed(3)} </span>元
-          </Col>
-          <Col span={5} className="flex ai-c jc-e btns-wp">
-            <Button type="primary" className="btn-reset" disabled={this.props.betCount <= 0} onClick={this.onResetHandler}>重置</Button>
-            <Button type="danger" className="btn-order" disabled={this.props.betCount <= 0} onClick={this.onOrderHandler}>一键下单</Button>
-          </Col>
-        </Row>
+          </div>
+          <div className="flex ai-c jc-e btns-wp">
+            <Button className="btn-reset" disabled={this.props.betCount <= 0} onClick={this.onResetHandler}>重置</Button>
+            <Button className="btn-order" disabled={this.props.betCount <= 0} onClick={this.onOrderHandler}>一键下单</Button>
+          </div>
+        </div>
       </section>
     )
   }
