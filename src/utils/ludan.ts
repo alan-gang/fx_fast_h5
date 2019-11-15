@@ -110,6 +110,19 @@ export const methodTabs: any = {
   }
 }
 
+export function getAllTabsByTypeAndName(type: string, methodName: string): any[] {
+  let tabs = methodTabs[type][methodName];
+  let allTabs: any[] = [];
+  if (tabs) {
+    tabs.forEach((tab: any) => {
+      tab.subM.forEach((subTab: any) => {
+        allTabs.push({title:tab.title + subTab.title, name: tab.name + '_' + subTab.name})
+      });
+    });
+  }
+  return allTabs;
+}
+
 export function getTabsByType(type: string, methodName: string): any[] {
   return methodTabs[type][methodName];
 }

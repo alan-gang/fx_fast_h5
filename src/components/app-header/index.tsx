@@ -30,7 +30,9 @@ class AppHeader extends Component<Props, object> {
       case 1:
         return <React.Fragment>{[
           <Flex.Item>
-            <span class="pdl-22 pdr-22">彩种选择</span>
+            <span class="pdl-22 pdr-22">彩种选择
+              span.icon-triangle
+            </span>
           </Flex.Item>,
           <Flex.Item className="txt-c">
             <div className="mgb-1">游戏大厅</div>

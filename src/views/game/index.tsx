@@ -52,6 +52,7 @@ interface State {
   defaultMenu?: string;
   defaultSubMenu?: string;
   isShowLudan: boolean;
+  isExpandLudan: boolean;
   isShowLimitSetDialog: boolean;
   limitLevelList: LimitLevelItem[];
 }
@@ -111,6 +112,7 @@ class Game extends Component<Props, object> {
       defaultMenu: (ludanTab && ludanTab.name) || '',
       defaultSubMenu: (ludanTab && ludanTab.subM && ludanTab.subM.length > 0) ? bestLudan.codeStyle.split('_')[1] : '',
       isShowLudan: ludanMenus && ludanMenus.length > 0,
+      isExpandLudan: false,
       isShowLimitSetDialog: !gameLimitLevel,
       limitLevelList: !gameLimitLevel ? (limitListItem ? limitListItem.kqPrizeLimit : []) : [],
     }
@@ -412,6 +414,11 @@ class Game extends Component<Props, object> {
   componentWillUnmount() {
     this.mysocket && this.mysocket.removeListen();
   }
+  onGameHeaderUpdateHandler = (data: any) => {
+    if (data.type === 'ludan') {
+      this.setState({isExpandLudan: data.data});
+    }
+  }
   render() {
     return (
       <article className="game-view">
@@ -425,7 +432,21 @@ class Game extends Component<Props, object> {
             remainTime={this.state.remainTime}
             openNumbers={this.state.openNumbers}
             getNewestIssue={this.getCurIssue}
+            isExpandLudan={this.state.isExpandLudan}
+            update={this.onGameHeaderUpdateHandler}
           />
+          {/* {this.state.isShowLudan && this.state.isExpandLudan &&
+            <Ludan 
+              gameId={this.id} 
+              gameType={this.gameType} 
+              maxColumns={this.state.maxColumns} 
+              maxRows={this.state.maxRows} 
+              issueList={this.state.issueList.slice(0).reverse()} 
+              methodMenuName={this.state.curMenuEname} 
+              defaultMenu={this.state.defaultMenu} 
+              defaultSubMenu={this.state.defaultSubMenu}
+            />
+          } */}
           <section className="game-main">
             <MethodMenu gameType={this.gameType} curMenuIndex={this.state.curMenuIndex} methodMenuChangedCB={this.methodMenuChangedCB} updateMethodMenuIndex={this.updateMethodMenuIndex}/>
             {this.state.subMethods.length > 0 && 
@@ -438,12 +459,12 @@ class Game extends Component<Props, object> {
                 updateSubMethodMenuIndex={this.updateSubMethodMenuIndex}
               />
             }
-            <Play 
+            {/* <Play 
               curGameMethodItems={this.state.curGameMethodItems} 
               gameType={this.gameType} 
               defaultInitMethodItemAmount={this.state.defaultInitMethodItemAmount}
               updateMethdItem={this.updateMethdItem} 
-            />
+            /> */}
             {/* <OrderBar 
               gameId={this.id} 
               curIssue={this.state.curIssue} 
@@ -455,18 +476,7 @@ class Game extends Component<Props, object> {
               orderFinishCB={this.orderFinishCB}
               resetSelectedOfAllMethodItem={this.resetSelectedOfAllMethodItem}
             /> */}
-            {this.state.isShowLudan &&
-              <Ludan 
-                gameId={this.id} 
-                gameType={this.gameType} 
-                maxColumns={this.state.maxColumns} 
-                maxRows={this.state.maxRows} 
-                issueList={this.state.issueList.slice(0).reverse()} 
-                methodMenuName={this.state.curMenuEname} 
-                defaultMenu={this.state.defaultMenu} 
-                defaultSubMenu={this.state.defaultSubMenu}
-              />
-            }
+           
           </section>
         </GameCommonDataContext.Provider>
         {/* <LimitSetDialog isShow={this.state.isShowLimitSetDialog} gameId={this.id} limitLevelList={this.state.limitLevelList} onLimitChoiceCB={this.onLimitChoiceCB} onCloseHandler={this.onCloseLimitChoiceHandler} /> */}

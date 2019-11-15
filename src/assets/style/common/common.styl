@@ -190,7 +190,27 @@ cntEl() {
 .no-data {
   color $no-data-txt-color
 }
-
+.icon-triangle {
+  width 20px
+  height 20px
+  display flex
+  align-items center
+  justify-content center
+  iconTran() {
+    display inline-block
+    content ''
+    border-left solid 12px transparent
+    border-right solid 12px transparent
+  }
+  &.up::after {
+    iconTran()
+    border-bottom solid 12px #ccc
+  }
+  &.down::after {
+    iconTran()
+    border-top solid 12px #ccc
+  }
+}
 // ==================== joey =======================
 // radius
 for x in 0 2 5 8 10 15
@@ -234,3 +254,4 @@ for x in 0 10 15 16 17 18 19 20 25 30 33 35 40 45 50 55 60 65 70 80 90 100 120 1
     opacity .9
     
 // ==================== joey =======================
+
