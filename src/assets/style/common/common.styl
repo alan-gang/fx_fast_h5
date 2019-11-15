@@ -189,3 +189,25 @@ cntEl() {
 .no-data {
   color $no-data-txt-color
 }
+
+.icon-triangle {
+  width 20px
+  height 20px
+  display flex
+  align-items center
+  justify-content center
+  iconTran() {
+    display inline-block
+    content ''
+    border-left solid 12px transparent
+    border-right solid 12px transparent
+  }
+  &.up::after {
+    iconTran()
+    border-bottom solid 12px #ccc
+  }
+  &.down::after {
+    iconTran()
+    border-top solid 12px #ccc
+  }
+}

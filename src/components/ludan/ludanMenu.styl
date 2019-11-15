@@ -1,36 +1,31 @@
 .ludan-menu-view {
-  border-top solid 0.01rem $ludan-sub-menu-bd-color
-  border-left solid 0.01rem $ludan-sub-menu-bd-color
-  border-right solid 0.01rem $ludan-sub-menu-bd-color
+  border-top solid 1px $ludan-sub-menu-bd-color
+  border-left solid 1px $ludan-sub-menu-bd-color
+  border-right solid 1px $ludan-sub-menu-bd-color
+  .menu-wp {
+    overflow hidden
+  }
   .menu {
-    margin-top 0.05rem
-    padding-bottom 0.05rem
+    width 1400px
+    height 54px
+    margin-top 5px
+    padding-bottom 5px
     .menu-item {
-      flex 1
-      cursor pointer
-      border solid 0.01rem $ludan-menu-item-bd-color
+      min-width 100px
+      height 100%
+      line-height 54px
       box-sizing border-box
-      margin 0 0.04rem
+      margin 0 4px
+      float left
     }
     .selected {
       color $ludan-menu-item-selected-color
       background-color $ludan-menu-item-selected-bg-color
-      border solid 0.01rem $ludan-menu-item-selected-bg-color
+      border solid 1px $ludan-menu-item-selected-bg-color
     }
-  }
-  .sub-menu {
-    height 0.3rem
-    background-color $ludan-sub-menu-bg-color
-    border solid 0.01rem $ludan-sub-menu-bd-color
-    box-sizing border-box
-    .sub-menu-item {
-      width 1.8rem
-      cursor pointer
-    }
-    .selected {
-      color $theme-txt-color-6
-      background-color $ludan-sub-menu-item-selected-color
-      border-top solid 0.02rem $theme-txt-color-6
+    &::after {
+      content ''
+      clear both
     }
   }
 }

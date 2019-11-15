@@ -138,7 +138,7 @@ class LobbyGame extends Component<Props, object> {
       }
     });
   }
-  gotoGame() {
+  gotoGame = () => {
     this.props.goto(`/game/${this.props.gameId}`);
   }
   onIntoGame = () => {
@@ -161,7 +161,7 @@ class LobbyGame extends Component<Props, object> {
   }
   render() {
     return (
-      <section className="lobby-game-view crs-p">
+      <section className="lobby-game-view crs-p" onClick={this.gotoGame}>
         <LobbyGameHeader gameType={this.props.gameType} gameId={this.props.gameId} curIssue={this.state.curIssue} remainTime={this.state.remainTime} gameName={this.props.gameName} getNewestIssue={this.getCurIssue} />
         <div className="best-dudan-name">{this.state.bestLudanName}</div>
         <div className="ludan-wp">

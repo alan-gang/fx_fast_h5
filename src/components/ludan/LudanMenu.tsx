@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import Bus from '../../utils/eventBus'
-
+import Bus from '../../utils/eventBus';
+import MyScroll from '../my-scroll';
 import './ludanMenu.styl';
 
 interface Props {
   store?: any;
-  tabs?: any;
+  tabs: any[];
   menus: any[];
   selectedMenu?: string;
   selectedSubMenu?: string;
@@ -22,14 +22,16 @@ interface State {
 @observer
 class LundanMenu extends Component<Props, object> {
   state: State;
+  myScrollRef: any;
   constructor(props: Props) {
     super(props);
     this.state = {
       subMenus: this.getSubMenusByName(this.props.menus, this.props.selectedMenu)
     }
+    this.myScrollRef = React.createRef();
   }
   componentDidMount() {
-    Bus.emit('ludanSelectMenuChange', this.props.selectedMenu)
+    Bus.emit('ludanSelectMenuChange', this.props.selectedMenu);
   }
   getMenuByName(menus: any[] = [], name: string = '') {
     return menus.find((menu: any) => name === menu.name);
@@ -44,25 +46,22 @@ class LundanMenu extends Component<Props, object> {
       this.setState({subMenus: this.getSubMenusByName(nextProps.menus, nextProps.selectedMenu)})
     }
   }
-  
   changeMenu = (menu: any) => {
-    this.props.updateMenu(menu)
-    Bus.emit('ludanSelectMenuChange', menu.name)
+    console.log('info menu=', menu);
+    this.myScrollRef.current.refresh();
+    // this.props.updateMenu(menu)
+    // Bus.emit('ludanSelectMenuChange', menu.name);
   }
   render() {
     return (
       <section className="ludan-menu-view">
-        {this.state.subMenus && this.state.subMenus.length > 0 && 
-        <nav className="flex sub-menu">
-          {this.state.subMenus.map((menu: any, i: number) => (
-            <div key={i} className={`flex jc-c ai-c sub-menu-item ${this.props.selectedSubMenu === menu.name ? 'selected' : ''}`} onClick={() => this.props.updateSubMenu(menu.name)}>{menu.title}</div>
-          ))}
-        </nav>}
-        <nav className="flex menu">
-          {this.props.menus && this.props.menus.length > 0 && this.props.menus.map((menu: any, i: number) => (
-            <div key={i} className={`flex jc-c ai-c menu-item ${this.props.selectedMenu === menu.name ? 'selected' : ''}`} onClick={() => this.changeMenu(menu)}>{menu.title}</div>
-          ))}
-        </nav>
+        <MyScroll ref={this.myScrollRef}>
+          <nav className="menu">
+            {this.props.tabs && this.props.tabs.length > 0 && this.props.tabs.map((menu: any, i: number) => (
+              <div key={i} className={`menu-item ${this.props.selectedMenu === menu.name ? 'selected' : ''}`} onClick={() => this.changeMenu(menu)}>{menu.title}</div>
+            ))}
+          </nav>
+        </MyScroll>
       </section>  
     )
   }

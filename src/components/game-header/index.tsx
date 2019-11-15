@@ -13,7 +13,9 @@ interface Props {
   curTime?: number;
   remainTime: number;
   openNumbers: string[];
+  isExpandLudan: boolean;
   getNewestIssue(gameid: number): void;
+  update(data: any): void;
 }
 
 interface State {
@@ -93,6 +95,9 @@ class GameHeader extends Component<Props, object> {
       curGameLimitLevel: parseInt(value, 10)
     });
   }
+  onLudanHandler = () => {
+    this.props.update({type: 'ludan', data: !this.props.isExpandLudan})
+  }
   clearTimer(): void {
     if (this.state.timer && this.state.timer.close) {
       this.state.timer.close();
@@ -103,23 +108,28 @@ class GameHeader extends Component<Props, object> {
   }
   render() {
     return (
-      <section className={`game-header-view flex ai-c ${this.props.gameType}`}>
-        <div className={`game-logo game-header-logo-${this.props.gameId}`}>
-          <span className="volumn-switch close"></span>
-        </div>
-        <div className="flex ai-c">
-          <div className="txt-r cur-issue-wp">
-            <div>{this.props.curIssue}期</div>
-            <div>截止时间</div>
+      <section className={`game-header-view ${this.props.gameType}`}>
+        <section className="flex ai-c last-issue-sec">
+          <div>第{this.props.lastIssue}期：</div>
+          <div>
+            {this.props.openNumbers.map((num: string, i: number) => (
+             <span key={i} className="open-num-item">{num}</span> 
+            ))}
           </div>
-          <div className="time-wp flex ai-c jc-c">
-            <span className="hour-wp">{this.state.hours}</span>
-            <span className="colon">:</span>
-            <span className="minute-wp">{this.state.minutes}</span>
-            <span className="colon">:</span>
-            <span className="second-wp">{this.state.seconds}</span>
+        </section>
+        <section className="flex ai-c jc-sb cur-issue-sec">
+          <div className="flex ai-c">
+            <div className="txt-r cur-issue-wp">距{this.props.curIssue}期截止:</div>
+            <div className="time-wp flex ai-c jc-c">
+              <span className="hour-wp">{this.state.hours}</span>
+              <span className="colon">:</span>
+              <span className="minute-wp">{this.state.minutes}</span>
+              <span className="colon">:</span>
+              <span className="second-wp">{this.state.seconds}</span>
+            </div>
           </div>
-        </div>
+          <div className="flex ai-c" onClick={this.onLudanHandler}>路单走势<span className={`icon-triangle ${this.props.isExpandLudan ? 'up' : 'down'}`}></span></div>
+        </section>
       </section>
     );
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { getLuDanListByMethod, getTabsByType } from '../../utils/ludan';
+import { getLuDanListByMethod, getTabsByType, getAllTabsByTypeAndName } from '../../utils/ludan';
 import LudanMenu from './LudanMenu';
 import LundanTable from './LundanTable';
 
@@ -21,6 +21,7 @@ interface Props {
 
 interface State {
   menus: any[];
+  tabs: any[];
   selectedMenu?: string;
   selectedSubMenu?: string;
   ludanList: any[];
@@ -32,6 +33,8 @@ class Ludan extends Component<Props, object> {
   state: State;
   constructor(props: Props) {
     super(props);
+    let tabs = getAllTabsByTypeAndName(this.props.gameType, this.props.methodMenuName);
+    console.log('info tabs =', tabs);
     // ssc -> 整合 -> 万位 -> 大小
     let menus = getTabsByType(this.props.gameType, this.props.methodMenuName);
     let selectedMenu = this.props.defaultMenu || ((menus && menus.length > 0) ? menus[0].name : '');
@@ -42,7 +45,8 @@ class Ludan extends Component<Props, object> {
       menus,
       selectedMenu,
       selectedSubMenu,
-      ludanList
+      ludanList,
+      tabs
     }
   }
   getMenuByMenuName(menus: any[], menuName: string): any {
@@ -79,7 +83,7 @@ class Ludan extends Component<Props, object> {
   render() {
     return (
       <section className="ludan-view">
-        {this.props.isShowLudanMenu !== false && <LudanMenu menus={this.state.menus} selectedMenu={this.state.selectedMenu} selectedSubMenu={this.state.selectedSubMenu} updateMenu={this.updateMenu} updateSubMenu={this.updateSubMenu} />}
+        {this.props.isShowLudanMenu !== false && <LudanMenu menus={this.state.menus} selectedMenu={this.state.selectedMenu} selectedSubMenu={this.state.selectedSubMenu} tabs={this.state.tabs} updateMenu={this.updateMenu} updateSubMenu={this.updateSubMenu}  />}
         <LundanTable maxColumns={this.props.maxColumns} maxRows={this.props.maxRows} ludanList={this.state.ludanList} />
       </section>  
     )
