@@ -272,8 +272,7 @@ class OrderBar extends Component<Props, object> {
         <div className="flex ai-c ">
           <div>
             <div className="flex ai-c fast-amount-wp">
-              <span className="flex ai-c jc-c">快速金额</span>
-              <input className="fast-amount" value={this.state.amount} onChange={this.onAmountChanged} onBlur={this.onAmountChanged} />
+              <input className="fast-amount" value={this.state.amount} onChange={this.onAmountChanged} onBlur={this.onAmountChanged} placeholder="请输入快捷金额" />
             </div>  
           </div>
           {/* <div span={10}><CoinSet coinChoosed={this.coinChoosed} /></Col> */}

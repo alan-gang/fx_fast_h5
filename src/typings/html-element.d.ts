@@ -3,5 +3,8 @@ declare namespace JSX {
       span: {
         [elemName: string]: any;
       }
+      // div: {
+      //   [elemName: string]: any;
+      // }
   }
 }

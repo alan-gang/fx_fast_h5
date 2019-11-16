@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { getMethodsConfigByType } from '../../game/gameMethods';
 import { GameMethodMenu, GameSubMethodMenu } from '../../typings/games';
+import MyScroll from '../my-scroll';
 
 import './index.styl';
 
@@ -15,7 +16,6 @@ interface Props {
 
 interface State {
   menus: GameMethodMenu[];
-
   subMenus: GameSubMethodMenu[];
 }
 
@@ -43,11 +43,13 @@ class MethodMenu extends Component<Props, object> {
     return (
       <section className="method-menu-view">
         <section className="menu-wp">
-          <nav className="flex ai-c">
-            {menus.map((menu, i) => (
-              <div key={i} className={`menu-item ${i === this.props.curMenuIndex ? 'selected' : ''}`} onClick={() => {this.onMenuHandler(menu, i)}}>{menu.name}</div>
-            ))}
-          </nav>
+          <MyScroll>
+            <nav className="menu-item-ls">
+              {menus.map((menu, i) => (
+                <div key={i} className={`menu-item ${i === this.props.curMenuIndex ? 'selected' : ''}`} onClick={() => {this.onMenuHandler(menu, i)}}><span>{menu.name}</span></div>
+              ))}
+            </nav>
+          </MyScroll>
         </section>
         <section className="sub-menu-wp">
           <nav></nav>

@@ -1,0 +1,11 @@
+.ds-col {
+  box-sizing border-box
+  $unum = 100 / 24
+  for n in 2 3 4 5 6 7 8 10 12 16 18 20 22 24 {
+    &.col-{n} {
+      // $width = $unum * n + ""
+      // width substr($width, 0, 8) + "%"
+      width $unum * n + "%"
+    }
+  }
+}

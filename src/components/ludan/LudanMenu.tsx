@@ -7,49 +7,34 @@ import './ludanMenu.styl';
 interface Props {
   store?: any;
   tabs: any[];
-  menus: any[];
   selectedMenu?: string;
   selectedSubMenu?: string;
   updateMenu(menuName: any): void;
-  updateSubMenu(menuName: string): void;
-}
-
-interface State {
-  subMenus: any[];
 }
 
 @inject('store')
 @observer
 class LundanMenu extends Component<Props, object> {
-  state: State;
   myScrollRef: any;
   constructor(props: Props) {
     super(props);
-    this.state = {
-      subMenus: this.getSubMenusByName(this.props.menus, this.props.selectedMenu)
-    }
     this.myScrollRef = React.createRef();
   }
   componentDidMount() {
     Bus.emit('ludanSelectMenuChange', this.props.selectedMenu);
+    let selectedItem = document.querySelector('.ludan-menu-view .menu-item.selected');
+    selectedItem && this.myScrollRef.current.bscroll.scrollToElement('.menu-item.selected');
   }
-  getMenuByName(menus: any[] = [], name: string = '') {
-    return menus.find((menu: any) => name === menu.name);
-  }
-  getSubMenusByName(menus: any[], selectedMenu: string = ''): any[] {
-    let menu = this.getMenuByName(menus, selectedMenu);
-    return (menu && menu.subM) || [];
-  }
-  componentWillReceiveProps(nextProps: Props, nextState: State) {
-    if (this.props.selectedMenu !== nextProps.selectedMenu || this.props.selectedSubMenu !== nextProps.selectedSubMenu) {
+  componentWillReceiveProps(nextProps: Props) {
+    if (this.props.selectedMenu !== nextProps.selectedMenu) {
       Bus.emit('ludanSelectMenuChange', nextProps.selectedMenu)
-      this.setState({subMenus: this.getSubMenusByName(nextProps.menus, nextProps.selectedMenu)})
     }
+    this.myScrollRef.current.refresh();
+    let selectedItem = document.querySelector('.ludan-menu-view .menu-item.selected');
+    this.myScrollRef.current.bscroll && selectedItem && this.myScrollRef.current.bscroll.scrollToElement(selectedItem, 150, true);
   }
   changeMenu = (menu: any) => {
-    console.log('info menu=', menu);
-    this.myScrollRef.current.refresh();
-    // this.props.updateMenu(menu)
+    this.props.updateMenu(menu);
     // Bus.emit('ludanSelectMenuChange', menu.name);
   }
   render() {

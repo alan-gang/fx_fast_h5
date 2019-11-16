@@ -1,73 +1,68 @@
 .play-view {
-  margin-top 0.1rem
+  padding 10px 25px 10px 10px
   .pos-lebel {
-    background-color $theme-bg-color-2
     text-align center
-    height 0.32rem
-    line-height 0.32rem
+    height 70px
+    line-height 70px
     box-sizing border-box
-    border-bottom solid 0.01rem $theme-bd-color-1
+    border-bottom solid 1px $theme-bd-color-1
     &.hide {
       display none
     }
   }
   .method {
     border solid 0.01rem $theme-bd-color-1
-    margin-bottom 0.08rem
     &.col {
       display flex
     }
-    .ant-row {
-      flex 1
-      border-right dashed 0.01rem $theme-bd-color-2
+    .ds-row {
+      margin-bottom 14px
     }
-    .ant-row:last-child {
-      border-right none
+    .method-item-col {
+      padding 0 8px 0 0
     }
     .method-item {
       display flex
-      height 0.32rem
+      height 70px
       align-items center
-      padding-left 0.15rem
+      border solid 1px $play-method-item-bd-color
+      box-sizing border-box
+      background-color $theme-txt-color4
+      justify-content center
+      border-radius 10px
+      flex-direction column
       &.selected {
+        color $play-method-item-selected-txt-color
         background-color $play-method-item-selected-bg-color
+        .odd {
+          color $play-method-item-selected-txt-color
+        }
+      }
+      
+    }
+    methodItemcircleStyle($width, $height) {
+      border-radius 50%
+      width $width
+      height $height
+    }
+    .method-item-col.circle {
+      &.large .method-item {
+        margin 0 0 10px 20px
+        methodItemcircleStyle(90px, 90px)
+      }
+      &.medium .method-item {
+        methodItemcircleStyle(80px, 80px)
+      }
+      &.small .method-item {
+        margin 0 0 10px 2px
+        methodItemcircleStyle(78px, 78px)
       }
     }
     &::after {
       clear both
     }
-    .col5 {
-      width 20%
-      float left
-    }
-    &.no-b-m {
-      border-bottom none
-      margin-bottom 0
-    }
-    &.no-t-b {
-      border-top none
-    }
-    &.min-auto-w {
-      .method-item-name {
-        padding 0 0.08rem
-        border-radius 0.2rem
-      }
-    }
-    &.m-lh {
-      border none
-      .ant-row {
-        border solid 0.01rem $theme-bd-color-1
-        margin-bottom 0.08rem
-      }
-    }
-    &.yzzh {
-      width 2.08rem
-      float left
-      margin-right 0.16rem
-      &:last-child {
-        margin 0;
-      }
-    }
+    // &.yzzh {
+    // }
     &.layout-c-2 {
       width 4.35rem
       float left
@@ -114,13 +109,8 @@
       .method-item-name {
         width 1.6rem
         height 0.5rem
-        background $play-white-bg-img
-        border solid 0.01rem $theme-bd-color-1
         border-radius 0.08rem
         font-weight bold
-      }
-      .ant-input {
-        width 0.9rem
       }
     }
     &.no-bd-b-pos-label {
@@ -129,14 +119,21 @@
       }
     }
   }
-  .mi-pl-50 {
-    .method-item {
-      padding-left 0.5rem
+  .layout-col-float {
+    .ds-row {
+      display block
+      clear left
+      .pos-lebel {
+        height 160px
+      }
+    }
+    .ds-col {
+      float left
     }
   }
   .odd {
     min-width 0.5rem
-    color $theme-txt-color-6
+    color $theme-txt-color1
     padding 0 0.04rem
   }
   .method-item-name {
@@ -144,20 +141,10 @@
     height 0.25rem
     line-height 0.25rem
     border-radius 50%
-    background-color $theme-bg-color-3
-    color $theme-txt-color-5
-    border solid 0.01rem $play-method-name-bd-color
     cursor pointer
     display flex
     align-items center
     justify-content center
-  }
-  .method-item.selected {
-    .method-item-name {
-      // background $play-method-name-selected-bg-color
-      // color $theme-txt-color-4
-      // border-color $play-method-name-selected-bg-color
-    }
   }
   .method-item.icon.selected {
     .method-item-name {
@@ -178,18 +165,6 @@
         background url("../../assets/images/default/dice-" + num + "@2x.png") center no-repeat
         dice()
       }
-      // .method-item.selected.icon {
-      //   .method-item-name .icon-item-{num} {
-      //     background url("../../assets/images/default/dice-red-" + num + "@2x.png") center no-repeat
-      //     dice()
-      //   }
-      // }
     }
-  }
-
-  .ant-input {
-    width 0.6rem
-    height 0.2rem
-    border-radius 0.02rem
   }
 }

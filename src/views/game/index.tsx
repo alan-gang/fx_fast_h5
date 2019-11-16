@@ -4,7 +4,7 @@ import GameHeader from 'comp/game-header';
 import MethodMenu from 'comp/method-menu';
 import SubMethodMenu from 'comp/sub-method-menu';
 import Play from 'comp/play';
-// import OrderBar from 'comp/order-bar';
+import OrderBar from 'comp/order-bar';
 import { RouteComponentProps } from "react-router-dom";
 import { getGameTypeByGameId } from '../../game/games';
 import calc from '../../game/calc';
@@ -15,7 +15,7 @@ import APIs from '../../http/APIs';
 import { countRepeat } from '../../utils/game';
 import { GameCommonDataContext } from '../../context/gameContext';
 import Ludan from 'comp/ludan';
-import { getLunDanTabByName, getTabsByType } from '../../utils/ludan';
+import { getLunDanTabByName, getTabsByType, getLudanTabByTypeAndName } from '../../utils/ludan';
 // import LimitSetDialog from 'comp/limit-set-dialog';
 import Socket from '../../socket';
 import Bus from '../../utils/eventBus'
@@ -50,7 +50,7 @@ interface State {
   maxColumns: number;
   maxRows: number;
   defaultMenu?: string;
-  defaultSubMenu?: string;
+  // defaultSubMenu?: string;
   isShowLudan: boolean;
   isExpandLudan: boolean;
   isShowLimitSetDialog: boolean;
@@ -84,8 +84,8 @@ class Game extends Component<Props, object> {
     let menus: GameMethodMenu[] = getMethodsConfigByType(this.gameType);
     let limitItem = props.store.game.getLimitListItemById(this.id);
     let bestLudan: BestLudanItem = limitItem && limitItem.bestLudan;
-    let ludanTab = getLunDanTabByName(this.gameType, bestLudan && bestLudan.codeStyle);
     let curMenuEname = (menus && menus[0]).ename;
+    let ludanTab = getLudanTabByTypeAndName(this.gameType, curMenuEname, bestLudan && bestLudan.codeStyle);
     let ludanMenus = getTabsByType(this.gameType, curMenuEname);
     let gameLimitLevel = this.props.store.game.getGameLimitLevelByGameId(this.id); // 设置的限红数据
     let limitListItem = this.props.store.game.getLimitListItemById(this.id); 
@@ -103,14 +103,13 @@ class Game extends Component<Props, object> {
       curGameMethodItems: this.getMethodItemsByIds((menus && menus[0].ids) || []),
       odds: {},
       issueList: [],
-      defaultInitMethodItemAmount: 2,
+      defaultInitMethodItemAmount: 20,
       totalBetCount: 0,
       totalBetAmount: 0,
       tabIndex: 0,
-      maxColumns: 30,
+      maxColumns: 21,
       maxRows: 6,
       defaultMenu: (ludanTab && ludanTab.name) || '',
-      defaultSubMenu: (ludanTab && ludanTab.subM && ludanTab.subM.length > 0) ? bestLudan.codeStyle.split('_')[1] : '',
       isShowLudan: ludanMenus && ludanMenus.length > 0,
       isExpandLudan: false,
       isShowLimitSetDialog: !gameLimitLevel,
@@ -152,9 +151,9 @@ class Game extends Component<Props, object> {
     if (this.props.match.params.id !== nextProps.match.params.id) {
       let limitItem = this.props.store.game.getLimitListItemById(this.id);
       let bestLudan: BestLudanItem = limitItem && limitItem.bestLudan;
-      let ludanTab = getLunDanTabByName(this.gameType, bestLudan && bestLudan.codeStyle);
       let menus: GameMethodMenu[] = getMethodsConfigByType(this.gameType);
       let curMenuEname = menus && menus[0].ename
+      let ludanTab = getLudanTabByTypeAndName(this.gameType, curMenuEname, bestLudan && bestLudan.codeStyle);
       let ludanMenus = getTabsByType(this.gameType, curMenuEname);
       let gameLimitLevel = this.props.store.game.getGameLimitLevelByGameId(this.id); // 设置的限红数据
       let limitListItem = this.props.store.game.getLimitListItemById(this.id); 
@@ -164,7 +163,6 @@ class Game extends Component<Props, object> {
         curGameMethodItems: this.getMethodItemsByIds((menus && menus[0].ids) || []),
         subMethods: (menus && menus[0].subMethods) || [],
         defaultMenu: (ludanTab && ludanTab.name) || '',
-        defaultSubMenu: (ludanTab && ludanTab.subM && ludanTab.subM.length > 0) ? bestLudan.codeStyle.split('_')[1] : '',
         isShowLudan: ludanMenus && ludanMenus.length > 0,
         isShowLimitSetDialog: !gameLimitLevel,
         limitLevelList: !gameLimitLevel ? (limitListItem ? limitListItem.kqPrizeLimit : []) : []
@@ -212,6 +210,11 @@ class Game extends Component<Props, object> {
   methodMenuChangedCB = (method: GameMethodMenu) => {
     let curGameMethodItems = this.getMethodItemsByIds(method.ids || []);
     let ludanMenus = getTabsByType(this.gameType, method.ename);
+
+    let limitItem = this.props.store.game.getLimitListItemById(this.id);
+    let bestLudan: BestLudanItem = limitItem && limitItem.bestLudan;
+    let ludanTab = getLudanTabByTypeAndName(this.gameType, method.ename, bestLudan && bestLudan.codeStyle);
+
     this.setState({
       subMethods: method.subMethods || [],
       curGameMethodItems,
@@ -219,8 +222,8 @@ class Game extends Component<Props, object> {
       totalBetAmount: 0,
       curSubMenuIndex: 0,
       curMenuEname: method.ename,
-      defaultMenu: '',
-      defaultSubMenu: '',
+      defaultMenu: (ludanTab && ludanTab.name) || '',
+      // defaultSubMenu: '',
       isShowLudan: ludanMenus && ludanMenus.length > 0
     }, this.updateOddsOfMethod);
   }
@@ -435,7 +438,7 @@ class Game extends Component<Props, object> {
             isExpandLudan={this.state.isExpandLudan}
             update={this.onGameHeaderUpdateHandler}
           />
-          {/* {this.state.isShowLudan && this.state.isExpandLudan &&
+          {this.state.isShowLudan && this.state.isExpandLudan &&
             <Ludan 
               gameId={this.id} 
               gameType={this.gameType} 
@@ -444,9 +447,8 @@ class Game extends Component<Props, object> {
               issueList={this.state.issueList.slice(0).reverse()} 
               methodMenuName={this.state.curMenuEname} 
               defaultMenu={this.state.defaultMenu} 
-              defaultSubMenu={this.state.defaultSubMenu}
             />
-          } */}
+          }
           <section className="game-main">
             <MethodMenu gameType={this.gameType} curMenuIndex={this.state.curMenuIndex} methodMenuChangedCB={this.methodMenuChangedCB} updateMethodMenuIndex={this.updateMethodMenuIndex}/>
             {this.state.subMethods.length > 0 && 
@@ -464,8 +466,8 @@ class Game extends Component<Props, object> {
               gameType={this.gameType} 
               defaultInitMethodItemAmount={this.state.defaultInitMethodItemAmount}
               updateMethdItem={this.updateMethdItem} 
-            /> */}
-            {/* <OrderBar 
+            />
+            <OrderBar 
               gameId={this.id} 
               curIssue={this.state.curIssue} 
               betCount={this.state.totalBetCount} 

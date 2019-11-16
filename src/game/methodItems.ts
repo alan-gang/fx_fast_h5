@@ -40,14 +40,14 @@ const methodItems: any = {
   '1250:1' () {
     // ssc 双面
     return {
-      layout: 'col',
-      class: 'no-b-m',
+      layout: 'row',
+      class: '',
       rows: [
-        getCommonRow({n: '万位', vs: [{s: false, n: '大'}, {s: false, n: '小'}, {s: false, n: '单'}, {s: false, n: '双'}]}),
-        getCommonRow({n: '千位', vs: [{s: false, n: '大'}, {s: false, n: '小'}, {s: false, n: '单'}, {s: false, n: '双'}]}),
-        getCommonRow({n: '百位', vs: [{s: false, n: '大'}, {s: false, n: '小'}, {s: false, n: '单'}, {s: false, n: '双'}]}),
-        getCommonRow({n: '十位', vs: [{s: false, n: '大'}, {s: false, n: '小'}, {s: false, n: '单'}, {s: false, n: '双'}]}),
-        getCommonRow({n: '个位', vs: [{s: false, n: '大'}, {s: false, n: '小'}, {s: false, n: '单'}, {s: false, n: '双'}]})
+        getCommonRow({n: '万位', col: 4, vs: [{s: false, n: '大', col: 5}, {s: false, n: '小', col: 5}, {s: false, n: '单', col: 5}, {s: false, n: '双', col: 5}]}),
+        getCommonRow({n: '千位', col: 4, vs: [{s: false, n: '大', col: 5}, {s: false, n: '小', col: 5}, {s: false, n: '单', col: 5}, {s: false, n: '双', col: 5}]}),
+        getCommonRow({n: '百位', col: 4, vs: [{s: false, n: '大', col: 5}, {s: false, n: '小', col: 5}, {s: false, n: '单', col: 5}, {s: false, n: '双', col: 5}]}),
+        getCommonRow({n: '十位', col: 4, vs: [{s: false, n: '大', col: 5}, {s: false, n: '小', col: 5}, {s: false, n: '单', col: 5}, {s: false, n: '双', col: 5}]}),
+        getCommonRow({n: '个位', col: 4, vs: [{s: false, n: '大', col: 5}, {s: false, n: '小', col: 5}, {s: false, n: '单', col: 5}, {s: false, n: '双', col: 5}]})
       ]
     }
   },
@@ -56,7 +56,7 @@ const methodItems: any = {
     return {
       layout: 'row',
       rows: [
-        getCommonRow({n: '总和', nonasv: true, col: 24, vs: [{s: false, n: '大', pv: '总大', oddIndex: 2, col: 6}, {s: false, n: '小', pv: '总小', oddIndex: 2, col: 6}, {s: false, n: '单', pv: '总单', oddIndex: 2, col: 6}, {s: false, n: '双', pv: '总双', oddIndex: 2, col: 6}]})
+        getCommonRow({n: '总和', nonasv: true, col: 4, vs: [{s: false, n: '大', pv: '总大', oddIndex: 2, col: 5}, {s: false, n: '小', pv: '总小', oddIndex: 2, col: 5}, {s: false, n: '单', pv: '总单', oddIndex: 2, col: 5}, {s: false, n: '双', pv: '总双', oddIndex: 2, col: 5}]})
       ]
     }
   },
@@ -64,7 +64,7 @@ const methodItems: any = {
     // ssc 数字
     return {
       layout: 'col',
-      class: 'no-t-b',
+      class: '',
       rows: [
         getCommonRow({n: '万位', hidePos: true, vs: [{s: false, n: '0'}, {s: false, n: '1'}, {s: false, n: '2'}, {s: false, n: '3'},{s: false, n: '4'},{s: false, n: '5'},{s: false, n: '6'},{s: false, n: '7'},{s: false, n: '8'},{s: false, n: '9'}]}),
         getCommonRow({n: '千位', hidePos: true, vs: [{s: false, n: '0'}, {s: false, n: '1'}, {s: false, n: '2'}, {s: false, n: '3'},{s: false, n: '4'},{s: false, n: '5'},{s: false, n: '6'},{s: false, n: '7'},{s: false, n: '8'},{s: false, n: '9'}]}),
@@ -76,21 +76,21 @@ const methodItems: any = {
   },
   '1273:1' () {
     // ssc 龙虎和
-    let vs = [{s: false, n: '龙', oddIndex: 1, col: 6}, {s: false, n: '和', oddIndex: 0, col: 6}, {s: false, n: '虎', oddIndex: 1, col: 6}];
+    let vs = [{s: false, n: '龙', oddIndex: 1, col: 7}, {s: false, n: '和', oddIndex: 0, col: 7}, {s: false, n: '虎', oddIndex: 1, col: 7}];
     return {
       layout: 'row',
-      class: 'mi-pl-50 m-lh no-bd-b-pos-label',
+      class: '  no-bd-b-pos-label',
       rows: [
-        getCommonRow({n: '万千', col: 6, p: '龙1vs虎2', nstyle: 'lhh_1v2', vs: cpArr(vs)}),
-        getCommonRow({n: '万百', col: 6, p: '龙1vs虎3', nstyle: 'lhh_1v3', vs: cpArr(vs)}),
-        getCommonRow({n: '万十', col: 6, p: '龙1vs虎4', nstyle: 'lhh_1v4', vs: cpArr(vs)}),
-        getCommonRow({n: '万个', col: 6, p: '龙1vs虎5', nstyle: 'lhh_1v5', vs: cpArr(vs)}),
-        getCommonRow({n: '千百', col: 6, p: '龙2vs虎3', nstyle: 'lhh_2v3', vs: cpArr(vs)}),
-        getCommonRow({n: '千十', col: 6, p: '龙2vs虎4', nstyle: 'lhh_2v4', vs: cpArr(vs)}),
-        getCommonRow({n: '千个', col: 6, p: '龙2vs虎5', nstyle: 'lhh_2v5', vs: cpArr(vs)}),
-        getCommonRow({n: '百十', col: 6, p: '龙3vs虎4', nstyle: 'lhh_3v4', vs: cpArr(vs)}),
-        getCommonRow({n: '百个', col: 6, p: '龙3vs虎5', nstyle: 'lhh_3v5', vs: cpArr(vs)}),
-        getCommonRow({n: '十个', col: 6, p: '龙4vs虎5', nstyle: 'lhh_4v5', vs: cpArr(vs)})
+        getCommonRow({n: '万千', col: 3, p: '龙1vs虎2', nstyle: 'lhh_1v2', vs: cpArr(vs)}),
+        getCommonRow({n: '万百', col: 3, p: '龙1vs虎3', nstyle: 'lhh_1v3', vs: cpArr(vs)}),
+        getCommonRow({n: '万十', col: 3, p: '龙1vs虎4', nstyle: 'lhh_1v4', vs: cpArr(vs)}),
+        getCommonRow({n: '万个', col: 3, p: '龙1vs虎5', nstyle: 'lhh_1v5', vs: cpArr(vs)}),
+        getCommonRow({n: '千百', col: 3, p: '龙2vs虎3', nstyle: 'lhh_2v3', vs: cpArr(vs)}),
+        getCommonRow({n: '千十', col: 3, p: '龙2vs虎4', nstyle: 'lhh_2v4', vs: cpArr(vs)}),
+        getCommonRow({n: '千个', col: 3, p: '龙2vs虎5', nstyle: 'lhh_2v5', vs: cpArr(vs)}),
+        getCommonRow({n: '百十', col: 3, p: '龙3vs虎4', nstyle: 'lhh_3v4', vs: cpArr(vs)}),
+        getCommonRow({n: '百个', col: 3, p: '龙3vs虎5', nstyle: 'lhh_3v5', vs: cpArr(vs)}),
+        getCommonRow({n: '十个', col: 3, p: '龙4vs虎5', nstyle: 'lhh_4v5', vs: cpArr(vs)})
       ]
     }
   },
@@ -123,83 +123,86 @@ const methodItems: any = {
   // },
   '1253:1' () {
     // ssc 定位
-    let vs = [{s: false, n: '0'}, {s: false, n: '1'}, {s: false, n: '2'}, {s: false, n: '3'}, {s: false, n: '4'}, {s: false, n: '5'}, {s: false, n: '6'}, {s: false, n: '7'}, {s: false, n: '8'}, {s: false, n: '9'}];
+    let vs = [{s: false, n: '0'}, {s: false, n: '1'}, {s: false, n: '2'}, {s: false, n: '3'}, {s: false, n: '4'}, {s: false, n: '5'}, {s: false, n: '6'}, {s: false, n: '7'}, {s: false, n: '8'}, {s: false, n: '9'},{s: false, n: '大'}, {s: false, n: '小'}, {s: false, n: '单'}, {s: false, n: '双'}];
     return {
-      layout: 'col',
+      layout: 'row layout-col-float',
+      posOdd: false,
       rows: [
-        getCommonRow({n: '万位', p: '万定位', oddIndex: 0, vs: cpArr(vs)}),
-        getCommonRow({n: '千位', p: '千定位', oddIndex: 0, vs: cpArr(vs)}),
-        getCommonRow({n: '百位', p: '百定位', oddIndex: 0, vs: cpArr(vs)}),
-        getCommonRow({n: '十位', p: '十定位', oddIndex: 0, vs: cpArr(vs)}),
-        getCommonRow({n: '个位', p: '个定位', oddIndex: 0, vs: cpArr(vs)})
+        getCommonRow({n: '万位', p: '万定位', oddIndex: 0, col: 3, class: 'circle small', vs: cpArr(vs)}),
+        getCommonRow({n: '千位', p: '千定位', oddIndex: 0, col: 3, class: 'circle small', vs: cpArr(vs)}),
+        getCommonRow({n: '百位', p: '百定位', oddIndex: 0, col: 3, class: 'circle small', vs: cpArr(vs)}),
+        getCommonRow({n: '十位', p: '十定位', oddIndex: 0, col: 3, class: 'circle small', vs: cpArr(vs)}),
+        getCommonRow({n: '个位', p: '个定位', oddIndex: 0, col: 3, class: 'circle small', vs: cpArr(vs)})
       ]
     }
   },
   '1256:1' () {
     // ssc 一字组合 全五一字
     return {
-      layout: 'col',
+      layout: 'row layout-col-float',
       class: 'yzzh',
       rows: [
-        getCommonRow({n: '全五一字', nonasv: true, oddIndex: 0, vs: [{s: false, n: '0'}, {s: false, n: '1'}, {s: false, n: '2'}, {s: false, n: '3'}, {s: false, n: '4'}, {s: false, n: '5'}, {s: false, n: '6'}, {s: false, n: '7'}, {s: false, n: '8'}, {s: false, n: '9'}]})
+        getCommonRow({n: '全五一字', nonasv: true, oddIndex: 0, col: 4, class: 'circle large', vs: [{s: false, n: '0'}, {s: false, n: '1'}, {s: false, n: '2'}, {s: false, n: '3'}, {s: false, n: '4'}, {s: false, n: '5'}, {s: false, n: '6'}, {s: false, n: '7'}, {s: false, n: '8'}, {s: false, n: '9'}]})
       ]
     }
   },
   '1257:1' () {
     // ssc 一字组合 前三一字
     return {
-      layout: 'col',
+      layout: 'row layout-col-float',
       class: 'yzzh',
       rows: [
-        getCommonRow({n: '前三一字', nonasv: true, oddIndex: 0, vs: [{s: false, n: '0'}, {s: false, n: '1'}, {s: false, n: '2'}, {s: false, n: '3'}, {s: false, n: '4'}, {s: false, n: '5'}, {s: false, n: '6'}, {s: false, n: '7'}, {s: false, n: '8'}, {s: false, n: '9'}]})
+        getCommonRow({n: '前三一字', nonasv: true, oddIndex: 0, col: 4, class: 'circle large', vs: [{s: false, n: '0'}, {s: false, n: '1'}, {s: false, n: '2'}, {s: false, n: '3'}, {s: false, n: '4'}, {s: false, n: '5'}, {s: false, n: '6'}, {s: false, n: '7'}, {s: false, n: '8'}, {s: false, n: '9'}]})
       ]
     }
   },
   '1258:1' () {
     // ssc 一字组合 中三一字
     return {
-      layout: 'col',
+      layout: 'row layout-col-float',
       class: 'yzzh',
       rows: [
-        getCommonRow({n: '中三一字', nonasv: true, oddIndex: 0, vs: [{s: false, n: '0'}, {s: false, n: '1'}, {s: false, n: '2'}, {s: false, n: '3'}, {s: false, n: '4'}, {s: false, n: '5'}, {s: false, n: '6'}, {s: false, n: '7'}, {s: false, n: '8'}, {s: false, n: '9'}]})
+        getCommonRow({n: '中三一字', nonasv: true, oddIndex: 0, col: 4, class: 'circle large', vs: [{s: false, n: '0'}, {s: false, n: '1'}, {s: false, n: '2'}, {s: false, n: '3'}, {s: false, n: '4'}, {s: false, n: '5'}, {s: false, n: '6'}, {s: false, n: '7'}, {s: false, n: '8'}, {s: false, n: '9'}]})
       ]
     }
   },
   '1259:1' () {
     // ssc 一字组合 后三一字
     return {
-      layout: 'col',
+      layout: 'row layout-col-float',
       class: 'yzzh',
       rows: [
-        getCommonRow({n: '后三一字', nonasv: true, oddIndex: 0, vs: [{s: false, n: '0'}, {s: false, n: '1'}, {s: false, n: '2'}, {s: false, n: '3'}, {s: false, n: '4'}, {s: false, n: '5'}, {s: false, n: '6'}, {s: false, n: '7'}, {s: false, n: '8'}, {s: false, n: '9'}]})
+        getCommonRow({n: '后三一字', nonasv: true, oddIndex: 0, col: 4, class: 'circle large', vs: [{s: false, n: '0'}, {s: false, n: '1'}, {s: false, n: '2'}, {s: false, n: '3'}, {s: false, n: '4'}, {s: false, n: '5'}, {s: false, n: '6'}, {s: false, n: '7'}, {s: false, n: '8'}, {s: false, n: '9'}]})
       ]
     }
   },
   '1274:1' () {
     // ssc 二字组合 前三一字
     return {
-      layout: 'col',
-      class: 'min-auto-w',
+      layout: 'row',
+      class: '',
       rows: [
-        getCommonRow({n: '前三', nonasv: true, col: 24, oddIndex: 0, class: 'col5', vs: [{s: false, n: '豹子', oddIndex: 0}, {s: false, n: '顺子', oddIndex: 1}, {s: false, n: '对子', oddIndex: 2}, {s: false, n: '半顺', oddIndex: 4}, {s: false, n: '杂六', oddIndex: 3}]})
+        getCommonRow({n: '前三', nonasv: true, col: 4, oddIndex: 0, class: '', vs: [{s: false, n: '豹子', oddIndex: 0, col: 4}, {s: false, n: '顺子', oddIndex: 1, col: 4}, {s: false, n: '对子', oddIndex: 2, col: 4}, {s: false, n: '半顺', oddIndex: 4, col: 4}, {s: false, n: '杂六', oddIndex: 3, col: 4}]})
       ]
     }
   },
   '1275:1' () {
     // ssc 二字组合 中三一字
     return {
-      class: 'min-auto-w',
+      layout: 'row',
+      class: '',
       rows: [
-        getCommonRow({n: '中三', nonasv: true, col: 24, oddIndex: 0, class: 'col5', vs: [{s: false, n: '豹子', oddIndex: 0}, {s: false, n: '顺子', oddIndex: 1}, {s: false, n: '对子', oddIndex: 2}, {s: false, n: '半顺', oddIndex: 4}, {s: false, n: '杂六', oddIndex: 3}]})
+        getCommonRow({n: '中三', nonasv: true, col: 4, oddIndex: 0, class: '', vs: [{s: false, n: '豹子', oddIndex: 0, col: 4}, {s: false, n: '顺子', oddIndex: 1, col: 4}, {s: false, n: '对子', oddIndex: 2, col: 4}, {s: false, n: '半顺', oddIndex: 4, col: 4}, {s: false, n: '杂六', oddIndex: 3, col: 4}]})
       ]
     }
   },
   '1276:1' () {
     // ssc 二字组合 后三一字
     return {
-      class: 'min-auto-w',
+      layout: 'row',
+      class: '',
       rows: [
-      getCommonRow({n: '后三', nonasv: true, col: 24, oddIndex: 0, class: 'col5', vs: [{s: false, n: '豹子', oddIndex: 0}, {s: false, n: '顺子', oddIndex: 1}, {s: false, n: '对子', oddIndex: 2}, {s: false, n: '半顺', oddIndex: 4}, {s: false, n: '杂六', oddIndex: 3}]})
+        getCommonRow({n: '后三', nonasv: true, col: 4, oddIndex: 0, class: '', vs: [{s: false, n: '豹子', oddIndex: 0, col: 4}, {s: false, n: '顺子', oddIndex: 1, col: 4}, {s: false, n: '对子', oddIndex: 2, col: 4}, {s: false, n: '半顺', oddIndex: 4, col: 4}, {s: false, n: '杂六', oddIndex: 3, col: 4}]})
       ]
     }
   },
@@ -257,7 +260,7 @@ const methodItems: any = {
     let vs = [{s: false, n: '龙', col: 7}, {s: false, n: '虎', col: 7}];
     return {
       layout: 'row',
-      class: 'mi-pl-50 m-lh no-bd-b-pos-label',
+      class: 'no-bd-b-pos-label',
       rows: [
         getCommonRow({n: '一位VS二位', oddIndex: 0, col: 6, vs: cpArr(vs)}),
         getCommonRow({n: '一位VS三位', nstyle: 'lh_1v3', oddIndex: 0, col: 6, vs: cpArr(vs)}),
@@ -437,7 +440,7 @@ const methodItems: any = {
     // 冠亚和大, 冠亚和小， 冠亚和单，冠亚和双
     return {
       layout: 'row',
-      class: 'no-t-b no-b-m',
+      class: '',
       rows: [
         getCommonRow({n: '冠亚和值', nonasv: true, col: 24, vs: [{s: false, n: '大', pv: '总大', oddIndex: 0, col: 6}, {s: false, n: '小', pv: '总小', oddIndex: 1, col: 6}, {s: false, n: '单', pv: '总单', oddIndex: 1, col: 6}, {s: false, n: '双', pv: '总双', oddIndex: 0, col: 6}]}),
       ]
@@ -447,7 +450,7 @@ const methodItems: any = {
     // PK10
     // 冠亚和大, 冠亚和小， 冠亚和单，冠亚和双 
     return {
-      class: 'no-b-m no-t-b',
+      class: ' ',
       rows: [
         getCommonRow({nonasv: true, hidePos: true, vs: [{s: false, n: '大单', oddIndex: 0, col: 6}, {s: false, n: '大双', oddIndex: 1, col: 6}, {s: false, n: '小单', oddIndex: 1, col: 6}, {s: false, n: '小双', oddIndex: 0, col: 6}]}),
       ]
@@ -458,7 +461,7 @@ const methodItems: any = {
     let c = {s: false, col: 6, dis: false}
     let vs = [cp({n: '03', pv: '3', oddIndex: 0}, c), cp({n: '04', pv: '4', oddIndex: 0}, c), cp({n: '05', pv: '5', oddIndex: 1}, c), cp({n: '06', pv: '6', oddIndex: 1}, c), cp({n: '07', pv: '7', oddIndex: 2}, c), cp({n: '08', pv: '8', oddIndex: 2}, c), cp({n: '09', pv: '9', oddIndex: 3}, c), cp({n: '10', pv: '10', oddIndex: 3}, c), cp({n: '11', pv: '11', oddIndex: 4}, c), cp({n: '12', pv: '12', oddIndex: 3}, c), cp({n: '13', pv: '13', oddIndex: 3}, c), cp({n: '14', pv: '14', oddIndex: 2}, c), cp({n: '15', pv: '15', oddIndex: 2}, c), cp({n: '16', pv: '16', oddIndex: 1}, c), cp({n: '17', pv: '17', oddIndex: 1}, c), cp({n: '18', pv: '18', oddIndex: 0}, c), cp({n: '19', pv: '19', oddIndex: 0}, c)];
     return {
-      class: 'no-t-b',
+      class: '',
       rows: [
         getCommonRow({n: '', hidePos: true, vs: cpArr(vs)})
       ]
@@ -497,7 +500,7 @@ const methodItems: any = {
     let vs = [{s: false, n: '龙', col: 8}, {s: false, n: '虎', col: 8}];
     return {
       layout: 'row',
-      class: 'mi-pl-50 m-lh no-bd-b-pos-label',
+      class: '  no-bd-b-pos-label',
       rows: [
         getCommonRow({n: '冠军VS第十名', oddIndex: 0, col: 6, vs: cpArr(vs)}),
         getCommonRow({n: '亚军VS第九名', oddIndex: 0, col: 6, vs: cpArr(vs)}),
