@@ -1,0 +1,30 @@
+.coin-set-view {
+  $base-dir = "../../assets/images/default/";
+  bgImage(img) {
+    background url($base-dir + img) center no-repeat
+  }
+  padding 20px 22px 20px 22px
+  border-top solid 1px $coin-set-bd-color
+  border-bottom solid 1px $coin-set-bd-color
+  background-color $theme-bg-color
+  .coin-item {
+    width 84px
+    height 84px
+    line-height 84px
+    text-align center
+    background-size 100% !important
+    cursor pointer
+    font-weight bold
+    font-size 28px
+    &.selected {
+      bgImage('coin-yellow@2x.png')
+      color $coin-set-selected-txt-color
+    }
+  }
+  .coin-gray {
+     bgImage('coin-gray@2x.png')
+  }
+  .coin-yellow {
+     bgImage('coin-yellow@2x.png')
+  }
+}

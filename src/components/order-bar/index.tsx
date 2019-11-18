@@ -1,7 +1,7 @@
 import React, { Component, ChangeEvent } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Button } from 'antd-mobile';
-// import CoinSet from '../coin-set';
+import { Button, Toast } from 'antd-mobile';
+import CoinSet from '../coin-set';
 import APIs from '../../http/APIs';
 import calc from '../../game/calc';
 import { removeRepeat2DArray, countRepeat } from '../../utils/game';
@@ -45,9 +45,10 @@ class OrderBar extends Component<Props, object> {
       amount: this.props.defaultInitMethodItemAmount
     }
   }
-  coinChoosed = (value: number) => {
-    this.setState({amount: value});
-    this.props.updateDefaultInitMethodItemAmount(value);
+  coinChoosed = (value: string) => {
+    let amount: number = value === 'all' ? parseInt(this.props.store.user.balance, 10): parseInt(value, 10);
+    this.setState({amount});
+    this.props.updateDefaultInitMethodItemAmount(amount);
   }
   onResetHandler = () => {
     // Modal.confirm({
@@ -238,18 +239,10 @@ class OrderBar extends Component<Props, object> {
       this.showLoading = false;
       if (success === 1) {
         this.props.store.user.updateBalance();
-        // Modal.success({
-        //   centered: true,
-        //   title: '投注成功',
-        //   content: ''
-        // });
+        Toast.success('投注成功');
         this.props.orderFinishCB(true);
       } else {
-        // Modal.error({
-        //   centered: true,
-        //   title: msg || '投注失败',
-        //   content: ''
-        // });
+        Toast.fail(msg || '投注失败');
         this.props.orderFinishCB(false);
       }
     });
@@ -269,21 +262,21 @@ class OrderBar extends Component<Props, object> {
   render() {
     return (
       <section className="order-bar-view">
-        <div className="flex ai-c ">
+        <section>{<CoinSet coinChoosed={this.coinChoosed} />}</section>
+        <section className="flex ai-c jc-sb order-sec">
           <div>
             <div className="flex ai-c fast-amount-wp">
-              <input className="fast-amount" value={this.state.amount} onChange={this.onAmountChanged} onBlur={this.onAmountChanged} placeholder="请输入快捷金额" />
+              <input className="fast-amount" value={this.state.amount} onChange={this.onAmountChanged} onBlur={this.onAmountChanged} maxLength={9} placeholder="请输入快捷金额" />
             </div>  
           </div>
-          {/* <div span={10}><CoinSet coinChoosed={this.coinChoosed} /></Col> */}
-          <div className="txt-r">
-            已选 <span className="txt-red">{this.props.betCount}</span> 注 共 <span className="txt-red"> {(this.props.amount).toFixed(3)} </span>元
-          </div>
+          {/* <div className="txt-r">
+            已选 <span className="txt-red">{this.props.betCount}</span> 注 共 <span className="txt-red"> 10000{(this.props.amount).toFixed(3)} </span>元
+          </div> */}
           <div className="flex ai-c jc-e btns-wp">
-            <Button className="btn-reset" disabled={this.props.betCount <= 0} onClick={this.onResetHandler}>重置</Button>
-            <Button className="btn-order" disabled={this.props.betCount <= 0} onClick={this.onOrderHandler}>一键下单</Button>
+            <Button type="primary" className="btn-reset" disabled={this.props.betCount <= 0} onClick={this.onResetHandler}>重置</Button>
+            <Button type="primary" className="btn-order" disabled={this.props.betCount <= 0} onClick={this.onOrderHandler}>一键下单</Button>
           </div>
-        </div>
+        </section>
       </section>
     )
   }

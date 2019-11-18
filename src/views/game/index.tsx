@@ -461,7 +461,7 @@ class Game extends Component<Props, object> {
                 updateSubMethodMenuIndex={this.updateSubMethodMenuIndex}
               />
             }
-            {/* <Play 
+            <Play 
               curGameMethodItems={this.state.curGameMethodItems} 
               gameType={this.gameType} 
               defaultInitMethodItemAmount={this.state.defaultInitMethodItemAmount}
@@ -477,7 +477,7 @@ class Game extends Component<Props, object> {
               updateDefaultInitMethodItemAmount={this.updateDefaultInitMethodItemAmount} 
               orderFinishCB={this.orderFinishCB}
               resetSelectedOfAllMethodItem={this.resetSelectedOfAllMethodItem}
-            /> */}
+            />
            
           </section>
         </GameCommonDataContext.Provider>

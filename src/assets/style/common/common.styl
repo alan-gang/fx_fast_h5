@@ -4,6 +4,9 @@
 @import "./animation.styl"
 @import "./message.styl"
 
+body {
+  color $colors.gray
+}
 
 for k, v in $colors
   .c-{k}
@@ -212,5 +215,13 @@ cntEl() {
   &.down::after {
     iconTran()
     border-top solid 12px #ccc
+  }
+}
+
+.clear {
+  &::after {
+    content ''
+    clear both
+    display block
   }
 }

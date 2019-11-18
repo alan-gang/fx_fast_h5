@@ -43,9 +43,9 @@ class Play extends PureComponent<Props, object> {
     return (
       <article className={`play-view ${this.props.gameType}`}>
         {curGameMethodItems.map((methodItem: any, i: number) => (
-          <div className={`method ${methodItem.layout} ${methodItem.class || ''}`} key={i} >
+          <div className={`method ${methodItem.layout} ${methodItem.class || ''} clear`} key={i} >
             {methodItem.rows.map((row: any, j: number) => (
-              <Row key={j}>
+              <Row key={j} className={`clear`}>
                   <Col span={row.col} className={`pos-lebel ${row.hidePos ? 'hide' : ''}`} >
                     <div>{row.n}</div>
                     {/* {methodItem.posOdd === true && <div>{12}</div>} */}
