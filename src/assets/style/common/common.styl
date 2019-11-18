@@ -3,6 +3,7 @@
 @import "./loading.styl"
 @import "./animation.styl"
 @import "./message.styl"
+@import "./gameicon.styl"
 
 
 for k, v in $colors
@@ -16,7 +17,7 @@ for x in 12 13 14 15 16 18 20 22 24 25 26 28 30 32 35 36 38 40 42 45 46 48 50
   .fs-{x}
     font-size (x)px
 
-for x in -100 -80 -50  -44 -40 -30 -20 -10 -5 -3 -2 0 1 2 3 5 10 15 20 22 25 30 34 40 44 50 60 70 75 80
+for x in -100 -80 -50  -44 -40 -30 -20 -10 -5 -3 -2 0 1 2 3 5 10 15 20 22 25 30 34 40 44 50 60 70 75 80 88 90 100 120 130 140
   .pd-{x}
     padding x px
   .mg-{x}
@@ -193,7 +194,7 @@ cntEl() {
 .icon-triangle {
   width 20px
   height 20px
-  display flex
+  display inline-block
   align-items center
   justify-content center
   iconTran() {
@@ -204,11 +205,11 @@ cntEl() {
   }
   &.up::after {
     iconTran()
-    border-bottom solid 12px #ccc
+    border-bottom solid 12px currentColor
   }
   &.down::after {
     iconTran()
-    border-top solid 12px #ccc
+    border-top solid 12px currentColor
   }
 }
 // ==================== joey =======================
@@ -237,6 +238,8 @@ for x in 0 10 15 16 17 18 19 20 25 30 33 35 40 45 50 55 60 65 70 80 90 100 120 1
     height x + '%'
   .o_{x}
     opacity x * 0.01
+  .wvw_{x}
+    width x * 1vh
   .hvh_{x}
     height x * 1vh
   .mvh_{x}
@@ -248,10 +251,23 @@ for x in 0 10 15 16 17 18 19 20 25 30 33 35 40 45 50 55 60 65 70 80 90 100 120 1
   .mwp_{x}
     max-width x + '%'
 .clickable
+  cursor pointer
   &:hover
-    opacity .8
+    opacity .6
   &:active
-    opacity .9
+    opacity .8
+  
+  &.effect-gray
+    opacity 1
+    &:hover
+    &:active
+      background-color $colors.c
+
+.o_h
+  overflow hidden
+.o_a
+  overflow auto
+
     
 // ==================== joey =======================
 

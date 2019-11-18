@@ -146,6 +146,7 @@ class Game extends Component<Props, object> {
     this.initSocket();
   }
   componentWillReceiveProps(nextProps: Props) {
+    // console.log(this.props.location.pathname, nextProps.location.pathname, '?????')
     this.id = parseInt(nextProps.match.params.id || '1', 10);
     this.gameType = getGameTypeByGameId(this.id);
     Bus.emit('gameIdChanged', this.id);

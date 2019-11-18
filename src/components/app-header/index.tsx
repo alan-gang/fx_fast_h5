@@ -1,50 +1,85 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Flex, WhiteSpace } from 'antd-mobile';
-
+import { Flex, WhiteSpace, Popover, Toast } from 'antd-mobile';
+import store from '../../store'
 import './index.styl';
+import { Route, withRouter, RouteComponentProps } from 'react-router-dom'
+interface Props extends RouteComponentProps {
+  store?: any
+}
+
+const popoverInner: any[] = [
+  {name: '官方玩法', },
+  {name: '基诺玩法', },
+  {name: '彩种大厅', link: '/'},
+  {name: '投注记录', link: '/betRecords'},
+  {name: '历史开奖', link: '/openIssueHistory'},
+  {name: '玩法说明', link: '/playMethodRule'},
+  {name: '彩种说明',},
+  {name: '投注提醒',},
+]
 
 @inject("store")
 @observer
 class AppHeader extends Component<Props, object> {
-  state: any;
+  state: any
   constructor(props: Props) {
     super(props)
     this.state = {
       route: 1,
       data: {
-        gameName: ''
-      }
+        gameName: '江苏十一选五',
+        popoverVisible: false,
+      },
     }
   }
+  popoverInnerClick = (node: any, index: number = 0): void => {
+    // Todo
+    if (popoverInner[index].link) this.props.history.push(popoverInner[index].link)
+    else Toast.info(popoverInner[index].name)
+    this.setState({popoverVisible: false})
+  }
+  togglePanel () {
+    store.common.togglePanel()
+  }
   getHeaderInner () {
-    switch (this.state.route) {
+    return (<React.Fragment>{[
       // 大厅
-      case 0:
-        return <Flex.Item className="txt-c">
+      <Route key="1" path="/" exact>
+        <Flex.Item className="txt-c">
           <div className="mgb-1">游戏大厅</div>
           <div className="fs-24">余额: ￥100000.00</div>
         </Flex.Item>
-        break
+      </Route>,
       // 游戏中
-      case 1:
-        return <React.Fragment>{[
-          <Flex.Item>
-            <span class="pdl-22 pdr-22">彩种选择
-              span.icon-triangle
+      <Route key="2" path="/game/:id">
+        <React.Fragment>{[
+          <Flex.Item key="0">
+            <span className="pdl-22 pdr-22 clickable" onClick={ this.togglePanel }>彩种选择
+              <span className="icon-triangle up rz_90 mgl-20 pos-r pot-5"></span>
             </span>
           </Flex.Item>,
-          <Flex.Item className="txt-c">
-            <div className="mgb-1">游戏大厅</div>
-            <div className="fs-24">余额: ￥100000.00</div>
+          <Flex.Item className="txt-c" key="1">
+            <div className="mgb-1">{ this.state.data.gameName }</div>
+            <div className="fs-24">余额: ￥{ this.props.store.balance || '0.00' }</div>
           </Flex.Item>,
-          <Flex.Item className="txt-r">彩种选择</Flex.Item>,
+          <Flex.Item className="txt-r pdr-22" key="2">
+            <span className="inlb clickable mgl-20 setting"></span>
+            <Popover
+              visible={this.state.data.popoverVisible}
+              onSelect={ this.popoverInnerClick }
+              overlay={popoverInner.map((x, i) => <Popover.Item key={i} >{x.name}</Popover.Item>)}
+            >
+              <span className="inlb clickable mgl-20 more"></span>
+            </Popover>
+          </Flex.Item>,
         ]}</React.Fragment>
-        break
-    }
+      </Route>,
+    ]}
+    </React.Fragment>)
   }
   render() {
-    return (<header className="app-header-view">
+    return (<header className="app-header-view pos-r">
       <Flex className="hp_100 fs-30 flex-auto c-white">
         { this.getHeaderInner() }
       </Flex>
@@ -52,4 +87,4 @@ class AppHeader extends Component<Props, object> {
   }
 }
 
-export default AppHeader;
+export default withRouter(AppHeader)
