@@ -110,17 +110,33 @@ export const methodTabs: any = {
   }
 }
 
+/**
+ * 获取玩法大类下的所有路单玩法
+ * @param type 
+ * @param methodName 
+ */
 export function getAllTabsByTypeAndName(type: string, methodName: string): any[] {
-  let tabs = methodTabs[type][methodName];
   let allTabs: any[] = [];
-  if (tabs) {
-    tabs.forEach((tab: any) => {
+  (methodTabs[type][methodName] || []).forEach((tab: any) => {
+    if (tab.subM.length > 0) {
       tab.subM.forEach((subTab: any) => {
         allTabs.push({title:tab.title + subTab.title, name: tab.name + '_' + subTab.name})
       });
-    });
-  }
+    } else {
+      allTabs.push({title:tab.title, name: tab.name})
+    }
+  });
   return allTabs;
+}
+
+/**
+ * 获取指定的路单玩法
+ * @param type 游戏类型
+ * @param methodName 游戏玩法大类
+ * @param ludanMethodName 玩法路单
+ */
+export function getLudanTabByTypeAndName(type: string, methodName: string, ludanMethodName: string) {
+  return (getAllTabsByTypeAndName(type, methodName) || []).find((tab:any) => tab.name === ludanMethodName);
 }
 
 export function getTabsByType(type: string, methodName: string): any[] {

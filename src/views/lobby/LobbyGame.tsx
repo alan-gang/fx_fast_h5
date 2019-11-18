@@ -6,7 +6,7 @@ import Ludan from 'comp/ludan';
 // import LimitSetDialog from 'comp/limit-set-dialog';
 import APIs from '../../http/APIs';
 import { getGameTypeByGameId } from '../../game/games';
-import { getLunDanTabByName, getLunDanFullTitleByName, getMethodENameByLudanName } from '../../utils/ludan';
+import { getLunDanTabByName, getLunDanFullTitleByName, getMethodENameByLudanName, getLudanTabByTypeAndName } from '../../utils/ludan';
 import Socket from '../../socket';
 
 import './lobbyGame.styl';
@@ -34,7 +34,6 @@ interface State {
   limitLevelList: LimitLevelItem[];
   methodMenuName: string;
   defaultMenu?: string;
-  defaultSubMenu?: string;
 }
 
 @inject("store")
@@ -45,19 +44,19 @@ class LobbyGame extends Component<Props, object> {
   constructor(props: Props) {
     super(props);
     let bestLudanConfig: any = {
-      'ssc': {methodMenuName: 'zhenghe', defaultMenu: 'zh', defaultSubMenu: 'dx', title: '总和大小'},
-      '11x5': {methodMenuName: 'zhenghe', defaultMenu: 'zh', defaultSubMenu: 'dx', title: '总和大小'},
-      'pk10': {methodMenuName: 'zhenghe', defaultMenu: 'zh', defaultSubMenu: 'dx', title: '冠亚和值大小'},
-      'k3': {methodMenuName: 'diansu', defaultMenu: 'zh_dx', defaultSubMenu: '', title: '总和大小'},
+      'ssc': {methodMenuName: 'zhenghe', defaultMenu: 'zh_dx', title: '总和大小'},
+      '11x5': {methodMenuName: 'zhenghe', defaultMenu: 'zh_dx', title: '总和大小'},
+      'pk10': {methodMenuName: 'zhenghe', defaultMenu: 'zh_dx', title: '冠亚和值大小'},
+      'k3': {methodMenuName: 'diansu', defaultMenu: 'zh_dx', title: '总和大小'},
     };
     let gameType = getGameTypeByGameId(props.gameId);
     let limitItem = props.store.game.getLimitListItemById(props.gameId);
     let bestLudan: BestLudanItem = limitItem && limitItem.bestLudan;
-    let ludanTab = getLunDanTabByName(gameType, bestLudan && bestLudan.codeStyle);
+    // let ludanTab = getLunDanTabByName(gameType, bestLudan && bestLudan.codeStyle);
     let bestLudanName = (getLunDanFullTitleByName(gameType, bestLudan && bestLudan.codeStyle) || bestLudanConfig[gameType].title) + '路单';
     let methodMenuName = getMethodENameByLudanName(gameType, bestLudan && bestLudan.codeStyle) || bestLudanConfig[gameType].methodMenuName;
+    let ludanTab = getLudanTabByTypeAndName(gameType, methodMenuName, bestLudan && bestLudan.codeStyle);
     let defaultMenu = (ludanTab && ludanTab.name) || bestLudanConfig[gameType].defaultMenu;
-    let defaultSubMenu = (ludanTab && ludanTab.subM && ludanTab.subM.length > 0) ? bestLudan.codeStyle.split('_')[1] : bestLudanConfig[gameType].defaultSubMenu;
     this.state = {
       gameType,
       curIssue: '',
@@ -72,8 +71,7 @@ class LobbyGame extends Component<Props, object> {
       isShowLimitSetDialog: false,
       limitLevelList: [],
       methodMenuName,
-      defaultMenu,
-      defaultSubMenu
+      defaultMenu
     }
   }
   componentWillMount() {
@@ -174,7 +172,6 @@ class LobbyGame extends Component<Props, object> {
             issueList={this.state.issueList.slice(0).reverse()} 
             methodMenuName={this.state.methodMenuName} 
             defaultMenu={this.state.defaultMenu} 
-            defaultSubMenu={this.state.defaultSubMenu}
           />
         </div>
         {/* <LimitSetDialog isShow={this.state.isShowLimitSetDialog} gameId={this.props.gameId} limitLevelList={this.state.limitLevelList} onLimitChoiceCB={this.onLimitChoiceCB} onCloseHandler={this.onCloseLimitChoiceHandler} /> */}

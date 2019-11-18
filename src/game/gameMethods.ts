@@ -47,7 +47,7 @@ export let methodsConfig: MethodsConfig = {
       name: '整合',
       ename: 'zhenghe',
       recentType: [hz({min: 22})],
-      ids: ['1251:1', '1250:1','1252:1', '1274:1', '1275:1', '1276:1']
+      ids: ['1251:1', '1250:1', '1274:1', '1275:1', '1276:1']
     },
     {
       name: '定位',

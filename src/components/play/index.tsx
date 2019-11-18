@@ -1,6 +1,7 @@
-import React, { Component, MouseEvent, ChangeEvent, FocusEvent } from 'react';
+import React, { PureComponent, MouseEvent, ChangeEvent, FocusEvent } from 'react';
 import { inject, observer } from 'mobx-react';
 import methodItems from '../../game/methodItems';
+import { Row, Col } from '../grid';
 
 import './index.styl';
 
@@ -24,7 +25,7 @@ interface Props {
 
 @inject('store')
 @observer
-class Play extends Component<Props, object> {
+class Play extends PureComponent<Props, object> {
   methodItems: any = methodItems;
   onMethodItemHandler = (i: number, j: number, k: number, selected: boolean, methodTypeName: string, event: MouseEvent<HTMLElement>) => {
     let myevent: DsMouseEvent = event as DsMouseEvent;
@@ -33,19 +34,6 @@ class Play extends Component<Props, object> {
     let amount = selected ? '' : String(this.props.defaultInitMethodItemAmount);
     amount = ['rx_nzn', 'zux_q2', 'zux_q3', 'zx_q2', 'zx_q3'].includes(methodTypeName) ? '0' : amount;
     this.props.updateMethdItem(i, j, k, !selected, amount);
-  }
-  onMethodItemValueChanged = (i: number, j: number, k: number, event: ChangeEvent<HTMLInputElement>) => {
-    event.stopPropagation();
-    event.preventDefault();
-    let { value } = event.target;
-    let eType  = event.type;
-    if (!/^\d*$/g.test(value)) {
-      value = this.props.curGameMethodItems[i].rows[j].vs[k].amt;
-    }
-    if (eType === 'blur' && !/^\d+$/g.test(value)) {
-      value = String(this.props.defaultInitMethodItemAmount);
-    }
-    this.props.updateMethdItem(i, j, k, undefined, value);
   }
   componentWillReceiveProps(nextProps: Props) {
     this.forceUpdate();
@@ -57,22 +45,23 @@ class Play extends Component<Props, object> {
         {curGameMethodItems.map((methodItem: any, i: number) => (
           <div className={`method ${methodItem.layout} ${methodItem.class || ''}`} key={i} >
             {methodItem.rows.map((row: any, j: number) => (
-              <div key={j}>
-                  <div className={`pos-lebel ${row.hidePos ? 'hide' : ''}`} >{row.n}</div>
+              <Row key={j}>
+                  <Col span={row.col} className={`pos-lebel ${row.hidePos ? 'hide' : ''}`} >
+                    <div>{row.n}</div>
+                    {/* {methodItem.posOdd === true && <div>{12}</div>} */}
+                  </Col>
                   {row.vs.map((vsItem: any, k: number) => (
-                    <div key={k} className={`method-item ${row.class || ''} ${vsItem.class || ''} ${vsItem.s ? 'selected' : ''}`} onClick={(e: MouseEvent<HTMLElement>) => this.onMethodItemHandler(i, j, k, vsItem.s, methodItem.methodTypeName, e)}>
-                      <span className={`method-item-name`} n={vsItem.n}>
-                        {vsItem.class === 'icon' && vsItem.icons && vsItem.icons.map((iconNum: number, m: number) => (<span className={`icon-item icon-item-${iconNum}`} key={m}></span>))}
-                        {vsItem.class !== 'icon' && vsItem.n}
-                      </span>
-                      {row.noodd !== true && <span className={`odd`}>{vsItem.odd || ''}</span>}
-                      {row.noInput !== true && 
-                        <span className={`bet-amount`}>
-                          <input value={vsItem.amt} onChange={(e: ChangeEvent<HTMLInputElement>) => this.onMethodItemValueChanged(i, j, k, e)} onBlur={(e: FocusEvent<HTMLInputElement>) => this.onMethodItemValueChanged(i, j, k, e)} />
-                        </span>}
-                    </div>
+                    <Col span={vsItem.col}  key={k} className={`method-item-col ${row.class || ''}`}>
+                      <div className={`method-item ${vsItem.class || ''} ${vsItem.s ? 'selected' : ''}`} onClick={(e: MouseEvent<HTMLElement>) => this.onMethodItemHandler(i, j, k, vsItem.s, methodItem.methodTypeName, e)}>
+                        <span className={`method-item-name`} n={vsItem.n}>
+                          {vsItem.class === 'icon' && vsItem.icons && vsItem.icons.map((iconNum: number, m: number) => (<span className={`icon-item icon-item-${iconNum}`} key={m}></span>))}
+                          {vsItem.class !== 'icon' && vsItem.n}
+                        </span>
+                        {row.noodd !== true && methodItem.posOdd !==true && <span className={`odd`}>{vsItem.odd || ''}</span>}
+                      </div>
+                    </Col>
                   ))}
-              </div>
+              </Row>
             ))}
           </div>
         ))}
