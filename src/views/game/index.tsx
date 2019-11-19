@@ -60,6 +60,7 @@ interface State {
 interface DataMethodItem {
   id: string;
   rows: any[];
+  repeatCount: number;
 }
 
 interface MatchParams {
@@ -145,6 +146,7 @@ class Game extends Component<Props, object> {
     this.initSocket();
   }
   componentWillReceiveProps(nextProps: Props) {
+    // console.log(this.props.location.pathname, nextProps.location.pathname, '?????')
     this.id = parseInt(nextProps.match.params.id || '1', 10);
     this.gameType = getGameTypeByGameId(this.id);
     Bus.emit('gameIdChanged', this.id);
@@ -280,9 +282,8 @@ class Game extends Component<Props, object> {
     let method: any;
     let betCount: number = 0;
     let totalAmount: number = 0;
-    let repeatCount = 0;
 
-    // 构造选择的号码集合，金额集合
+    // 构造选择的号码集合，金额集合,总金额
     let curGameMethodItems = this.state.curGameMethodItems;
     let methodTypeName: string = '';
     curGameMethodItems = curGameMethodItems.map((methodItem: any) => {
@@ -316,23 +317,30 @@ class Game extends Component<Props, object> {
     });
 
     // 计算重复数
-    if (['zx_q2', 'zx_q3'].includes(methodTypeName)) {
-      repeatCount = countRepeat(methodList.map((methodItem: DataMethodItem) => methodItem.rows));
-    }
+    curGameMethodItems.forEach((gameMethodItem: any) => {
+      if (['zx_q2', 'zx_q3'].includes(gameMethodItem.methodTypeName)) {
+        gameMethodItem.repeatCount = countRepeat(methodList.map((methodItem: DataMethodItem) => methodItem.id === gameMethodItem.id ? methodItem.rows : []));
+      }
+    });
     
     // 构造注数计算格式
-    if (!['zx_q3'].includes(methodTypeName)) {
-      methodList = methodList.map((methodItem: DataMethodItem) => {
-        methodItem.rows = methodItem.rows.map((row: any) => {
-          return row.length;
-        })
-        return methodItem;
-      });
-    }
+    curGameMethodItems.forEach((gameMethodItem: any) => {
+      if (!['zx_q3'].includes(gameMethodItem.methodTypeName)) {
+        methodList = methodList.map((methodItem: DataMethodItem) => {
+          if (gameMethodItem.id === methodItem.id) {
+            methodItem.rows = methodItem.rows.map((row: any) => {
+              return row.length;
+            })
+          }
+          methodItem.repeatCount = gameMethodItem.repeatCount;
+          return methodItem;
+        });
+      }
+    });
 
     // 总注数
     methodList.forEach((methodItem: DataMethodItem) => {
-      betCount += this.calc[methodItem.id]({nsl: methodItem.rows, ns: methodItem.rows, repeatCount});
+      betCount += this.calc[methodItem.id]({nsl: methodItem.rows, ns: methodItem.rows, repeatCount: methodItem.repeatCount});
     });
 
     // 任选，组选，直选金额计算

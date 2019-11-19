@@ -3,11 +3,15 @@
   .pos-lebel {
     text-align center
     height 70px
-    line-height 70px
     box-sizing border-box
-    border-bottom solid 1px $theme-bd-color-1
+    flex-direction column
+    font-size 28px
     &.hide {
       display none
+    }
+    .subn {
+      color $theme-txt-color2
+      font-size 24px
     }
   }
   .method {
@@ -54,40 +58,12 @@
         methodItemcircleStyle(90px, 90px)
       }
       &.medium .method-item {
+         margin 0 0 10px 8px
         methodItemcircleStyle(80px, 80px)
       }
       &.small .method-item {
         margin 0 0 10px 2px
         methodItemcircleStyle(78px, 78px)
-      }
-    }
-    &.layout-c-2 {
-      width 4.35rem
-      float left
-      &.left {
-       margin-right 0.1rem 
-      }
-    }
-    &.one-line-balls {
-      padding 0.2rem 0
-      .pos-lebel {
-        height 0.66rem
-        line-height 0.66rem
-        background-color $theme-txt-color-4
-        border-bottom none
-      }
-      .method-item {
-        height 0.66rem
-        float left
-        padding-left 0.08rem
-        &.selected {
-          background-color transparent
-        }
-      }
-      .method-item-name {
-        width 0.46rem
-        height 0.46rem
-        font-size 0.24rem
       }
     }
     .icon {

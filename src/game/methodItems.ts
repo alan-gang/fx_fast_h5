@@ -213,7 +213,7 @@ const methodItems: any = {
     return {
       layout: 'row',
       rows: [
-        getCommonRow({n: '总和', nonasv: true, col: 24, vs: [{s: false, n: '大', pv: '总大', oddIndex: 1, col: 6}, {s: false, n: '小', pv: '总小', oddIndex: 1, col: 6}, {s: false, n: '单', pv: '总单', oddIndex: 2, col: 6}, {s: false, n: '双', pv: '总双',  oddIndex: 0, col: 6}]})
+        getCommonRow({n: '总和', nonasv: true, col: 4, vs: [{s: false, n: '大', pv: '总大', oddIndex: 1, col: 5}, {s: false, n: '小', pv: '总小', oddIndex: 1, col: 5}, {s: false, n: '单', pv: '总单', oddIndex: 2, col: 5}, {s: false, n: '双', pv: '总双',  oddIndex: 0, col: 5}]})
       ]
     }
   },
@@ -221,22 +221,22 @@ const methodItems: any = {
     // 11x5
     // 和尾大,和尾小
     return {
-      class: 'layout-c-2 left',
+      layout: 'row',
       rows: [
-        getCommonRow({n: '总和尾', nonasv: true, vs: [{s: false, n: '大', pv: '和尾大', oddIndex: 1, col: 12, pn: ''}, {s: false, n: '小', pv: '和尾小', oddIndex: 1, col: 12, pn: ''}]}),
+        getCommonRow({n: '总和尾', nonasv: true, col: 4, vs: [{s: false, n: '大', pv: '和尾大', oddIndex: 1, col: 10, pn: ''}, {s: false, n: '小', pv: '和尾小', oddIndex: 1, col: 10, pn: ''}]}),
       ]
     }
   },
   '2051:1' () {
     // 11x5大，小，单，双
     return {
-      layout: 'col',
+      layout: 'row ',
       rows: [
-        getCommonRow({n: '第一位', vs: [{s: false, n: '大'}, {s: false, n: '小'}, {s: false, n: '单'}, {s: false, n: '双'},]}),
-        getCommonRow({n: '第二位', vs: [{s: false, n: '大'}, {s: false, n: '小'}, {s: false, n: '单'}, {s: false, n: '双'},]}),
-        getCommonRow({n: '第三位', vs: [{s: false, n: '大'}, {s: false, n: '小'}, {s: false, n: '单'}, {s: false, n: '双'},]}),
-        getCommonRow({n: '第四位', vs: [{s: false, n: '大'}, {s: false, n: '小'}, {s: false, n: '单'}, {s: false, n: '双'},]}),
-        getCommonRow({n: '第五位', vs: [{s: false, n: '大'}, {s: false, n: '小'}, {s: false, n: '单'}, {s: false, n: '双'},]})
+        getCommonRow({n: '第一位', col: 4, vs: [{s: false, n: '大', col: 5}, {s: false, n: '小', col: 5}, {s: false, n: '单', col: 5}, {s: false, n: '双', col: 5}]}),
+        getCommonRow({n: '第二位', col: 4, vs: [{s: false, n: '大', col: 5}, {s: false, n: '小', col: 5}, {s: false, n: '单', col: 5}, {s: false, n: '双', col: 5}]}),
+        getCommonRow({n: '第三位', col: 4, vs: [{s: false, n: '大', col: 5}, {s: false, n: '小', col: 5}, {s: false, n: '单', col: 5}, {s: false, n: '双', col: 5}]}),
+        getCommonRow({n: '第四位', col: 4, vs: [{s: false, n: '大', col: 5}, {s: false, n: '小', col: 5}, {s: false, n: '单', col: 5}, {s: false, n: '双', col: 5}]}),
+        getCommonRow({n: '第五位', col: 4, vs: [{s: false, n: '大', col: 5}, {s: false, n: '小', col: 5}, {s: false, n: '单', col: 5}, {s: false, n: '双', col: 5}]})
       ]
     }
   },
@@ -244,20 +244,20 @@ const methodItems: any = {
     // 11x5 定位
     let vs = [{s: false, n: '01'}, {s: false, n: '02'}, {s: false, n: '03'}, {s: false, n: '04'}, {s: false, n: '05'}, {s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}];
     return {
-      layout: 'col',
+      layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '第一位', vs: cpArr(vs)}),
-        getCommonRow({n: '第二位', vs: cpArr(vs)}),
-        getCommonRow({n: '第三位', vs: cpArr(vs)}),
-        getCommonRow({n: '第四位', vs: cpArr(vs)}),
-        getCommonRow({n: '第五位', vs: cpArr(vs)})
+        getCommonRow({n: '第一位', col: 4, class: 'circle medium', vs: cpArr(vs)}),
+        getCommonRow({n: '第二位', col: 4, class: 'circle medium', vs: cpArr(vs)}),
+        getCommonRow({n: '第三位', col: 4, class: 'circle medium', vs: cpArr(vs)}),
+        getCommonRow({n: '第四位', col: 4, class: 'circle medium', vs: cpArr(vs)}),
+        getCommonRow({n: '第五位', col: 4, class: 'circle medium', vs: cpArr(vs)})
       ]
     }
   },
   '2053:1' () {
     // 11x5
     // 龙，虎
-    let vs = [{s: false, n: '龙', col: 7}, {s: false, n: '虎', col: 7}];
+    let vs = [{s: false, n: '龙', col: 9}, {s: false, n: '虎', col: 9}];
     return {
       layout: 'row',
       class: 'no-bd-b-pos-label',
@@ -278,19 +278,20 @@ const methodItems: any = {
   '2053:2' () {
     // 11x5
     // 龙，虎
-    let vs = [{s: false, n: '龙', col: 12}, {s: false, n: '虎', col: 12}];
+    let vs = [{s: false, n: '龙', col: 10}, {s: false, n: '虎', col: 10}];
     return {
-      class: 'layout-c-2',
+      class: 'row',
       rows: [
-        getCommonRow({n: '一位VS二位', oddIndex: 0, vs: cpArr(vs)})
+        getCommonRow({n: '一位VS二位', oddIndex: 0, col: 4, vs: cpArr(vs)})
       ]
     }
   },
   '2054:1' () {
     // 11x5 任选
     return {
-        rows: [
-        getCommonRow({nonasv: true, noodd: true, vs:[{s: false, n: '01', col: 8},{s: false, n: '02', col: 8},{s: false, n: '03', col: 8},{s: false, n: '04', col: 8},{s: false, n: '05', col: 8},{s: false, n: '06', col: 8},{s: false, n: '07', col: 8},{s: false, n: '08', col: 8},{s: false, n: '09', col: 8},{s: false, n: '10', col: 8},{s: false, n: '11', col: 8}]}),
+      class: 'row',
+       rows: [
+        getCommonRow({nonasv: true, noodd: true, col: 4, class: 'circle medium', vs:[{s: false, n: '01', col: 8},{s: false, n: '02', col: 8},{s: false, n: '03', col: 8},{s: false, n: '04', col: 8},{s: false, n: '05', col: 8},{s: false, n: '06', col: 8},{s: false, n: '07', col: 8},{s: false, n: '08', col: 8},{s: false, n: '09', col: 8},{s: false, n: '10', col: 8},{s: false, n: '11', col: 8}]}),
       ]
     }
   },
@@ -298,9 +299,9 @@ const methodItems: any = {
     // 11x5 任选 一中一
     return {
       methodTypeName: 'rx_nzn',
-      class: 'one-line-balls',
+      layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '一中一', nonasv: true, noodd: true, noInput: true, oddIndex: 7, col: 2, vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
+        getCommonRow({n: '一中一', nonasv: true, noodd: true, noInput: true, oddIndex: 7, col: 4, class: 'circle medium', vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
       ]
     }
   },
@@ -308,9 +309,9 @@ const methodItems: any = {
     // 11x5 任选 二中二
     return {
       methodTypeName: 'rx_nzn',
-      class: 'one-line-balls',
+      layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '二中二', nonasv: true, noodd: true, noInput: true, oddIndex: 6, col: 2, vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
+        getCommonRow({n: '二中二', nonasv: true, noodd: true, noInput: true, oddIndex: 6, col: 4, class: 'circle medium', vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
       ]
     }
   },
@@ -318,9 +319,9 @@ const methodItems: any = {
     // 11x5 任选 三中三
     return {
       methodTypeName: 'rx_nzn',
-      class: 'one-line-balls',
+      layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '三中三', nonasv: true, noodd: true, noInput: true, oddIndex: 4, col: 2, vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
+        getCommonRow({n: '三中三', nonasv: true, noodd: true, noInput: true, oddIndex: 4, col: 4, class: 'circle medium', vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
       ]
     }
   },
@@ -328,9 +329,9 @@ const methodItems: any = {
     // 11x5 任选 四中四
     return {
       methodTypeName: 'rx_nzn',
-      class: 'one-line-balls',
+      layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '四中四', nonasv: true, noodd: true, noInput: true, oddIndex: 2, col: 2, vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
+        getCommonRow({n: '四中四', nonasv: true, noodd: true, noInput: true, oddIndex: 2, col: 4, class: 'circle medium', vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
       ]
     }
   },
@@ -338,9 +339,9 @@ const methodItems: any = {
     // 11x5 任选 五中五
     return {
       methodTypeName: 'rx_nzn',
-      class: 'one-line-balls',
+      layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '五中五', nonasv: true, noodd: true, noInput: true, oddIndex: 0, col: 2, vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
+        getCommonRow({n: '五中五', nonasv: true, noodd: true, noInput: true, oddIndex: 0, col: 4, class: 'circle medium', vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
       ]
     }
   },
@@ -348,9 +349,9 @@ const methodItems: any = {
     // 11x5 任选 六中五
     return {
       methodTypeName: 'rx_nzn',
-      class: 'one-line-balls',
+      layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '六中五', nonasv: true, noodd: true, noInput: true, oddIndex: 1, col: 2, vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
+        getCommonRow({n: '六中五', nonasv: true, noodd: true, noInput: true, oddIndex: 1, col: 4, class: 'circle medium', vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
       ]
     }
   },
@@ -358,9 +359,9 @@ const methodItems: any = {
     // 11x5 任选 七中五
     return {
       methodTypeName: 'rx_nzn',
-      class: 'one-line-balls',
+      layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '七中五', nonasv: true, noodd: true, noInput: true, oddIndex: 3, col: 2, vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
+        getCommonRow({n: '七中五', nonasv: true, noodd: true, noInput: true, oddIndex: 3, col: 4, class: 'circle medium', vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
       ]
     }
   },
@@ -368,9 +369,9 @@ const methodItems: any = {
     // 11x5 任选 八中五
     return {
       methodTypeName: 'rx_nzn',
-      class: 'one-line-balls',
+      layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '八中五', nonasv: true, noodd: true, noInput: true, oddIndex: 5, col: 2, vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
+        getCommonRow({n: '八中五', nonasv: true, noodd: true, noInput: true, oddIndex: 5, col: 4, class: 'circle medium', vs:[{s: false, n: '01'},{s: false, n: '02'},{s: false, n: '03'},{s: false, n: '04'},{s: false, n: '05'},{s: false, n: '06'}, {s: false, n: '07'}, {s: false, n: '08'}, {s: false, n: '09'}, {s: false, n: '10'}, {s: false, n: '11'}]})
       ]
     }
   },
@@ -380,9 +381,9 @@ const methodItems: any = {
     let vs = [cp({n: '01'}, c), cp({n: '02'}, c), cp({n: '03'}, c), cp({n: '04'}, c), cp({n: '05'}, c), cp({n: '06'}, c), cp({n: '07'}, c), cp({n: '08'}, c), cp({n: '09'}, c), cp({n: '10'}, c), cp({n: '11'}, c)];
     return {
       methodTypeName: 'zux_q2',
-      class: 'one-line-balls',
+      layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '前二组选', nonasv: true, noodd: true, noInput: true, col: 3, class: 'col-txt', vs: cpArr(vs)}),
+        getCommonRow({n: '前二组选', nonasv: true, col: 4, class: 'circle medium col-txt', vs: cpArr(vs)}),
       ]
     }
   },
@@ -392,9 +393,9 @@ const methodItems: any = {
     let vs = [cp({n: '01'}, c), cp({n: '02'}, c), cp({n: '03'}, c), cp({n: '04'}, c), cp({n: '05'}, c), cp({n: '06'}, c), cp({n: '07'}, c), cp({n: '08'}, c), cp({n: '09'}, c), cp({n: '10'}, c), cp({n: '11'}, c)];
     return {
       methodTypeName: 'zux_q3',
-      class: 'one-line-balls',
+      layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '前三组选', nonasv: true, noodd: true, noInput: true, col: 3, class: 'col-txt', vs: cpArr(vs)})
+        getCommonRow({n: '前三组选', nonasv: true, col: 4, class: 'circle medium col-txt', vs: cpArr(vs)})
       ]
     }
   },
@@ -409,10 +410,10 @@ const methodItems: any = {
       noodd: true,
       methodTypeName: 'zx_q2',
       choiceNoRepeat: true,
-      class: 'one-line-balls',
+      layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '第一位', nonasv: true, noodd: true, noInput: true, col: 2, vs: cpArr(vs)}),
-        getCommonRow({n: '第二位', nonasv: true, noodd: true, noInput: true, col: 2, vs: cpArr(vs)})
+        getCommonRow({n: '前二直选', subn: '(第一位)', pv: '第一位', nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)}),
+        getCommonRow({n: '前二直选', subn: '(第二位)', pv: '第二位', nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)})
       ]
     }
   },
@@ -426,11 +427,11 @@ const methodItems: any = {
       noodd: true,
       methodTypeName: 'zx_q3',
       choiceNoRepeat: true,
-      class: 'one-line-balls',
+      layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '第一位', nonasv: true, noodd: true, noInput: true, col: 2, vs: cpArr(vs)}),
-        getCommonRow({n: '第二位', nonasv: true, noodd: true, noInput: true, col: 2, vs: cpArr(vs)}),
-        getCommonRow({n: '第三位', nonasv: true, noodd: true, noInput: true, col: 2, vs: cpArr(vs)})
+        getCommonRow({n: '前三直选', subn: '(第一位)', pv: '第一位', nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)}),
+        getCommonRow({n: '前三直选', subn: '(第二位)', pv: '第二位', nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)}),
+        getCommonRow({n: '前三直选', subn: '(第三位)', pv: '第三位', nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)})
       ]
     }
   },
