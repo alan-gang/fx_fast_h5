@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Flex, WhiteSpace, Popover, Toast } from 'antd-mobile';
+import { Flex, Popover, Toast, Icon } from 'antd-mobile';
 import store from '../../store'
 import './index.styl';
 import { Route, withRouter, RouteComponentProps } from 'react-router-dom'
+import { getGameById } from 'src/game/games'
+import Bus from 'src/utils/eventBus'
+
 interface Props extends RouteComponentProps {
   store?: any
 }
@@ -26,12 +29,13 @@ class AppHeader extends Component<Props, object> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      route: 1,
-      data: {
-        gameName: '江苏十一选五',
-        popoverVisible: false,
-      },
+      gameName: '',
+      popoverVisible: false,
     }
+    Bus.on('gameIdChanged', this.activeGame);
+  }
+  activeGame = (id: any) => {
+    this.setState({gameName: (getGameById(id) || {}).name})
   }
   popoverInnerClick = (node: any, index: number = 0): void => {
     // Todo
@@ -46,9 +50,9 @@ class AppHeader extends Component<Props, object> {
     return (<React.Fragment>{[
       // 大厅
       <Route key="1" path="/" exact>
-        <Flex.Item className="txt-c">
+        <Flex.Item className="txt-c clickable" onClick={ store.user.updateBalance }>
           <div className="mgb-1">游戏大厅</div>
-          <div className="fs-24">余额: ￥100000.00</div>
+          <div className="fs-24">余额: ￥{ this.props.store.user.balance || '0.00' }<span className="mgl-10 refresh inlb va-b pos-r pot-2"></span></div>
         </Flex.Item>
       </Route>,
       // 游戏中
@@ -59,14 +63,14 @@ class AppHeader extends Component<Props, object> {
               <span className="icon-triangle up rz_90 mgl-20 pos-r pot-5"></span>
             </span>
           </Flex.Item>,
-          <Flex.Item className="txt-c" key="1">
-            <div className="mgb-1">{ this.state.data.gameName }</div>
-            <div className="fs-24">余额: ￥{ this.props.store.balance || '0.00' }</div>
+          <Flex.Item className="txt-c clickable" key="1" onClick={ store.user.updateBalance }>
+            <div className="mgb-5">{ this.state.gameName }</div>
+            <div className="fs-24">余额: ￥{ this.props.store.user.balance || '0.00' }<span className="mgl-10 refresh inlb va-b pos-r pot-2"></span></div>
           </Flex.Item>,
           <Flex.Item className="txt-r pdr-22" key="2">
             <span className="inlb clickable mgl-20 setting"></span>
             <Popover
-              visible={this.state.data.popoverVisible}
+              visible={this.state.popoverVisible}
               onSelect={ this.popoverInnerClick }
               overlay={popoverInner.map((x, i) => <Popover.Item key={i} >{x.name}</Popover.Item>)}
             >
@@ -75,8 +79,14 @@ class AppHeader extends Component<Props, object> {
           </Flex.Item>,
         ]}</React.Fragment>
       </Route>,
-    ]}
-    </React.Fragment>)
+      <Route key="3" path="/betRecords">
+        <Flex.Item onClick={ this.props.history.goBack }>
+          <Icon type="left" size="lg" />
+        </Flex.Item>
+        <Flex.Item className="txt-c fs-32">投注记录</Flex.Item>
+        <Flex.Item></Flex.Item>
+      </Route>,
+    ]}</React.Fragment>)
   }
   render() {
     return (<header className="app-header-view pos-r">

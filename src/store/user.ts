@@ -32,7 +32,7 @@ class User {
   }
 
   @action
-  updateBalance() {
+  updateBalance = () => {
     APIs.getUserBalance().then((data: any) => {
       if (data.success === 1) {
         this.balance = data.availableBalance;

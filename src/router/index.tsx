@@ -22,7 +22,7 @@ export const routes = [
     {
       title: '投注记录',
       path: '/betRecords',
-      component: lazy(() => import('../views/bet-records'))
+      component: lazy(() => import('../views/bet-records/test'))
     },
     {
       title: '开奖历史',
