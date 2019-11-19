@@ -35,7 +35,7 @@ class SubMethodMenu extends Component<Props, object> {
     let subMethods = this.props.subMethods;
     return (
       <section className={`sub-method-menu-view`}>
-        <ul className={`flex sub-method-item-ls`}>
+        <ul className={`flex fw-w sub-method-item-ls`}>
           {subMethods && subMethods.map((sm: GameSubMethodMenu, i: number) => (
             <li className={`sub-method-item ${sm.class} ${i === this.props.curSubMenuIndex ? 'selected' : ''}`} key={i} onClick={this.onSubMethodHandler.bind(this, sm, i)}>
               <div className="method-name">{sm.name}</div>

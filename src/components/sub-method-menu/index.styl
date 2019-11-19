@@ -1,47 +1,54 @@
 .sub-method-menu-view {
-  padding 0.16rem 0 0 0
+  padding 20px
   .sub-method-item-ls {
     background-color $sub-method-menu-item-bg-color
-    border solid 0.01rem $theme-bd-color-3
+    border solid 2px $theme-bd-color-3
+    justify-content space-between
   }
   .sub-method-item {
-    background-color $sub-method-menu-item-bg-color
+    width 170px
+    height 80px
+    background-color $theme-bg-color
     border-right solid 0.01rem $theme-bd-color-3
+    display flex
+    flex-direction column
+    align-items center
+    justify-content center
+    border-radius 10px
     cursor pointer
-    &.no-bd-r {
-      border-right none
-    }
-    // &:last-child {
+    margin-bottom 10px
+    // &.no-bd-r {
     //   border-right none
     // }
     &.selected {
       background-color $sub-method-menu-item-selected-bg-color
+      color $theme-txt-color4
       .method-name {
         color $theme-txt-color-4
       }
       .odd {
-        color $theme-txt-color-4
+        color $theme-txt-color4
       }
     }
-    &.layout-ud {
-      text-align center
-    }
-    &.w110 {
-      width 1.1rem
-    }
-    &.w180 {
-      width 1.8rem
-    }
-    &.h60 {
-      height 0.6rem
-    }
-    &.h40 {
-      height 0.4rem
-    }
+    // &.layout-ud {
+    //   text-align center
+    // }
+    // &.w110 {
+    //   width 1.1rem
+    // }
+    // &.w180 {
+    //   width 1.8rem
+    // }
+    // &.h60 {
+    //   height 0.6rem
+    // }
+    // &.h40 {
+    //   height 0.4rem
+    // }
   }
-  .pd-t-12 {
-    padding-top 0.12rem
-  }
+  // .pd-t-12 {
+  //   padding-top 0.12rem
+  // }
   .odd-pd-l-5 .odd {
     padding-left 0.05rem
   }
@@ -49,7 +56,7 @@
     color $theme-txt-color-5
   }
   .odd {
-    color $theme-txt-color-6
+    color $theme-txt-color1
   }
   .layout-lr {
     display flex

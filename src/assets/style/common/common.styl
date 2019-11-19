@@ -6,6 +6,9 @@
 @import "./gameicon.styl"
 @import "./border-1px.styl"
 
+body {
+  color $colors.gray
+}
 
 for k, v in $colors
   .c-{k}
@@ -219,6 +222,15 @@ cntEl() {
     border-top solid 12px currentColor
   }
 }
+
+.clear {
+  &::after {
+    content ''
+    clear both
+    display block
+  }
+}
+
 // ==================== joey =======================
 // radius
 for x in 0 2 5 8 10 15

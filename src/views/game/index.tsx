@@ -60,6 +60,7 @@ interface State {
 interface DataMethodItem {
   id: string;
   rows: any[];
+  repeatCount: number;
 }
 
 interface MatchParams {
@@ -281,9 +282,8 @@ class Game extends Component<Props, object> {
     let method: any;
     let betCount: number = 0;
     let totalAmount: number = 0;
-    let repeatCount = 0;
 
-    // 构造选择的号码集合，金额集合
+    // 构造选择的号码集合，金额集合,总金额
     let curGameMethodItems = this.state.curGameMethodItems;
     let methodTypeName: string = '';
     curGameMethodItems = curGameMethodItems.map((methodItem: any) => {
@@ -317,23 +317,30 @@ class Game extends Component<Props, object> {
     });
 
     // 计算重复数
-    if (['zx_q2', 'zx_q3'].includes(methodTypeName)) {
-      repeatCount = countRepeat(methodList.map((methodItem: DataMethodItem) => methodItem.rows));
-    }
+    curGameMethodItems.forEach((gameMethodItem: any) => {
+      if (['zx_q2', 'zx_q3'].includes(gameMethodItem.methodTypeName)) {
+        gameMethodItem.repeatCount = countRepeat(methodList.map((methodItem: DataMethodItem) => methodItem.id === gameMethodItem.id ? methodItem.rows : []));
+      }
+    });
     
     // 构造注数计算格式
-    if (!['zx_q3'].includes(methodTypeName)) {
-      methodList = methodList.map((methodItem: DataMethodItem) => {
-        methodItem.rows = methodItem.rows.map((row: any) => {
-          return row.length;
-        })
-        return methodItem;
-      });
-    }
+    curGameMethodItems.forEach((gameMethodItem: any) => {
+      if (!['zx_q3'].includes(gameMethodItem.methodTypeName)) {
+        methodList = methodList.map((methodItem: DataMethodItem) => {
+          if (gameMethodItem.id === methodItem.id) {
+            methodItem.rows = methodItem.rows.map((row: any) => {
+              return row.length;
+            })
+          }
+          methodItem.repeatCount = gameMethodItem.repeatCount;
+          return methodItem;
+        });
+      }
+    });
 
     // 总注数
     methodList.forEach((methodItem: DataMethodItem) => {
-      betCount += this.calc[methodItem.id]({nsl: methodItem.rows, ns: methodItem.rows, repeatCount});
+      betCount += this.calc[methodItem.id]({nsl: methodItem.rows, ns: methodItem.rows, repeatCount: methodItem.repeatCount});
     });
 
     // 任选，组选，直选金额计算
@@ -462,7 +469,7 @@ class Game extends Component<Props, object> {
                 updateSubMethodMenuIndex={this.updateSubMethodMenuIndex}
               />
             }
-            {/* <Play 
+            <Play 
               curGameMethodItems={this.state.curGameMethodItems} 
               gameType={this.gameType} 
               defaultInitMethodItemAmount={this.state.defaultInitMethodItemAmount}
@@ -478,7 +485,7 @@ class Game extends Component<Props, object> {
               updateDefaultInitMethodItemAmount={this.updateDefaultInitMethodItemAmount} 
               orderFinishCB={this.orderFinishCB}
               resetSelectedOfAllMethodItem={this.resetSelectedOfAllMethodItem}
-            /> */}
+            />
            
           </section>
         </GameCommonDataContext.Provider>

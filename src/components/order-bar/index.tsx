@@ -1,7 +1,8 @@
 import React, { Component, ChangeEvent } from 'react';
+import ReactDOM from 'react-dom';
 import { inject, observer } from 'mobx-react';
-import { Button } from 'antd-mobile';
-// import CoinSet from '../coin-set';
+import { Button, Toast } from 'antd-mobile';
+import CoinSet from '../coin-set';
 import APIs from '../../http/APIs';
 import calc from '../../game/calc';
 import { removeRepeat2DArray, countRepeat } from '../../utils/game';
@@ -25,13 +26,15 @@ interface DataMethodItem {
   id: string;
   rows: any[];
   methodTypeName?: string;
+  repeatCount: number;
 }
 
 interface State {
   amount: number;
 }
 
-let DEFAULT_AMOUNT = 2;
+const DEFAULT_AMOUNT = 2;
+const ORDER_BAR_CONTAINER_CLASS = 'order-bar-container';
 
 @inject('store')
 @observer
@@ -39,15 +42,19 @@ class OrderBar extends Component<Props, object> {
   showLoading: boolean = false;
   state: State;
   calc: any = calc;
+  orderBarContainer: HTMLDivElement;
   constructor(props: Props) {
     super(props);
     this.state = {
       amount: this.props.defaultInitMethodItemAmount
     }
+    this.orderBarContainer = document.createElement('div');
+    this.orderBarContainer.className = ORDER_BAR_CONTAINER_CLASS;
   }
-  coinChoosed = (value: number) => {
-    this.setState({amount: value});
-    this.props.updateDefaultInitMethodItemAmount(value);
+  coinChoosed = (value: string) => {
+    let amount: number = value === 'all' ? parseInt(this.props.store.user.balance, 10): parseInt(value, 10);
+    this.setState({amount});
+    this.props.updateDefaultInitMethodItemAmount(amount);
   }
   onResetHandler = () => {
     // Modal.confirm({
@@ -66,12 +73,12 @@ class OrderBar extends Component<Props, object> {
   }
   validate(params: any): boolean {
     if (!params.issue) {
-      // message.warning('获取游戏期号失败，请刷新后重试！');
+      Toast.fail('获取游戏期号失败，请刷新后重试！');
       return false;
     } else if(!params.betList || params.betList.length <= 0) {
       return false;
     } else if (params.errorMsg) {
-      // message.warning(params.errorMsg);
+      Toast.fail(params.errorMsg);
       return false;
     }
     return true;
@@ -100,7 +107,7 @@ class OrderBar extends Component<Props, object> {
         params.totMoney = this.state.amount * betCount;
         content = methodItem.rows[0].nc.join(',');
         params.betList.push({methodId: methodItem.id.split(':')[0], projs: 1, money: params.totMoney, content});
-        params.totProjs = params.betList.length;
+        params.totProjs += params.betList.length;
         if (content.split(',').length > 8) {
           params.errorMsg = '该玩法一个方案最多选择8个号码！';
         }
@@ -134,8 +141,8 @@ class OrderBar extends Component<Props, object> {
         }
         betCount = this.calcBet();
         params.totMoney = this.state.amount * betCount;
-        params.betList = contents;
-        params.totProjs = params.betList.length;
+        params.betList.push(...contents);
+        params.totProjs += contents.length;
       } else if (['zx_q2', 'zx_q3'].includes(methodItem.methodTypeName)) {
         // 直选 前二、三
         let nc = methodItem.rows.map((row: any) => {
@@ -171,8 +178,8 @@ class OrderBar extends Component<Props, object> {
         }
         betCount = this.calcBet();
         params.totMoney = this.state.amount * betCount;
-        params.betList = contents;
-        params.totProjs = params.betList.length;
+        params.betList.push(...contents);
+        params.totProjs += contents.length;
       } else {
         methodItem.rows.forEach((row: any) => {
           row.vs.forEach((vsItem: any) => {
@@ -208,23 +215,49 @@ class OrderBar extends Component<Props, object> {
       methodList.push(method);
     });
     
-    // 计算重复数
-    if (['zx_q2', 'zx_q3'].includes(methodTypeName)) {
-      repeatCount = countRepeat(methodList.map((methodItem: DataMethodItem) => methodItem.rows));
-    }
+    // // 计算重复数
+    // if (['zx_q2', 'zx_q3'].includes(methodTypeName)) {
+    //   repeatCount = countRepeat(methodList.map((methodItem: DataMethodItem) => methodItem.rows));
+    // }
 
-    if (!['zx_q3'].includes(methodTypeName)) {
-      methodList = methodList.map((methodItem: DataMethodItem) => {
-        methodItem.rows = methodItem.rows.map((row: any) => {
-          return row.length;
-        })
-        return methodItem;
-      });
-    }
+    // if (!['zx_q3'].includes(methodTypeName)) {
+    //   methodList = methodList.map((methodItem: DataMethodItem) => {
+    //     methodItem.rows = methodItem.rows.map((row: any) => {
+    //       return row.length;
+    //     })
+    //     return methodItem;
+    //   });
+    // }
+
+    // // 总注数
+    // methodList.forEach((methodItem: DataMethodItem) => {
+    //   betCount += this.calc[methodItem.id]({nsl: methodItem.rows, ns: methodItem.rows, repeatCount});
+    // });
+
+    
+    // 计算重复数
+    curGameMethodItems.forEach((gameMethodItem: any) => {
+      if (['zx_q2', 'zx_q3'].includes(gameMethodItem.methodTypeName)) {
+        gameMethodItem.repeatCount = countRepeat(methodList.map((methodItem: DataMethodItem) => methodItem.id === gameMethodItem.id ? methodItem.rows : []));
+      }
+    });
+    
+    // 构造注数计算格式
+    curGameMethodItems.forEach((gameMethodItem: any) => {
+      if (!['zx_q3'].includes(gameMethodItem.methodTypeName)) {
+        methodList = methodList.map((methodItem: DataMethodItem) => {
+          methodItem.rows = methodItem.rows.map((row: any) => {
+            return row.length;
+          })
+          methodItem.repeatCount = gameMethodItem.repeatCount;
+          return methodItem;
+        });
+      }
+    });
 
     // 总注数
     methodList.forEach((methodItem: DataMethodItem) => {
-      betCount += this.calc[methodItem.id]({nsl: methodItem.rows, ns: methodItem.rows, repeatCount});
+      betCount += this.calc[methodItem.id]({nsl: methodItem.rows, ns: methodItem.rows, repeatCount: methodItem.repeatCount});
     });
 
     return betCount;
@@ -238,18 +271,10 @@ class OrderBar extends Component<Props, object> {
       this.showLoading = false;
       if (success === 1) {
         this.props.store.user.updateBalance();
-        // Modal.success({
-        //   centered: true,
-        //   title: '投注成功',
-        //   content: ''
-        // });
+        Toast.success('投注成功');
         this.props.orderFinishCB(true);
       } else {
-        // Modal.error({
-        //   centered: true,
-        //   title: msg || '投注失败',
-        //   content: ''
-        // });
+        Toast.fail(msg || '投注失败');
         this.props.orderFinishCB(false);
       }
     });
@@ -266,26 +291,33 @@ class OrderBar extends Component<Props, object> {
     this.setState({amount: value});
     this.props.updateDefaultInitMethodItemAmount(parseInt(value, 10));
   }
+  componentDidMount() {
+    document.body.appendChild(this.orderBarContainer);
+  }
+  componentWillUnmount() {
+    document.body.removeChild(this.orderBarContainer);
+  }
   render() {
-    return (
+    let elements = (
       <section className="order-bar-view">
-        <div className="flex ai-c ">
+        <section>{<CoinSet coinChoosed={this.coinChoosed} />}</section>
+        <section className="flex ai-c jc-sb order-sec">
           <div>
             <div className="flex ai-c fast-amount-wp">
-              <input className="fast-amount" value={this.state.amount} onChange={this.onAmountChanged} onBlur={this.onAmountChanged} placeholder="请输入快捷金额" />
+              <input className="fast-amount" type="tel" value={this.state.amount} onChange={this.onAmountChanged} onBlur={this.onAmountChanged} maxLength={9} placeholder="请输入快捷金额" />
             </div>  
           </div>
-          {/* <div span={10}><CoinSet coinChoosed={this.coinChoosed} /></Col> */}
           <div className="txt-r">
-            已选 <span className="txt-red">{this.props.betCount}</span> 注 共 <span className="txt-red"> {(this.props.amount).toFixed(3)} </span>元
+            已选 <span className="txt-red">{this.props.betCount}</span> 注 共 <span className="txt-red">{(this.props.amount).toFixed(3)} </span>元
           </div>
           <div className="flex ai-c jc-e btns-wp">
-            <Button className="btn-reset" disabled={this.props.betCount <= 0} onClick={this.onResetHandler}>重置</Button>
-            <Button className="btn-order" disabled={this.props.betCount <= 0} onClick={this.onOrderHandler}>一键下单</Button>
+            <Button type="primary" className="btn-reset" disabled={this.props.betCount <= 0} onClick={this.onResetHandler}>重置</Button>
+            <Button type="primary" className="btn-order" disabled={this.props.betCount <= 0} onClick={this.onOrderHandler}>一键下单</Button>
           </div>
-        </div>
+        </section>
       </section>
     )
+    return ReactDOM.createPortal(elements, this.orderBarContainer);
   }
 }
 

@@ -93,35 +93,35 @@ export let methodsConfig: MethodsConfig = {
       recentType: [dx({min: 4})],
       ids: ['2054:1:1'],
       subMethods: [
-        {s: true, name: '一中一', v: '1z1', oddIndex: 7, class: 'layout-ud w110 h60  pd-t-12', mid: '2054', odd: '', ids: ['2054:1:1']},
-        {s: false, name: '二中二', v: '2z2', oddIndex: 6, class: 'layout-ud w110 h60  pd-t-12', mid: '2054', odd: '', ids: ['2054:1:2']},
-        {s: false, name: '三中三', v: '3z3', oddIndex: 4, class: 'layout-ud w110 h60  pd-t-12', mid: '2054', odd: '', ids: ['2054:1:3']},
-        {s: false, name: '四中四', v: '4z4', oddIndex: 2, class: 'layout-ud w110 h60  pd-t-12', mid: '2054', odd: '', ids: ['2054:1:4']},
-        {s: false, name: '五中五', v: '5z5', oddIndex: 0, class: 'layout-ud w110 h60  pd-t-12', mid: '2054', odd: '', ids: ['2054:1:5']},
-        {s: false, name: '六中五', v: '6z5', oddIndex: 1, class: 'layout-ud w110 h60  pd-t-12', mid: '2054', odd: '', ids: ['2054:1:6']},
-        {s: false, name: '七中五', v: '7z5', oddIndex: 3, class: 'layout-ud w110 h60  pd-t-12', mid: '2054', odd: '', ids: ['2054:1:7']},
-        {s: false, name: '八中五', v: '8z5', oddIndex: 5, class: 'layout-ud w110 h60  pd-t-12 no-bd-r', mid: '2054', odd: '', ids: ['2054:1:8']}
+        {s: true, name: '一中一', v: '1z1', oddIndex: 7, class: '', mid: '2054', odd: '', ids: ['2054:1:1']},
+        {s: false, name: '二中二', v: '2z2', oddIndex: 6, class: '', mid: '2054', odd: '', ids: ['2054:1:2']},
+        {s: false, name: '三中三', v: '3z3', oddIndex: 4, class: '', mid: '2054', odd: '', ids: ['2054:1:3']},
+        {s: false, name: '四中四', v: '4z4', oddIndex: 2, class: '', mid: '2054', odd: '', ids: ['2054:1:4']},
+        {s: false, name: '五中五', v: '5z5', oddIndex: 0, class: '', mid: '2054', odd: '', ids: ['2054:1:5']},
+        {s: false, name: '六中五', v: '6z5', oddIndex: 1, class: '', mid: '2054', odd: '', ids: ['2054:1:6']},
+        {s: false, name: '七中五', v: '7z5', oddIndex: 3, class: '', mid: '2054', odd: '', ids: ['2054:1:7']},
+        {s: false, name: '八中五', v: '8z5', oddIndex: 5, class: 'no-bd-r', mid: '2054', odd: '', ids: ['2054:1:8']}
       ]
     },
     {
       name: '组选',
       ename: 'zux',
-      ids: ['2055:1'],
+      ids: ['2055:1', '2056:1'],
       recentChild: true,
-      subMethods: [
-        {s: true, name: '前二组选', recentType: [hz({title: '前二和值', nForm: true, range: {start: 0, end: 2}})], oddIndex: 0, class: 'layout-lr w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2055', odd: '', ids: ['2055:1']},
-        {s: false, name: '前三组选', recentType: [hz({title: '前三和值', nForm: true,range: {start: 0, end: 3}})], oddIndex: 0, class: 'layout-lr  w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2056', odd: '', ids: ['2056:1']}
-      ]
+      // subMethods: [
+      //   {s: true, name: '前二组选', recentType: [hz({title: '前二和值', nForm: true, range: {start: 0, end: 2}})], oddIndex: 0, class: 'layout-lr w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2055', odd: '', ids: ['2055:1']},
+      //   {s: false, name: '前三组选', recentType: [hz({title: '前三和值', nForm: true,range: {start: 0, end: 3}})], oddIndex: 0, class: 'layout-lr  w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2056', odd: '', ids: ['2056:1']}
+      // ]
     },
     {
       name: '直选',
       ename: 'zx',
-      ids: ['2057:1'],
+      ids: ['2057:1', '2058:1'],
       recentChild: true,
-      subMethods: [
-        {s: true, name: '前二直选', recentType: [hz({title: '前二和值', nForm: true, range: {start: 0, end: 2}})], oddIndex: 0, class: 'layout-lr w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2057', odd: '', ids: ['2057:1']},
-        {s: false, name: '前三直选', recentType: [hz({title: '前三和值', nForm: true, range: {start: 0, end: 3}})], oddIndex: 0, class: 'layout-lr  w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2058', odd: '', ids: ['2058:1']}
-      ]
+      // subMethods: [
+      //   {s: true, name: '前二直选', recentType: [hz({title: '前二和值', nForm: true, range: {start: 0, end: 2}})], oddIndex: 0, class: 'layout-lr w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2057', odd: '', ids: ['2057:1']},
+      //   {s: false, name: '前三直选', recentType: [hz({title: '前三和值', nForm: true, range: {start: 0, end: 3}})], oddIndex: 0, class: 'layout-lr  w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2058', odd: '', ids: ['2058:1']}
+      // ]
     }
   ],
   [LOTTERY_TYPES.PK10]: [
