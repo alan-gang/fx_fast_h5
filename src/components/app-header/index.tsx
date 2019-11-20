@@ -16,9 +16,9 @@ const popoverInner: any[] = [
   {name: '基诺玩法', },
   {name: '彩种大厅', link: '/'},
   {name: '投注记录', link: '/betRecords'},
-  {name: '历史开奖', link: '/openIssueHistory'},
-  {name: '玩法说明', link: '/playMethodRule'},
-  {name: '彩种说明',},
+  {name: '历史开奖', link: '/openIssueHistory', gameId: true},
+  {name: '玩法说明', link: '/playMethodRule', gameId: true},
+  {name: '彩种说明', link: '/instruction', gamId: true},
   {name: '投注提醒',},
 ]
 
@@ -29,17 +29,18 @@ class AppHeader extends Component<Props, object> {
   constructor(props: Props) {
     super(props)
     this.state = {
+      gameId: '',
       gameName: '',
       popoverVisible: false,
     }
     Bus.on('gameIdChanged', this.activeGame);
   }
   activeGame = (id: any) => {
-    this.setState({gameName: (getGameById(id) || {}).name})
+    this.setState({gameName: (getGameById(id) || {}).name, gameId: id})
   }
   popoverInnerClick = (node: any, index: number = 0): void => {
     // Todo
-    if (popoverInner[index].link) this.props.history.push(popoverInner[index].link)
+    if (popoverInner[index].link) this.props.history.push(popoverInner[index].link + (popoverInner[index].gameId ? `/${this.state.gameId}` : ''))
     else Toast.info(popoverInner[index].name)
     this.setState({popoverVisible: false})
   }
@@ -86,6 +87,28 @@ class AppHeader extends Component<Props, object> {
         <Flex.Item className="txt-c fs-32">投注记录</Flex.Item>
         <Flex.Item></Flex.Item>
       </Route>,
+      <Route key="4" path="/openIssueHistory">
+        <Flex.Item onClick={ this.props.history.goBack }>
+          <Icon type="left" size="lg" />
+        </Flex.Item>
+        <Flex.Item className="txt-c fs-32">历史开奖</Flex.Item>
+        <Flex.Item></Flex.Item>
+      </Route>,
+      <Route key="5" path="/playMethodRule">
+        <Flex.Item onClick={ this.props.history.goBack }>
+          <Icon type="left" size="lg" />
+        </Flex.Item>
+        <Flex.Item className="txt-c fs-32">开奖说明</Flex.Item>
+        <Flex.Item></Flex.Item>
+      </Route>,
+      <Route key="6" path="/instruction">
+        <Flex.Item onClick={ this.props.history.goBack }>
+          <Icon type="left" size="lg" />
+        </Flex.Item>
+        <Flex.Item className="txt-c fs-32">彩种说明</Flex.Item>
+        <Flex.Item></Flex.Item>
+      </Route>,
+      
     ]}</React.Fragment>)
   }
   render() {

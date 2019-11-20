@@ -26,13 +26,18 @@ export const routes = [
     },
     {
       title: '开奖历史',
-      path: '/openIssueHistory',
+      path: '/openIssueHistory/:id',
       component: lazy(() => import('../views/open-issue-history'))
     },
     {
-      title: '玩法',
-      path: '/playMethodRule',
+      title: '玩法说明',
+      path: '/playMethodRule/:id',
       component: lazy(() => import('../views/play-method-rule'))
+    },
+    {
+      title: '彩种说明',
+      path: '/instruction/:id',
+      component: lazy(() => import('../views/instruction'))
     },
 ];
 

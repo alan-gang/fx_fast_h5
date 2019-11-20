@@ -12,7 +12,7 @@ interface Props extends RouteComponentProps<MatchParams> {
 
 @inject("store")
 @observer
-class playMethodRule extends Component<Props, object> {
+class instruction extends Component<Props, object> {
   dom: any
   state: any
   constructor (props: Props) {
@@ -197,4 +197,4 @@ class playMethodRule extends Component<Props, object> {
   }
 }
 
-export default playMethodRule
+export default instruction
