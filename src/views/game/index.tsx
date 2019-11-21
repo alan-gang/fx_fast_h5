@@ -16,7 +16,7 @@ import { countRepeat } from '../../utils/game';
 import { GameCommonDataContext } from '../../context/gameContext';
 import Ludan from 'comp/ludan';
 import { getLunDanTabByName, getTabsByType, getLudanTabByTypeAndName } from '../../utils/ludan';
-// import LimitSetDialog from 'comp/limit-set-dialog';
+import LimitSetDialog from 'comp/limit-set-dialog';
 import Socket from '../../socket';
 import Bus from '../../utils/eventBus'
 
@@ -61,6 +61,7 @@ interface DataMethodItem {
   id: string;
   rows: any[];
   repeatCount: number;
+  methodTypeName: string;
 }
 
 interface MatchParams {
@@ -191,7 +192,9 @@ class Game extends Component<Props, object> {
       let items =  this.methodItems[id]();
       items.rows = items.rows.map((row: any) => {
         row.vs.map((vs: any) => {
-          vs.val = '';
+          if (typeof vs === 'object') {
+            vs.val = '';
+          }
           return vs;
         });
         return row;
@@ -236,13 +239,23 @@ class Game extends Component<Props, object> {
   }
 
   // 更新选中的玩法项数据
-  updateMethdItem = (i: number, j: number, k: number, selected?: boolean | undefined, value?: string | undefined) => {
+  updateMethodItem = (i: number, j: number, k: number, selected?: boolean | undefined, value?: string | undefined) => {
     let methodItems = this.state.curGameMethodItems;
     if (selected !== undefined) {
       methodItems[i].rows[j].vs[k].s = selected;
     }
     if (value !== undefined) {
       methodItems[i].rows[j].vs[k].amt = value;
+    }
+    this.setState({
+      curGameMethodItems: methodItems
+    }, this.calcBet);
+  }
+
+  updateMethodRow = (i: number, j: number, selected?: boolean | undefined) => {
+    let methodItems = this.state.curGameMethodItems;
+    if (selected !== undefined) {
+      methodItems[i].rows[j].s = selected;
     }
     this.setState({
       curGameMethodItems: methodItems
@@ -259,13 +272,18 @@ class Game extends Component<Props, object> {
     let methodId: string = '';
     curGameMethodItems = curGameMethodItems.map((methodItem: any) => {
       methodItem.rows = methodItem.rows.map((row: any) => {
+        methodId = methodItem.id.split(':')[0];
         row.vs = row.vs.map((vsItem: any) => {
-          methodId = methodItem.id.split(':')[0];
-          if (odds[methodId] && odds[methodId][vsItem.oddIndex || 0]) {
-            vsItem.odd = odds[methodId][vsItem.oddIndex || 0].maxprize;
+          if (typeof vsItem === 'object') {
+            if (odds[methodId] && odds[methodId][vsItem.oddIndex || 0]) {
+              vsItem.odd = odds[methodId][vsItem.oddIndex || 0].maxprize;
+            }
           }
           return vsItem;
         });
+        if (row.posOdd) {
+          row.odd =  odds[methodId][row.oddIndex || 0].maxprize;
+        }
         return row;
       });
       return methodItem;
@@ -282,35 +300,33 @@ class Game extends Component<Props, object> {
     let method: any;
     let betCount: number = 0;
     let totalAmount: number = 0;
-
-    // 构造选择的号码集合，金额集合,总金额
     let curGameMethodItems = this.state.curGameMethodItems;
-    let methodTypeName: string = '';
+
+    // 构造选择的号码集合，金额集合, 总金额
     curGameMethodItems = curGameMethodItems.map((methodItem: any) => {
-      methodTypeName = methodItem.methodTypeName;
       methodItem.rows = methodItem.rows.map((row: any) => {
         row.nc = [];
         row.amtc = [];
         row.tmc = 0;
-        row.vs = row.vs.map((vsItem: any) => {
-          if (vsItem.s) {
-            row.nc.push(vsItem.n);
-            row.amtc.push(vsItem.amt);
-            row.tmc += parseInt(vsItem.amt || '0', 10);
+        row.vs.forEach((vsItem: any) => {
+          if (typeof vsItem === 'object') {
+            if (vsItem.s) {
+              row.nc.push(vsItem.n);
+              row.amtc.push(vsItem.amt);
+              row.tmc += parseInt(vsItem.amt || '0', 10);
+            }
           }
-          return vsItem;
         });
-        // 总金额
         totalAmount += row.tmc;
         return row;
       });
       return methodItem;
     });
 
-    // 构造注数计算格式
-    curGameMethodItems.forEach((methodItem: DataMethodItem) => {
-      method = {id: methodItem.id, rows: []};
-      methodItem.rows.forEach((row: any) => {
+    // 构造注数计算数据格式
+    curGameMethodItems.forEach((gameMethodItem: any) => {
+      method = {id: gameMethodItem.id, methodTypeName: gameMethodItem.methodTypeName, rows: [], repeatCount: 0};
+      gameMethodItem.rows.forEach((row: any) => {
         method.rows.push(row.nc.slice(0));
       });
       methodList.push(method);
@@ -323,14 +339,12 @@ class Game extends Component<Props, object> {
       }
     });
     
-    // 构造注数计算格式
+    // 构造注数计算数据格式
     curGameMethodItems.forEach((gameMethodItem: any) => {
       if (!['zx_q3'].includes(gameMethodItem.methodTypeName)) {
         methodList = methodList.map((methodItem: DataMethodItem) => {
           if (gameMethodItem.id === methodItem.id) {
-            methodItem.rows = methodItem.rows.map((row: any) => {
-              return row.length;
-            })
+            methodItem.rows = methodItem.rows.map((row: any) => row.length);
           }
           methodItem.repeatCount = gameMethodItem.repeatCount;
           return methodItem;
@@ -338,15 +352,14 @@ class Game extends Component<Props, object> {
       }
     });
 
-    // 总注数
+    // 计算总注数
     methodList.forEach((methodItem: DataMethodItem) => {
       betCount += this.calc[methodItem.id]({nsl: methodItem.rows, ns: methodItem.rows, repeatCount: methodItem.repeatCount});
+      // 任选，组选，直选金额计算
+      if (['rx_nzn', 'zux_q2', 'zux_q3', 'zx_q2', 'zx_q3'].includes(methodItem.methodTypeName)) {
+        totalAmount = betCount * this.state.defaultInitMethodItemAmount;
+      }
     });
-
-    // 任选，组选，直选金额计算
-    if (['rx_nzn', 'zux_q2', 'zux_q3', 'zx_q2', 'zx_q3'].includes(methodTypeName)) {
-      totalAmount = betCount * this.state.defaultInitMethodItemAmount;
-    }
 
     this.setState({totalBetCount: betCount, totalBetAmount: totalAmount});
   }
@@ -355,7 +368,12 @@ class Game extends Component<Props, object> {
     let curGameMethodItems = this.state.curGameMethodItems;
     curGameMethodItems = curGameMethodItems.map((methodItem: any) => {
       methodItem.rows = methodItem.rows.map((row: any) => {
-        row.vs = row.vs.map((vsItem: any) => { vsItem.s = false; vsItem.amt = ''; return vsItem; }); return row;
+        row.vs = row.vs.map((vsItem: any) => { 
+          if (typeof vsItem === 'object') {
+            vsItem.s = false; vsItem.amt = ''; return vsItem; 
+          }
+        }); 
+        return row;
       });
       return methodItem;
     });
@@ -473,7 +491,8 @@ class Game extends Component<Props, object> {
               curGameMethodItems={this.state.curGameMethodItems} 
               gameType={this.gameType} 
               defaultInitMethodItemAmount={this.state.defaultInitMethodItemAmount}
-              updateMethdItem={this.updateMethdItem} 
+              updateMethodItem={this.updateMethodItem} 
+              updateMethodRow={this.updateMethodRow}
             />
             <OrderBar 
               gameId={this.id} 
@@ -489,7 +508,7 @@ class Game extends Component<Props, object> {
            
           </section>
         </GameCommonDataContext.Provider>
-        {/* <LimitSetDialog isShow={this.state.isShowLimitSetDialog} gameId={this.id} limitLevelList={this.state.limitLevelList} onLimitChoiceCB={this.onLimitChoiceCB} onCloseHandler={this.onCloseLimitChoiceHandler} /> */}
+        {/* {this.state.isShowLimitSetDialog && <LimitSetDialog isShow={this.state.isShowLimitSetDialog} gameId={this.id} limitLevelList={this.state.limitLevelList} onLimitChoiceCB={this.onLimitChoiceCB} onCloseHandler={this.onCloseLimitChoiceHandler} />} */}
       </article>
     );
   }

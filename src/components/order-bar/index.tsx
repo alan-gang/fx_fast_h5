@@ -202,38 +202,15 @@ class OrderBar extends Component<Props, object> {
     let methodList: DataMethodItem[] = [];
     let method: any;
     let betCount: number = 0;
-    let repeatCount = 0;
 
     // 构造注数计算格式
-    let methodTypeName: string = '';
-    curGameMethodItems.forEach((methodItem: DataMethodItem) => {
-      methodTypeName = methodItem.methodTypeName || '';
-      method = {id: methodItem.id, rows: []};
-      methodItem.rows.forEach((row: any) => {
-        method.rows.push(row.nc);
+    curGameMethodItems.forEach((gameMethodItem: any) => {
+      method = {id: gameMethodItem.id, rows: [], repeatCount: 0};
+      gameMethodItem.rows.forEach((row: any) => {
+        method.rows.push(row.nc.slice(0));
       });
       methodList.push(method);
     });
-    
-    // // 计算重复数
-    // if (['zx_q2', 'zx_q3'].includes(methodTypeName)) {
-    //   repeatCount = countRepeat(methodList.map((methodItem: DataMethodItem) => methodItem.rows));
-    // }
-
-    // if (!['zx_q3'].includes(methodTypeName)) {
-    //   methodList = methodList.map((methodItem: DataMethodItem) => {
-    //     methodItem.rows = methodItem.rows.map((row: any) => {
-    //       return row.length;
-    //     })
-    //     return methodItem;
-    //   });
-    // }
-
-    // // 总注数
-    // methodList.forEach((methodItem: DataMethodItem) => {
-    //   betCount += this.calc[methodItem.id]({nsl: methodItem.rows, ns: methodItem.rows, repeatCount});
-    // });
-
     
     // 计算重复数
     curGameMethodItems.forEach((gameMethodItem: any) => {
@@ -242,20 +219,20 @@ class OrderBar extends Component<Props, object> {
       }
     });
     
-    // 构造注数计算格式
+    // 构造注数计算数据格式
     curGameMethodItems.forEach((gameMethodItem: any) => {
       if (!['zx_q3'].includes(gameMethodItem.methodTypeName)) {
         methodList = methodList.map((methodItem: DataMethodItem) => {
-          methodItem.rows = methodItem.rows.map((row: any) => {
-            return row.length;
-          })
+          if (gameMethodItem.id === methodItem.id) {
+            methodItem.rows = methodItem.rows.map((row: any) => row.length);
+          }
           methodItem.repeatCount = gameMethodItem.repeatCount;
           return methodItem;
         });
       }
     });
 
-    // 总注数
+    // 计算总注数
     methodList.forEach((methodItem: DataMethodItem) => {
       betCount += this.calc[methodItem.id]({nsl: methodItem.rows, ns: methodItem.rows, repeatCount: methodItem.repeatCount});
     });
@@ -296,6 +273,9 @@ class OrderBar extends Component<Props, object> {
   }
   componentWillUnmount() {
     document.body.removeChild(this.orderBarContainer);
+  }
+  onClose = (): void => {
+
   }
   render() {
     let elements = (

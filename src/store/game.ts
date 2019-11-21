@@ -5,11 +5,11 @@ import local from '../utils/local';
 import APIs from '../http/APIs';
 
 class MyGame {
-  @observable favourites: Game[] = local.get(Types.SET_PC_FAVOURITE_GAMES) || [];
+  @observable favourites: Game[] = local.get(Types.SET_WAP_FAVOURITE_GAMES) || [];
   // @observable limitLevel: number = 1; // 限红级别
   @observable limitLevelList: LimitLevelItem[] = [];
-  @observable limitList: LimitListItem[] = local.get(Types.LOCAL_PC_FAST_SET_LIMIT_LIST) || []; // 限红
-  @observable setGamesLimitLevel: GameLimitLevel[] = local.get(Types.LOCAL_PC_FAST_SET_GAMES_LIMIT_LEVEL) || [];
+  @observable limitList: LimitListItem[] = local.get(Types.LOCAL_WAP_FAST_SET_LIMIT_LIST) || []; // 限红
+  @observable setGamesLimitLevel: GameLimitLevel[] = local.get(Types.LOCAL_WAP_FAST_SET_GAMES_LIMIT_LEVEL) || [];
   @observable availableGames: number[] = [];
 
   hasGame(id: number): boolean {
@@ -20,7 +20,7 @@ class MyGame {
   setFavourite(game: Game) {
     if (this.hasGame(game.id)) return null;
     this.favourites.push(game);
-    local.set(Types.SET_PC_FAVOURITE_GAMES, this.favourites);
+    local.set(Types.SET_WAP_FAVOURITE_GAMES, this.favourites);
   }
 
   @action
@@ -32,13 +32,13 @@ class MyGame {
         break;
       }
     }
-    local.set(Types.SET_PC_FAVOURITE_GAMES, this.favourites);
+    local.set(Types.SET_WAP_FAVOURITE_GAMES, this.favourites);
   }
 
   @action
   clearFavourites() {
     this.favourites = [];
-    local.set(Types.SET_PC_FAVOURITE_GAMES, this.favourites);
+    local.set(Types.SET_WAP_FAVOURITE_GAMES, this.favourites);
   }
 
   // 根据ID获取限红项
@@ -67,7 +67,7 @@ class MyGame {
         this.limitList.push(item);
       }
     });
-    local.set(Types.LOCAL_PC_FAST_SET_LIMIT_LIST, this.limitList);
+    local.set(Types.LOCAL_WAP_FAST_SET_LIMIT_LIST, this.limitList);
   }
   
   @action
@@ -89,7 +89,7 @@ class MyGame {
     } else {
       this.setGamesLimitLevel.push(gameLimitLevel);
     }
-    local.set(Types.LOCAL_PC_FAST_SET_GAMES_LIMIT_LEVEL, this.setGamesLimitLevel);
+    local.set(Types.LOCAL_WAP_FAST_SET_GAMES_LIMIT_LEVEL, this.setGamesLimitLevel);
   }
 
   @action

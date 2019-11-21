@@ -107,6 +107,17 @@ export const methodTabs: any = {
     changpai: [],
     duanpai: [],
     yskd: []
+  },
+  hc6: {
+    tema: [],
+    texiao: [],
+    sebo: [],
+    zhengyima: [],
+    zhengerma: [],
+    zhengshanma: [],
+    zhengshima: [],
+    zhengwuma: [],
+    zhengliuma: []
   }
 }
 

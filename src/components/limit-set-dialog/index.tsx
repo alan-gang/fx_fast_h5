@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Button } from 'antd-mobile';
-import BaseModal from '../base-modal';
+import { Button, Modal, Icon } from 'antd-mobile';
 
 import './index.styl';
 
@@ -15,38 +14,50 @@ interface Props {
 }
 
 interface State {
-  [prop: string]: string;
+  curLimitIndex: number;
+  level: number;
 }
 
 @inject("store")
 @observer
 class LimitSetDialog extends Component<Props, object> {
   state: State = {
-    width: '4.3rem',
-    height: '2.6rem'
+    curLimitIndex: 0,
+    level: 1
   }
-  onLimitChoiceHandler = (level: number) => {
-    this.props.onLimitChoiceCB(level);
+  onLimitChoiceHandler = (level: number, index: number) => {
+    this.setState({curLimitIndex: index, level});
   }
   onCloseHandler = () => {
     if (this.props.onCloseHandler) {
       this.props.onCloseHandler();
     }
   }
+  onConfirmHandler = () => {
+    this.props.onLimitChoiceCB(this.state.level);
+  }
   render() {
     return (
       <section className="limit-set-dialog">
-        <BaseModal isShow={this.props.isShow} isShowMask={this.props.isShowMask} width={this.state.width} height={this.state.height} onCloseHandler={this.onCloseHandler}>
+         <Modal
+          visible={true}
+          maskClosable={false}
+          title=""
+        >
+          <header className="flex ai-c jc-c limit-set-header">限红设置<Icon type="cross" onClick={this.onCloseHandler} /></header>
           <div className="bg-white limit-set-content">
-            <section className={`game-logo logo-${this.props.gameId}`}></section>
-            <p className="txt-c mgt-35">选择限红进入游戏</p>
             <section className="flex jc-c limit-list">
               {this.props.limitLevelList.map((item: LimitLevelItem, i: number) => (
-                <Button key={i} className="crs-p btn-limit-amount" onClick={()=>this.onLimitChoiceHandler(item.level)}>{item.minAmt}-{item.maxAmt}</Button>
+                <Button key={i} className={`flex jc-c ai-c btn-limit-amount ${this.state.curLimitIndex === i ? 'selected' : ''}`} onClick={()=>this.onLimitChoiceHandler(item.level, i)}>{item.minAmt}-{item.maxAmt}</Button>
               ))}
             </section>
+            <div><Button className="flex jc-c ai-c btn-confirm" onClick={this.onConfirmHandler}>确定</Button></div>
+            <div className="limit-explain-tip">
+              <p>限红说明：</p>
+              <p>当切换不同的限红模式时，再次投注同一彩种，需至少间隔1期再投注。</p>
+            </div>
           </div>
-        </BaseModal>
+        </Modal>
       </section>
     )
   }
