@@ -90,6 +90,17 @@ export function getGameTypeByGameId(id: number): string {
   return '';
 }
 
+export function getGameTypeNameByGameId(id: number): any {
+  for (let i = 0; i < games.length; i++) {
+    for (let j = 0; j < games[i].items.length; j++) {
+      if (id === games[i].items[j].id) {
+        return games[i].name;
+      }
+    }
+  }
+  return '';
+}
+
 export function getGamesByType(type: string): Game[] {
   let gameCategory = games.find((gameCategory: GameCategory) => gameCategory.type === type);
   return (gameCategory && gameCategory.items) || [];

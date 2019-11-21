@@ -19,7 +19,6 @@ class GameMenu extends React.Component<Props, object> {
   }
   constructor(props: Props) {
     super(props)
-
     Bus.on('gameIdChanged', this.activeGame);
   }
   togglePanel () {
