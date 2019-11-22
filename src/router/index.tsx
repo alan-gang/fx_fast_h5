@@ -39,6 +39,16 @@ export const routes = [
       path: '/instruction/:id',
       component: lazy(() => import('../views/instruction'))
     },
+    {
+      title: '投注提醒',
+      path: '/BookLeadingSettings/:id',
+      component: lazy(() => import('src/views/book-leading/settings'))
+    },
+    {
+      title: '投注提醒历史',
+      path: '/BookLeadingHistory/:id',
+      component: lazy(() => import('../views/book-leading/history'))
+    },
 ];
 
 // wrap <Route> and use this everywhere instead, then when

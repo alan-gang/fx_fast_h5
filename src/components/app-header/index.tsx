@@ -18,8 +18,9 @@ const popoverInner: any[] = [
   {name: '投注记录', link: '/betRecords'},
   {name: '历史开奖', link: '/openIssueHistory', gameId: true},
   {name: '玩法说明', link: '/playMethodRule', gameId: true},
-  {name: '彩种说明', link: '/instruction', gamId: true},
-  {name: '投注提醒',},
+  {name: '彩种说明', link: '/instruction', gameId: true},
+  {name: '投注提醒', link: '/BookLeadingSettings', gameId: true},
+  {name: '投注提醒历史', link: '/BookLeadingHistory', gameId: true},
 ]
 
 @inject("store")
@@ -106,6 +107,20 @@ class AppHeader extends Component<Props, object> {
           <Icon type="left" size="lg" />
         </Flex.Item>
         <Flex.Item className="txt-c fs-32">彩种说明</Flex.Item>
+        <Flex.Item></Flex.Item>
+      </Route>,
+      <Route key="7" path="/BookLeadingSettings">
+        <Flex.Item onClick={ this.props.history.goBack }>
+          <Icon type="left" size="lg" />
+        </Flex.Item>
+        <Flex.Item className="txt-c fs-32">投注提醒</Flex.Item>
+        <Flex.Item></Flex.Item>
+      </Route>,
+      <Route key="8" path="/BookLeadingHistory">
+        <Flex.Item onClick={ this.props.history.goBack }>
+          <Icon type="left" size="lg" />
+        </Flex.Item>
+        <Flex.Item className="txt-c fs-32">投注提醒历史</Flex.Item>
         <Flex.Item></Flex.Item>
       </Route>,
       
