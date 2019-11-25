@@ -32,7 +32,7 @@ class playMethodRule extends Component<Props, object> {
       }
     })
     const n: any = this.contains('.c-deeporange', this.state.gameTypeName)[0]
-    n && n.scrollIntoView()
+    n && n.scrollIntoView({behavior: 'smooth'})
   }
   contains (selector: any, text: any) {
     return Array.prototype.filter.call(this.dom.current.querySelectorAll(selector), function(element){

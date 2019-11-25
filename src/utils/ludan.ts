@@ -323,9 +323,9 @@ export const MAX_COLUMNS: number = 30;
  * @param maxRows 路单最大展示的行数，默认为6行
  * @param maxColumns 路单最大展示的列数，默认为18列
  */
-export function getLuDanListByMethod(issueList: any[], type: string, name: string, maxRows: number = MAX_ROWS, maxColumns: number = MAX_COLUMNS): object[] | null {
+export function getLuDanListByMethod(issueList: any[], type: string, name: string, maxRows: number = MAX_ROWS, maxColumns: number = MAX_COLUMNS): object[] {
   if (!issueList || issueList.length < 1 || !name) {
-    return null;
+    return [];
   }
   const mObj: any = getMethodDataByName(type + '_' + name);
   if (!mObj) {
