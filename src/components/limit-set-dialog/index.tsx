@@ -5,10 +5,12 @@ import { Button, Modal, Icon } from 'antd-mobile';
 import './index.styl';
 
 interface Props {
+  store?: any;
   isShowMask?: boolean;
   isShow: boolean;
   gameId: number;
-  limitLevelList: LimitLevelItem[]
+  limitLevelList: LimitLevelItem[];
+  isShowLimitSetDialogClose: boolean; // 是否显示弹出框关闭按钮
   onLimitChoiceCB(level: number): void;
   onCloseHandler?: () => void;
 }
@@ -21,9 +23,20 @@ interface State {
 @inject("store")
 @observer
 class LimitSetDialog extends Component<Props, object> {
-  state: State = {
-    curLimitIndex: 0,
-    level: 1
+  state: State;
+  constructor(props: Props) {
+    super(props);
+    let level = ((props.store.game.getGameLimitLevelByGameId(props.gameId) || {}).level) || 1;
+    let index = props.limitLevelList.findIndex((item) => item.level === level);
+    this.state = {
+      curLimitIndex: index,
+      level
+    }
+  }
+  componentWillReceiveProps(nextProps: Props) {
+    let level = nextProps.store.game.getGameLimitLevelByGameId(nextProps.gameId) || 1;
+    let index = nextProps.limitLevelList.findIndex((item) => item.level === level);
+    this.setState({curLimitIndex: index});
   }
   onLimitChoiceHandler = (level: number, index: number) => {
     this.setState({curLimitIndex: index, level});
@@ -40,11 +53,12 @@ class LimitSetDialog extends Component<Props, object> {
     return (
       <section className="limit-set-dialog">
          <Modal
+          className="limit-set-modal"
           visible={true}
           maskClosable={false}
           title=""
         >
-          <header className="flex ai-c jc-c limit-set-header">限红设置<Icon type="cross" onClick={this.onCloseHandler} /></header>
+          <header className="flex ai-c jc-c limit-set-header">限红设置{this.props.isShowLimitSetDialogClose && <Icon type="cross" onClick={this.onCloseHandler} />}</header>
           <div className="bg-white limit-set-content">
             <section className="flex jc-c limit-list">
               {this.props.limitLevelList.map((item: LimitLevelItem, i: number) => (

@@ -11,7 +11,8 @@ class MyGame {
   @observable limitList: LimitListItem[] = local.get(Types.LOCAL_WAP_FAST_SET_LIMIT_LIST) || []; // 限红
   @observable setGamesLimitLevel: GameLimitLevel[] = local.get(Types.LOCAL_WAP_FAST_SET_GAMES_LIMIT_LEVEL) || [];
   @observable availableGames: number[] = [];
-
+  @observable defaultInitBetAmount: number = 10;
+  
   hasGame(id: number): boolean {
     return !!this.favourites.find((game: Game) => game.id === id);
   }

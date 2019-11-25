@@ -19,9 +19,9 @@ import { getLunDanTabByName, getTabsByType, getLudanTabByTypeAndName } from '../
 import LimitSetDialog from 'comp/limit-set-dialog';
 import Socket from '../../socket';
 import Bus from '../../utils/eventBus'
-
+import { LOTTERY_TYPES } from '../../utils/config';
+import { ANIMALS_POULTRY, ANIMALS_BEAST } from '../../game/hc6';
 import './index.styl';
-
 
 interface IProps {
   store?: any;
@@ -40,6 +40,7 @@ interface State {
   curMenuEname: string; // 玩法菜单选中玩法的英语名
   curSubMenuIndex: number;
   subMethods: GameSubMethodMenu[];
+  curSubMethod?: GameSubMethodMenu;
   curGameMethodItems: any[];
   odds: any;
   issueList: any[];
@@ -55,6 +56,7 @@ interface State {
   isExpandLudan: boolean;
   isShowLimitSetDialog: boolean;
   limitLevelList: LimitLevelItem[];
+  isShowLimitSetDialogClose: boolean; // 是否显示弹出框关闭按钮
 }
 
 interface DataMethodItem {
@@ -90,7 +92,7 @@ class Game extends Component<Props, object> {
     let ludanTab = getLudanTabByTypeAndName(this.gameType, curMenuEname, bestLudan && bestLudan.codeStyle);
     let ludanMenus = getTabsByType(this.gameType, curMenuEname);
     let gameLimitLevel = this.props.store.game.getGameLimitLevelByGameId(this.id); // 设置的限红数据
-    let limitListItem = this.props.store.game.getLimitListItemById(this.id); 
+    let curSubMenuIndex = this.gameType === LOTTERY_TYPES.HC6 ? -1 : 0;
     this.state = {
       id: 1,
       curIssue: '',
@@ -100,12 +102,13 @@ class Game extends Component<Props, object> {
       openNumbers: [],
       curMenuIndex: 0,
       curMenuEname,
-      curSubMenuIndex: 0,
+      curSubMenuIndex,
       subMethods: [],
+      curSubMethod: undefined,
       curGameMethodItems: this.getMethodItemsByIds((menus && menus[0].ids) || []),
       odds: {},
       issueList: [],
-      defaultInitMethodItemAmount: 20,
+      defaultInitMethodItemAmount: 0, //this.props.store.game.defaultInitBetAmount,
       totalBetCount: 0,
       totalBetAmount: 0,
       tabIndex: 0,
@@ -115,7 +118,8 @@ class Game extends Component<Props, object> {
       isShowLudan: ludanMenus && ludanMenus.length > 0,
       isExpandLudan: false,
       isShowLimitSetDialog: !gameLimitLevel,
-      limitLevelList: !gameLimitLevel ? (limitListItem ? limitListItem.kqPrizeLimit : []) : [],
+      limitLevelList: limitItem ? limitItem.kqPrizeLimit : [],
+      isShowLimitSetDialogClose: false
     }
     this.init();
     Bus.emit('gameIdChanged', this.id);
@@ -145,6 +149,10 @@ class Game extends Component<Props, object> {
   }
   componentDidMount() {
     this.initSocket();
+    Bus.on('onSetLimit', this.onSetLimit);
+  }
+  onSetLimit = () => {
+    this.setState({isShowLimitSetDialog: !this.state.isShowLimitSetDialog, isShowLimitSetDialogClose: true});
   }
   componentWillReceiveProps(nextProps: Props) {
     // console.log(this.props.location.pathname, nextProps.location.pathname, '?????')
@@ -215,17 +223,16 @@ class Game extends Component<Props, object> {
   methodMenuChangedCB = (method: GameMethodMenu) => {
     let curGameMethodItems = this.getMethodItemsByIds(method.ids || []);
     let ludanMenus = getTabsByType(this.gameType, method.ename);
-
     let limitItem = this.props.store.game.getLimitListItemById(this.id);
     let bestLudan: BestLudanItem = limitItem && limitItem.bestLudan;
     let ludanTab = getLudanTabByTypeAndName(this.gameType, method.ename, bestLudan && bestLudan.codeStyle);
-
+    let curSubMenuIndex = this.gameType === LOTTERY_TYPES.HC6 ? -1 : 0;
     this.setState({
       subMethods: method.subMethods || [],
       curGameMethodItems,
       totalBetCount: 0,
       totalBetAmount: 0,
-      curSubMenuIndex: 0,
+      curSubMenuIndex,
       curMenuEname: method.ename,
       defaultMenu: (ludanTab && ludanTab.name) || '',
       // defaultSubMenu: '',
@@ -233,11 +240,20 @@ class Game extends Component<Props, object> {
     }, this.updateOddsOfMethod);
   }
   updateSubMethods = (method: GameSubMethodMenu) => {
+    let curGameMethodItems;
+    if (this.gameType === LOTTERY_TYPES.HC6) {
+      curGameMethodItems = this.state.curGameMethodItems;
+      if (this.state.curMenuEname === 'texiao') {
+        curGameMethodItems = this.updateHC6TexiaoMethodItems(curGameMethodItems, method.v)
+      }
+    } else {
+      curGameMethodItems = this.getMethodItemsByIds(method.ids || []);
+    }
     this.setState({
-      curGameMethodItems: this.getMethodItemsByIds(method.ids || [])
+      curSubMethod: method,
+      curGameMethodItems
     });
   }
-
   // 更新选中的玩法项数据
   updateMethodItem = (i: number, j: number, k: number, selected?: boolean | undefined, value?: string | undefined) => {
     let methodItems = this.state.curGameMethodItems;
@@ -251,7 +267,6 @@ class Game extends Component<Props, object> {
       curGameMethodItems: methodItems
     }, this.calcBet);
   }
-
   updateMethodRow = (i: number, j: number, selected?: boolean | undefined) => {
     let methodItems = this.state.curGameMethodItems;
     if (selected !== undefined) {
@@ -261,7 +276,6 @@ class Game extends Component<Props, object> {
       curGameMethodItems: methodItems
     }, this.calcBet);
   }
-
   // 更新当前游戏当前玩法相关的odd
   updateOddsOfMethod(odds?: any) {
     if (!odds) {
@@ -349,6 +363,20 @@ class Game extends Component<Props, object> {
           methodItem.repeatCount = gameMethodItem.repeatCount;
           return methodItem;
         });
+      }
+    });
+
+    curGameMethodItems.forEach((gameMethodItem: any) => {
+      if (['texiao'].includes(gameMethodItem.methodTypeName)) {
+        methodList = [];
+        method = {id: gameMethodItem.id, rows: [], repeatCount: 0};
+        gameMethodItem.rows.forEach((row: any) => {
+          if (row.s) {
+            method.rows.push(row.n || row.pv);
+          }
+        });
+        method.rows = [method.rows.length];
+        methodList.push(method);
       }
     });
 
@@ -442,11 +470,23 @@ class Game extends Component<Props, object> {
   }
   componentWillUnmount() {
     this.mysocket && this.mysocket.removeListen();
+    Bus.off('onSetLimit', this.onSetLimit);
   }
   onGameHeaderUpdateHandler = (data: any) => {
     if (data.type === 'ludan') {
       this.setState({isExpandLudan: data.data});
     }
+  }
+  updateHC6TexiaoMethodItems(methodItems: any, subMethodMenuValue: string = '') {
+    const animals = subMethodMenuValue === '1' ? ANIMALS_POULTRY : ANIMALS_BEAST;
+    methodItems = methodItems.map((method: any) => {
+      method.rows = method.rows.map((row: any) => {
+        row.s = animals.includes(row.n);
+        return row;
+      })
+      return method;
+    });
+    return methodItems;
   }
   render() {
     return (
@@ -493,9 +533,11 @@ class Game extends Component<Props, object> {
               defaultInitMethodItemAmount={this.state.defaultInitMethodItemAmount}
               updateMethodItem={this.updateMethodItem} 
               updateMethodRow={this.updateMethodRow}
+              curSubMethod={this.state.curSubMethod}
             />
             <OrderBar 
               gameId={this.id} 
+              gameType={this.gameType} 
               curIssue={this.state.curIssue} 
               betCount={this.state.totalBetCount} 
               amount={this.state.totalBetAmount} 
@@ -508,7 +550,16 @@ class Game extends Component<Props, object> {
            
           </section>
         </GameCommonDataContext.Provider>
-        {/* {this.state.isShowLimitSetDialog && <LimitSetDialog isShow={this.state.isShowLimitSetDialog} gameId={this.id} limitLevelList={this.state.limitLevelList} onLimitChoiceCB={this.onLimitChoiceCB} onCloseHandler={this.onCloseLimitChoiceHandler} />} */}
+        {this.state.isShowLimitSetDialog && 
+          <LimitSetDialog 
+            isShow={this.state.isShowLimitSetDialog} 
+            isShowLimitSetDialogClose={this.state.isShowLimitSetDialogClose} 
+            gameId={this.id} 
+            limitLevelList={this.state.limitLevelList} 
+            onLimitChoiceCB={this.onLimitChoiceCB} 
+            onCloseHandler={this.onCloseLimitChoiceHandler} 
+          />
+        }
       </article>
     );
   }

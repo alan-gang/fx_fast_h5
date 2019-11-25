@@ -2,18 +2,10 @@ import React, { PureComponent, MouseEvent } from 'react';
 import { inject, observer } from 'mobx-react';
 import methodItems from '../../game/methodItems';
 import { Row, Col } from '../grid';
+import { LOTTERY_TYPES } from '../../utils/config';
+import { GameSubMethodMenu } from '../../typings/games';
 
 import './index.styl';
-
-interface DsEventTarget extends EventTarget {
-  nodeName: string;
-  type: string;
-  value: string;
-}
-
-interface DsMouseEvent extends MouseEvent<HTMLElement> {
-  target: DsEventTarget
-}
 
 interface Props {
   store?: any;
@@ -22,6 +14,7 @@ interface Props {
   defaultInitMethodItemAmount: number;
   updateMethodItem(i: number, j: number, k: number, selected?: boolean | undefined, value?: string | undefined): void;
   updateMethodRow(i: number, j: number, selected?: boolean | undefined): void;
+  curSubMethod?: GameSubMethodMenu;
 }
 
 @inject('store')
@@ -29,16 +22,14 @@ interface Props {
 class Play extends PureComponent<Props, object> {
   methodItems: any = methodItems;
   onMethodItemHandler = (i: number, j: number, k: number, selected: boolean, methodTypeName: string, event: MouseEvent<HTMLElement>) => {
-    // let myevent: DsMouseEvent = event as DsMouseEvent;
-    // let { nodeName } = myevent.target;
-    // if (nodeName === 'INPUT' && myevent.target.value) return;
     let amount = selected ? '' : String(this.props.defaultInitMethodItemAmount);
     amount = ['rx_nzn', 'zux_q2', 'zux_q3', 'zx_q2', 'zx_q3'].includes(methodTypeName) ? '0' : amount;
     this.props.updateMethodItem(i, j, k, !selected, amount);
   }
   onRowClickHandler = (i: number, j: number, selected?: boolean | undefined) => {
-    console.log('info row =', selected);
-    this.props.updateMethodRow(i, j, selected);
+    if (this.props.gameType === LOTTERY_TYPES.HC6) {
+      this.props.updateMethodRow(i, j, !selected);
+    }
   }
   componentWillReceiveProps(nextProps: Props) {
     this.forceUpdate();

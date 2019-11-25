@@ -143,6 +143,7 @@ export default {
   getUserBalance,
   getCfgInfo,
   bet,
+  booking,
   historyIssueByDate,
   myNewPoint,
   sysNotices,

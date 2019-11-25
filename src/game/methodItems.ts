@@ -363,7 +363,7 @@ const methodItems: any = {
       methodTypeName: 'zux_q2',
       layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '前二组选', nonasv: true, col: 4, class: 'circle medium col-txt', vs: cpArr(vs)}),
+        getCommonRow({n: '前二组选', posOdd: true, noodd: true, nonasv: true, col: 4, class: 'circle medium col-txt', vs: cpArr(vs)}),
       ]
     }
   },
@@ -375,7 +375,7 @@ const methodItems: any = {
       methodTypeName: 'zux_q3',
       layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '前三组选', nonasv: true, col: 4, class: 'circle medium col-txt', vs: cpArr(vs)})
+        getCommonRow({n: '前三组选', posOdd: true, noodd: true, nonasv: true, col: 4, class: 'circle medium col-txt', vs: cpArr(vs)})
       ]
     }
   },
@@ -390,8 +390,8 @@ const methodItems: any = {
       choiceNoRepeat: true,
       layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '前二直选', subpn: '(第一位)', pv: '第一位', nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)}),
-        getCommonRow({n: '前二直选', subpn: '(第二位)', pv: '第二位', nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)})
+        getCommonRow({n: '前二直选', subpn: '(第一位)', pv: '第一位', posOdd: true, noodd: true, nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)}),
+        getCommonRow({n: '前二直选', subpn: '(第二位)', pv: '第二位', posOdd: true, noodd: true, nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)})
       ]
     }
   },
@@ -405,9 +405,9 @@ const methodItems: any = {
       choiceNoRepeat: true,
       layout: 'row layout-col-float',
       rows: [
-        getCommonRow({n: '前三直选', subpn: '(第一位)', pv: '第一位', nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)}),
-        getCommonRow({n: '前三直选', subpn: '(第二位)', pv: '第二位', nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)}),
-        getCommonRow({n: '前三直选', subpn: '(第三位)', pv: '第三位', nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)})
+        getCommonRow({n: '前三直选', subpn: '(第一位)', pv: '第一位', posOdd: true, noodd: true, nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)}),
+        getCommonRow({n: '前三直选', subpn: '(第二位)', pv: '第二位', posOdd: true, noodd: true, nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)}),
+        getCommonRow({n: '前三直选', subpn: '(第三位)', pv: '第三位', posOdd: true, noodd: true, nonasv: true, col: 4, class: 'circle medium', vs: cpArr(vs)})
       ]
     }
   },
@@ -626,7 +626,7 @@ const methodItems: any = {
   '7001:1' () {
     let vs = [];
     for (let i = 1; i <= 49; i++) {
-      vs.push({s: false, n: String(i).padStart(2, '0'), col: 6, pv: '1'});
+      vs.push({s: false, n: String(i).padStart(2, '0'), col: 6, pv: i});
     }
     return {
       class: 'pd-b-12',
@@ -648,19 +648,20 @@ const methodItems: any = {
     return {
       layout: 'row',
       class: 'pos-label-row row-bar no-slt-m-item texiao',
+      methodTypeName: 'texiao',
       rows: [
-        getCommonRow({n: '鼠', pv: 1, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('鼠'))}),
-        getCommonRow({n: '牛', pv: 2, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('牛'))}),
-        getCommonRow({n: '虎', pv: 3, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('虎'))}),
-        getCommonRow({n: '兔', pv: 4, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('兔'))}),
-        getCommonRow({n: '龙', pv: 5, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('龙'))}),
-        getCommonRow({n: '蛇', pv: 6, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('蛇'))}),
-        getCommonRow({n: '马', pv: 7, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('马'))}),
-        getCommonRow({n: '羊', pv: 8, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('羊'))}),
-        getCommonRow({n: '猴', pv: 9, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('猴'))}),
-        getCommonRow({n: '鸡', pv: 10, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('鸡'))}),
-        getCommonRow({n: '狗', pv: 11, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('狗'))}),
-        getCommonRow({n: '猪', pv: 12, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 1, vs: formatToVsItem(AtoN('猪'))})
+        getCommonRow({s: false, n: '鼠', pv: 1, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('鼠'))}),
+        getCommonRow({s: false, n: '牛', pv: 2, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('牛'))}),
+        getCommonRow({s: false, n: '虎', pv: 3, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('虎'))}),
+        getCommonRow({s: false, n: '兔', pv: 4, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('兔'))}),
+        getCommonRow({s: false, n: '龙', pv: 5, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('龙'))}),
+        getCommonRow({s: false, n: '蛇', pv: 6, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('蛇'))}),
+        getCommonRow({s: false, n: '马', pv: 7, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('马'))}),
+        getCommonRow({s: false, n: '羊', pv: 8, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('羊'))}),
+        getCommonRow({s: false, n: '猴', pv: 9, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('猴'))}),
+        getCommonRow({s: false, n: '鸡', pv: 10, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('鸡'))}),
+        getCommonRow({s: false, n: '狗', pv: 11, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('狗'))}),
+        getCommonRow({s: false, n: '猪', pv: 12, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 1, vs: formatToVsItem(AtoN('猪'))})
       ]
     }
   },
@@ -713,39 +714,71 @@ const methodItems: any = {
   '7009:1' () {
     let vs = [];
     for (let i = 1; i <= 49; i++) {
-      vs.push({s: false, n: String(i).padStart(2, '0'), col: 6, pv: '1'});
+      vs.push({s: false, n: String(i).padStart(2, '0'), col: 6, pv: i});
     }
     return {
       class: 'pd-b-12',
       rows: [
-        getCommonRow({n: '', hidePos: true, class: 'ncircle xsmall', vs: [{s: false, n: '大', pv: 1, col: 6}, {s: false, n: '小', pv: 2, col: 6}, {s: false, n: '单', pv: 3, col: 6}, {s: false, n: '双', pv: 4, col: 6}]}),
-        getCommonRow({n: '', hidePos: true, class: 'ncircle xsmall', vs})
+        getCommonRow({n: '', hidePos: true, class: '', vs: [{s: false, n: '正一码大', pv: 1, col: 6}, {s: false, n: '正一码小', pv: 2, col: 6}, {s: false, n: '正一码单', pv: 3, col: 6}, {s: false, n: '正一码双', pv: 4, col: 6}]}),
+        // getCommonRow({n: '', hidePos: true, class: 'ncircle xsmall', vs})
       ]
     }
   },
   // '正二码'
   '7010:1' () {
-    return this['7009:1']()
+    // return this['7009:1']()
+    return {
+      class: '',
+      rows: [
+        getCommonRow({n: '', hidePos: true, class: '', vs: [{s: false, n: '正二码大', pv: 1, col: 6}, {s: false, n: '正二码小', pv: 2, col: 6}, {s: false, n: '正二码单', pv: 3, col: 6}, {s: false, n: '正二码双', pv: 4, col: 6}]})
+      ]
+    }
   },
   // '正三码'
   '7011:1' () {
-    return this['7009:1']()
+    return {
+      class: '',
+      rows: [
+        getCommonRow({n: '', hidePos: true, class: '', vs: [{s: false, n: '正三码大', pv: 1, col: 6}, {s: false, n: '正三码小', pv: 2, col: 6}, {s: false, n: '正三码单', pv: 3, col: 6}, {s: false, n: '正三码双', pv: 4, col: 6}]})
+      ]
+    }
   },
   // '正四码'
   '7012:1' () {
-    return this['7009:1']()
+    return {
+      class: '',
+      rows: [
+        getCommonRow({n: '', hidePos: true, class: '', vs: [{s: false, n: '正四码大', pv: 1, col: 6}, {s: false, n: '正四码小', pv: 2, col: 6}, {s: false, n: '正四码单', pv: 3, col: 6}, {s: false, n: '正四码双', pv: 4, col: 6}]})
+      ]
+    }
   },
   // '正五码'
   '7013:1' () {
-    return this['7009:1']()
+    return {
+      class: '',
+      rows: [
+        getCommonRow({n: '', hidePos: true, class: '', vs: [{s: false, n: '正五码大', pv: 1, col: 6}, {s: false, n: '正五码小', pv: 2, col: 6}, {s: false, n: '正五码单', pv: 3, col: 6}, {s: false, n: '正五码双', pv: 4, col: 6}]})
+      ]
+    }
   },
   // '正六码'
   '7014:1' () {
-    return this['7009:1']()
+    return {
+      class: '',
+      rows: [
+        getCommonRow({n: '', hidePos: true, class: '', vs: [{s: false, n: '正六码大', pv: 1, col: 6}, {s: false, n: '正六码小', pv: 2, col: 6}, {s: false, n: '正六码单', pv: 3, col: 6}, {s: false, n: '正六码双', pv: 4, col: 6}]})
+      ]
+    }
   },
   // '特码'
   '7015:1' () {
-    return this['7009:1']()
+    // return this['7009:1']()
+    return {
+      class: '',
+      rows: [
+        getCommonRow({n: '', hidePos: true, class: '', vs: [{s: false, n: '特码大', pv: 1, col: 6}, {s: false, n: '特码小', pv: 2, col: 6}, {s: false, n: '特码单', pv: 3, col: 6}, {s: false, n: '特码双', pv: 4, col: 6}]})
+      ]
+    }
   },
   // '正特和值'
   '7016:1' () {

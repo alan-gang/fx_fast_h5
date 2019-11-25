@@ -1,17 +1,19 @@
 import React, { Component, ChangeEvent } from 'react';
 import ReactDOM from 'react-dom';
 import { inject, observer } from 'mobx-react';
-import { Button, Toast } from 'antd-mobile';
+import { Button, Toast, Modal } from 'antd-mobile';
 import CoinSet from '../coin-set';
 import APIs from '../../http/APIs';
 import calc from '../../game/calc';
 import { removeRepeat2DArray, countRepeat } from '../../utils/game';
+import { LOTTERY_TYPES } from '../../utils/config';
 
 import './index.styl';
 
 interface Props {
   store?: any;
   gameId: number;
+  gameType: string;
   curIssue?: string;
   betCount: number;
   amount: number;
@@ -31,6 +33,7 @@ interface DataMethodItem {
 
 interface State {
   amount: number;
+  showCoinSet: boolean;
 }
 
 const DEFAULT_AMOUNT = 2;
@@ -46,7 +49,8 @@ class OrderBar extends Component<Props, object> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      amount: this.props.defaultInitMethodItemAmount
+      amount: this.props.defaultInitMethodItemAmount,
+      showCoinSet: false
     }
     this.orderBarContainer = document.createElement('div');
     this.orderBarContainer.className = ORDER_BAR_CONTAINER_CLASS;
@@ -57,25 +61,32 @@ class OrderBar extends Component<Props, object> {
     this.props.updateDefaultInitMethodItemAmount(amount);
   }
   onResetHandler = () => {
-    // Modal.confirm({
-    //   centered: true,
-    //   title: '您确定要重置选中的投注？',
-    //   content: '',
-    //   okText: '确认',
-    //   cancelText: '取消',
-    //   onOk: () => {
-    //     this.props.resetSelectedOfAllMethodItem();
-    //   }
-    // });
+    Modal.alert(
+      ' ',
+      '您确定要重置选中的投注？',
+      [
+        { text: '取消' },
+        { text: '确定', onPress: () => this.props.resetSelectedOfAllMethodItem() }
+      ]
+    );
   }
   onOrderHandler = () => {
-    this.order();
+    this.setState({showCoinSet: false});
+    if (this.props.gameType === LOTTERY_TYPES.HC6) {
+      this.hc6Order(); 
+    } else {
+      this.order();
+    }
   }
   validate(params: any): boolean {
     if (!params.issue) {
       Toast.fail('获取游戏期号失败，请刷新后重试！');
       return false;
     } else if(!params.betList || params.betList.length <= 0) {
+      return false;
+    } else if(params.totMoney <= 0) {
+      this.setState({showCoinSet: true});
+      Toast.fail('请输入金额！');
       return false;
     } else if (params.errorMsg) {
       Toast.fail(params.errorMsg);
@@ -184,17 +195,79 @@ class OrderBar extends Component<Props, object> {
         methodItem.rows.forEach((row: any) => {
           row.vs.forEach((vsItem: any) => {
             if (vsItem.s) {
-              params.totMoney += parseInt(vsItem.amt, 10);
+              params.totMoney += this.state.amount; // parseInt(vsItem.amt, 10);
               params.totProjs++;
               pos = row.nonasv ? '' : row.p || row.n;
               val = vsItem.p ? (vsItem.p + '-' + (vsItem.pv || vsItem.n)) : (vsItem.pv || vsItem.n)
               content = pos ? pos + '-' + val : val;
-              params.betList.push({methodId: methodItem.id.split(':')[0], projs: 1, money: vsItem.amt, content});
+              params.betList.push({methodId: methodItem.id.split(':')[0], projs: 1, money: this.state.amount, content});
             }
           });
         });
       }
     });
+    return params;
+  }
+  getParamsHc6() {
+    let props = this.props;
+    let curGameMethodItems = props.curGameMethodItems;
+    let curGameLimitLevel = props.store.game.getGameLimitLevelByGameId(props.gameId);
+    let params: any = {
+      gameid: props.gameId,
+      issue: props.curIssue,
+      totalnums: 0, // 总注数
+      totalmoney: 0,
+      type: 1, // 类型：1-投注；2-追号
+      isusefree: 0, // 是否使用优惠券，0-否，1-是
+      items: [],
+      trace: '',
+      isJoinPool: 0,
+      isFastBet: 1,
+      limitLevel: (curGameLimitLevel && curGameLimitLevel.level) || 1
+    };
+    let items: any[] = [];
+    let totalCount = 0;
+    curGameMethodItems.forEach((methodItem: any) => {
+      methodItem.rows.forEach((row: any) => {
+        console.log('count=', this.calcBet(), methodItem.id)
+        if (['texiao'].includes(methodItem.methodTypeName)) {
+          if (row.s) {
+            items.push({
+              methodid: methodItem.id.split(':')[0],
+              type: 1,
+              pos: '',
+              codes: row.n || row.pv,
+              count: 1,
+              times: this.state.amount,
+              money: this.state.amount,
+              mode: 1,
+              userpoint: '0.0000'
+            });
+            totalCount += 1;   
+          }
+        } else {
+          row.vs.forEach((vsItem: any) => {
+            if (vsItem.s) {
+              items.push({
+                methodid: methodItem.id.split(':')[0],
+                type: 1,
+                pos: vsItem.pos,
+                codes: vsItem.p ? (vsItem.p + '-' + (vsItem.pv || vsItem.n)) : (vsItem.pv || vsItem.n),
+                count: 1,
+                times: this.state.amount,
+                money: this.state.amount,
+                mode: 1,
+                userpoint: '0.0000'
+              });
+              totalCount += 1;            
+            }
+          })
+        }
+      });
+    });
+    params.totalmoney = items.length * this.state.amount;
+    params.totalnums = totalCount;
+    params.items = JSON.stringify(items);
     return params;
   }
   calcBet() {
@@ -232,6 +305,20 @@ class OrderBar extends Component<Props, object> {
       }
     });
 
+    curGameMethodItems.forEach((gameMethodItem: any) => {
+      if (['texiao'].includes(gameMethodItem.methodTypeName)) {
+        methodList = [];
+        method = {id: gameMethodItem.id, rows: [], repeatCount: 0};
+        gameMethodItem.rows.forEach((row: any) => {
+          if (row.s) {
+            method.rows.push(row.n || row.pv);
+          }
+        });
+        method.rows = [method.rows.length];
+        methodList.push(method);
+      }
+    });
+
     // 计算总注数
     methodList.forEach((methodItem: DataMethodItem) => {
       betCount += this.calc[methodItem.id]({nsl: methodItem.rows, ns: methodItem.rows, repeatCount: methodItem.repeatCount});
@@ -244,7 +331,10 @@ class OrderBar extends Component<Props, object> {
     if (!this.validate(params)) {
       return null;
     }
+    this.resetAmount();
+    Toast.loading('投注中...', 0)
     APIs.bet({betData: JSON.stringify(params)}).then(({success, msg}: any) => {
+      Toast.hide();
       this.showLoading = false;
       if (success === 1) {
         this.props.store.user.updateBalance();
@@ -254,16 +344,48 @@ class OrderBar extends Component<Props, object> {
         Toast.fail(msg || '投注失败');
         this.props.orderFinishCB(false);
       }
+    }).catch(() => {
+      Toast.hide();
     });
   }
+  hc6Order() {
+    let params = this.getParamsHc6();
+    Toast.loading('投注中...', 0)
+    APIs.booking(params).then(({success, msg}: any) => {
+      Toast.hide();
+      this.resetAmount();
+      if (success === 1) {
+        this.props.store.user.updateBalance();
+        Toast.success('投注成功');
+        this.props.orderFinishCB(true);
+      } else {
+        Toast.fail(msg || '投注失败');
+        this.props.orderFinishCB(false);
+      }
+    }).catch(() => {
+      Toast.hide();
+    });
+  }
+  onFocusHandler = () => {
+    this.setState({showCoinSet: true});
+  }
   onAmountChanged = (event: ChangeEvent<HTMLInputElement>) => {
-    let value = event.target.value;
+    let value = event.target.value.trim();
     let eType  = event.type;
+    if (value.length <= 0) {
+      value = '0';
+    }
+    console.log('type=', eType);
     if (!/^\d*$/g.test(value)) {
       value = String(this.props.defaultInitMethodItemAmount);
     }
-    if (eType === 'blur' && !/^\d+$/g.test(value)) {
-      value = String(this.props.defaultInitMethodItemAmount || DEFAULT_AMOUNT);
+    this.setState({amount: parseInt(value, 10)});
+    this.props.updateDefaultInitMethodItemAmount(parseInt(value, 10));
+  }
+  onBlurHandler =  (event: ChangeEvent<HTMLInputElement>) => {
+    let value = event.target.value.trim();
+    if (!/^\d+$/g.test(value)) {
+      value = '-1';
     }
     this.setState({amount: value});
     this.props.updateDefaultInitMethodItemAmount(parseInt(value, 10));
@@ -274,17 +396,18 @@ class OrderBar extends Component<Props, object> {
   componentWillUnmount() {
     document.body.removeChild(this.orderBarContainer);
   }
-  onClose = (): void => {
-
+  resetAmount() {
+    this.setState({amount: 0});
+    this.props.updateDefaultInitMethodItemAmount(0);
   }
   render() {
     let elements = (
       <section className="order-bar-view">
-        <section>{<CoinSet coinChoosed={this.coinChoosed} />}</section>
+        {this.state.showCoinSet && <section>{<CoinSet coinChoosed={this.coinChoosed} />}</section>}
         <section className="flex ai-c jc-sb order-sec">
           <div>
             <div className="flex ai-c fast-amount-wp">
-              <input className="fast-amount" type="tel" value={this.state.amount} onChange={this.onAmountChanged} onBlur={this.onAmountChanged} maxLength={9} placeholder="请输入快捷金额" />
+              <input className="fast-amount" type="tel" value={this.state.amount <= 0 ? '': this.state.amount} onChange={this.onAmountChanged} onBlur={this.onBlurHandler} onFocus={this.onFocusHandler} maxLength={9} placeholder="请输入快捷金额" />
             </div>  
           </div>
           <div className="txt-r">
