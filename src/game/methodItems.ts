@@ -649,6 +649,7 @@ const methodItems: any = {
       layout: 'row',
       class: 'pos-label-row row-bar no-slt-m-item texiao',
       methodTypeName: 'texiao',
+      calcMode: 'row',
       rows: [
         getCommonRow({s: false, n: '鼠', pv: 1, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('鼠'))}),
         getCommonRow({s: false, n: '牛', pv: 2, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('牛'))}),
@@ -670,6 +671,7 @@ const methodItems: any = {
     return {
       layout: 'row layout-col-float',
       class: 'pos-label-row no-slt-m-item row-bar row-bg-white sebo',
+      calcMode: 'row',
       rows: [
         getCommonRow({n: '红', pv: 1, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 1, vs: formatToVsItem(CtoN('red'))}),
         getCommonRow({n: '蓝', pv: 2, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(CtoN('blue'))}),

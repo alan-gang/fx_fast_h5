@@ -152,7 +152,7 @@ class Game extends Component<Props, object> {
     Bus.on('onSetLimit', this.onSetLimit);
   }
   onSetLimit = () => {
-    this.setState({isShowLimitSetDialog: !this.state.isShowLimitSetDialog, isShowLimitSetDialogClose: true});
+    this.setState({isShowLimitSetDialog: !this.state.isShowLimitSetDialog, isShowLimitSetDialogClose: true, limitLevelList: this.props.store.game.getLimitDataOfKqByGameId(this.id) || []});
   }
   componentWillReceiveProps(nextProps: Props) {
     // console.log(this.props.location.pathname, nextProps.location.pathname, '?????')
@@ -252,7 +252,7 @@ class Game extends Component<Props, object> {
     this.setState({
       curSubMethod: method,
       curGameMethodItems
-    });
+    }, this.calcBet);
   }
   // 更新选中的玩法项数据
   updateMethodItem = (i: number, j: number, k: number, selected?: boolean | undefined, value?: string | undefined) => {
@@ -280,7 +280,7 @@ class Game extends Component<Props, object> {
   updateOddsOfMethod(odds?: any) {
     if (!odds) {
       this.getUserPoint(this.id);
-      return ;
+      return null;
     }
     let curGameMethodItems = this.state.curGameMethodItems;
     let methodId: string = '';
@@ -367,7 +367,8 @@ class Game extends Component<Props, object> {
     });
 
     curGameMethodItems.forEach((gameMethodItem: any) => {
-      if (['texiao'].includes(gameMethodItem.methodTypeName)) {
+      // if (['texiao'].includes(gameMethodItem.methodTypeName)) {
+      if (gameMethodItem.calcMode === 'row') {  
         methodList = [];
         method = {id: gameMethodItem.id, rows: [], repeatCount: 0};
         gameMethodItem.rows.forEach((row: any) => {
@@ -396,11 +397,12 @@ class Game extends Component<Props, object> {
     let curGameMethodItems = this.state.curGameMethodItems;
     curGameMethodItems = curGameMethodItems.map((methodItem: any) => {
       methodItem.rows = methodItem.rows.map((row: any) => {
+        row.s = false;
         row.vs = row.vs.map((vsItem: any) => { 
           if (typeof vsItem === 'object') {
             vsItem.s = false; vsItem.amt = ''; return vsItem; 
           }
-        }); 
+        });
         return row;
       });
       return methodItem;

@@ -36,13 +36,11 @@ interface State {
   showCoinSet: boolean;
 }
 
-const DEFAULT_AMOUNT = 2;
 const ORDER_BAR_CONTAINER_CLASS = 'order-bar-container';
-
+const CALC_BET_NEED_COMPUTED_REPEAT = ['zx_q2', 'zx_q3'];
 @inject('store')
 @observer
 class OrderBar extends Component<Props, object> {
-  showLoading: boolean = false;
   state: State;
   calc: any = calc;
   orderBarContainer: HTMLDivElement;
@@ -56,27 +54,16 @@ class OrderBar extends Component<Props, object> {
     this.orderBarContainer.className = ORDER_BAR_CONTAINER_CLASS;
   }
   coinChoosed = (value: string) => {
-    let amount: number = value === 'all' ? parseInt(this.props.store.user.balance, 10): parseInt(value, 10);
+    const amount: number = value === 'all' ? parseInt(this.props.store.user.balance, 10): parseInt(value, 10);
     this.setState({amount});
     this.props.updateDefaultInitMethodItemAmount(amount);
   }
   onResetHandler = () => {
-    Modal.alert(
-      ' ',
-      '您确定要重置选中的投注？',
-      [
-        { text: '取消' },
-        { text: '确定', onPress: () => this.props.resetSelectedOfAllMethodItem() }
-      ]
-    );
+    Modal.alert(' ', '您确定要重置选中的投注？',[{ text: '取消' }, { text: '确定', onPress: () => this.props.resetSelectedOfAllMethodItem() }]);
   }
   onOrderHandler = () => {
     this.setState({showCoinSet: false});
-    if (this.props.gameType === LOTTERY_TYPES.HC6) {
-      this.hc6Order(); 
-    } else {
-      this.order();
-    }
+    this.order();
   }
   validate(params: any): boolean {
     if (!params.issue) {
@@ -88,9 +75,39 @@ class OrderBar extends Component<Props, object> {
       this.setState({showCoinSet: true});
       Toast.fail('请输入金额！');
       return false;
+    } else if (!this.validateLimit(params.lotteryId, params.limitLevel, this.state.amount)) {
+      return false;  
     } else if (params.errorMsg) {
       Toast.fail(params.errorMsg);
       return false;
+    }
+    return true;
+  }
+  validateHc6(params: any): boolean {
+    if (!params.issue) {
+      Toast.fail('获取游戏期号失败，请刷新后重试！');
+      return false;
+    } else if(!params.items || params.items.length <= 0) {
+      return false;
+    } else if(params.totalmoney <= 0) {
+      this.setState({showCoinSet: true});
+      Toast.fail('请输入金额！');
+      return false;
+    } else if (!this.validateLimit(params.gameid, params.limitLevel, this.state.amount)) {
+      return false;
+    } else if (params.errorMsg) {
+      Toast.fail(params.errorMsg);
+      return false;
+    }
+    return true;
+  }
+  validateLimit(gameId: number, level: number, amount: number) {
+    let limit = this.props.store.game.getLimitLevelData(gameId, level);
+    if (limit) {
+      if (amount < limit.minAmt || amount > limit.maxAmt) {
+        Toast.fail(amount < limit.minAmt ? '您输入的金额不能低于最低限红' : '您输入的金额超过最高限红');
+        return false;
+      } 
     }
     return true;
   }
@@ -230,13 +247,13 @@ class OrderBar extends Component<Props, object> {
     curGameMethodItems.forEach((methodItem: any) => {
       methodItem.rows.forEach((row: any) => {
         console.log('count=', this.calcBet(), methodItem.id)
-        if (['texiao'].includes(methodItem.methodTypeName)) {
+        if (methodItem.calcMode === 'row') {
           if (row.s) {
             items.push({
               methodid: methodItem.id.split(':')[0],
               type: 1,
               pos: '',
-              codes: row.n || row.pv,
+              codes: row.pv || row.n,
               count: 1,
               times: this.state.amount,
               money: this.state.amount,
@@ -261,7 +278,7 @@ class OrderBar extends Component<Props, object> {
               });
               totalCount += 1;            
             }
-          })
+          });
         }
       });
     });
@@ -276,7 +293,7 @@ class OrderBar extends Component<Props, object> {
     let method: any;
     let betCount: number = 0;
 
-    // 构造注数计算格式
+    // 构造注数计算数据格式
     curGameMethodItems.forEach((gameMethodItem: any) => {
       method = {id: gameMethodItem.id, rows: [], repeatCount: 0};
       gameMethodItem.rows.forEach((row: any) => {
@@ -287,7 +304,7 @@ class OrderBar extends Component<Props, object> {
     
     // 计算重复数
     curGameMethodItems.forEach((gameMethodItem: any) => {
-      if (['zx_q2', 'zx_q3'].includes(gameMethodItem.methodTypeName)) {
+      if (CALC_BET_NEED_COMPUTED_REPEAT.includes(gameMethodItem.methodTypeName)) {
         gameMethodItem.repeatCount = countRepeat(methodList.map((methodItem: DataMethodItem) => methodItem.id === gameMethodItem.id ? methodItem.rows : []));
       }
     });
@@ -306,13 +323,11 @@ class OrderBar extends Component<Props, object> {
     });
 
     curGameMethodItems.forEach((gameMethodItem: any) => {
-      if (['texiao'].includes(gameMethodItem.methodTypeName)) {
+      if (gameMethodItem.calcMode === 'row') {  
         methodList = [];
         method = {id: gameMethodItem.id, rows: [], repeatCount: 0};
         gameMethodItem.rows.forEach((row: any) => {
-          if (row.s) {
-            method.rows.push(row.n || row.pv);
-          }
+          if (row.s) method.rows.push(row.pv || row.n);
         });
         method.rows = [method.rows.length];
         methodList.push(method);
@@ -327,36 +342,20 @@ class OrderBar extends Component<Props, object> {
     return betCount;
   }
   order() {
-    let params = this.getParams();
-    if (!this.validate(params)) {
+    const isHc6 = this.isHc6();
+    const params = this[isHc6 ? 'getParamsHc6' : 'getParams']();
+    if (!this[isHc6 ? 'validateHc6' : 'validate'](params)) {
       return null;
     }
-    this.resetAmount();
-    Toast.loading('投注中...', 0)
-    APIs.bet({betData: JSON.stringify(params)}).then(({success, msg}: any) => {
-      Toast.hide();
-      this.showLoading = false;
-      if (success === 1) {
-        this.props.store.user.updateBalance();
-        Toast.success('投注成功');
-        this.props.orderFinishCB(true);
-      } else {
-        Toast.fail(msg || '投注失败');
-        this.props.orderFinishCB(false);
-      }
-    }).catch(() => {
-      Toast.hide();
-    });
-  }
-  hc6Order() {
-    let params = this.getParamsHc6();
-    Toast.loading('投注中...', 0)
-    APIs.booking(params).then(({success, msg}: any) => {
-      Toast.hide();
+    Toast.loading('投注中...', 0);
+    const data = isHc6 ? params : { betData: JSON.stringify(params) };
+    setTimeout(Toast.hide, 30000);
+    APIs[isHc6 ? 'booking' : 'bet'](data).then(({success, msg}: any) => {
       this.resetAmount();
+      Toast.hide();
       if (success === 1) {
-        this.props.store.user.updateBalance();
         Toast.success('投注成功');
+        this.props.store.user.updateBalance();
         this.props.orderFinishCB(true);
       } else {
         Toast.fail(msg || '投注失败');
@@ -387,7 +386,7 @@ class OrderBar extends Component<Props, object> {
     if (!/^\d+$/g.test(value)) {
       value = '-1';
     }
-    this.setState({amount: value});
+    this.setState({amount: parseInt(value, 10)});
     this.props.updateDefaultInitMethodItemAmount(parseInt(value, 10));
   }
   componentDidMount() {
@@ -400,6 +399,9 @@ class OrderBar extends Component<Props, object> {
     this.setState({amount: 0});
     this.props.updateDefaultInitMethodItemAmount(0);
   }
+  isHc6() {
+    return this.props.gameType === LOTTERY_TYPES.HC6;
+  }
   render() {
     let elements = (
       <section className="order-bar-view">
@@ -410,9 +412,9 @@ class OrderBar extends Component<Props, object> {
               <input className="fast-amount" type="tel" value={this.state.amount <= 0 ? '': this.state.amount} onChange={this.onAmountChanged} onBlur={this.onBlurHandler} onFocus={this.onFocusHandler} maxLength={9} placeholder="请输入快捷金额" />
             </div>  
           </div>
-          <div className="txt-r">
+          {/* <div className="txt-r">
             已选 <span className="txt-red">{this.props.betCount}</span> 注 共 <span className="txt-red">{(this.props.amount).toFixed(3)} </span>元
-          </div>
+          </div> */}
           <div className="flex ai-c jc-e btns-wp">
             <Button type="primary" className="btn-reset" disabled={this.props.betCount <= 0} onClick={this.onResetHandler}>重置</Button>
             <Button type="primary" className="btn-order" disabled={this.props.betCount <= 0} onClick={this.onOrderHandler}>一键下单</Button>
