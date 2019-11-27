@@ -11,6 +11,7 @@ export interface GameSubMethodMenu {
   ids: string[];
   recentType?: any[];
   range?: any;
+  noOdd?: boolean;
 }
 export interface GameMethodMenu {
   name: string;

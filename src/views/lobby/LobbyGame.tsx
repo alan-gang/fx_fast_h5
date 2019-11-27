@@ -48,6 +48,7 @@ class LobbyGame extends Component<Props, object> {
       '11x5': {methodMenuName: 'zhenghe', defaultMenu: 'zh_dx', title: '总和大小'},
       'pk10': {methodMenuName: 'zhenghe', defaultMenu: 'zh_dx', title: '冠亚和值大小'},
       'k3': {methodMenuName: 'diansu', defaultMenu: 'zh_dx', title: '总和大小'},
+      'hc6':  {methodMenuName: '', defaultMenu: '', title: '总和大小'}
     };
     let gameType = getGameTypeByGameId(props.gameId);
     let limitItem = props.store.game.getLimitListItemById(props.gameId);

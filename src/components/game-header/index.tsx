@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import Timer from '../../utils/timer';
 import { timeFormat } from '../../utils/date';
+import { LOTTERY_TYPES } from '../../utils/config';
+import { getAnimalByNum } from '../../game/hc6';
 
 import './index.styl';
 interface Props {
@@ -106,14 +108,27 @@ class GameHeader extends Component<Props, object> {
   componentWillUnmount() {
     this.clearTimer();
   }
+  isHc6() {
+    return this.props.gameType === LOTTERY_TYPES.HC6;
+  }
+  renderOpenNumbers(num: string, i: number) {
+    if (this.isHc6()) {
+      if (i === 5) {
+        return (<div key={i} className={`icon-plus`}>+</div>)
+      }
+      return (<div><div key={i} className={`open-num-item n-${String(num).padStart(2, '0')}`}>{String(num).padStart(2, '0')}</div><div className="animal">{getAnimalByNum(parseInt(num, 10))}</div></div>)
+    } else {
+      return <div key={i} className="open-num-item">{num}</div> 
+    }
+  }
   render() {
     return (
       <section className={`game-header-view ${this.props.gameType}`}>
         <section className="flex ai-c last-issue-sec">
           <div>第{this.props.lastIssue}期：</div>
-          <div>
+          <div className="nums-wp">
             {this.props.openNumbers.map((num: string, i: number) => (
-             <span key={i} className="open-num-item">{num}</span> 
+              this.renderOpenNumbers(num, i)
             ))}
           </div>
         </section>

@@ -23,7 +23,7 @@ interface State {
 @observer
 class CoinSet extends PureComponent<Props, {}> {
   state = {
-    selectedIndex: 0,
+    selectedIndex: -1,
     coins: [
       {name: '10', value: '10', class: 'coin-gray'},
       {name: '20', value: '20', class: 'coin-gray'},

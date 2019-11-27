@@ -2,6 +2,9 @@
   color $theme-txt-color
   background $theme-bg-color
   font-size 28px
+  .nums-wp {
+    display flex
+  }
   .open-num-item {
     width 44px
     height 44px
@@ -28,5 +31,44 @@
   }
   .icon-triangle {
     margin-left 5px
+    display flex
+  }
+  &.hc6 {
+    .nums-wp {
+      padding-top 6px
+    }
+    .animal {
+      font-size 20px
+      color $game-header-animal-txt-color
+      text-align center
+      padding-right 6px
+      padding-top 4px
+    }
+    .icon-plus {
+      font-size 40px
+      color $game-header-icon-plus-color
+      padding 0 15px 0 0
+    }
+    .open-num-item {
+      background-color $game-header-hc6-open-num-item-bg-color
+      border-width 2px
+      border-style solid
+      margin-right 14px 
+    }
+    openNum($num, $color) {
+      .open-num-item.n-{$num} {
+        border-color $color 
+        color $color
+      }  
+    }
+    for num in '01' '02' '07' '08' '12' '13' '18' '19' '23' '24' '29' '30' '34' '35' '40' '45' '46' {
+      openNum(num, $play-method-name-bd-color-red)
+    }
+    for num in '03' '04' '09' '10' '14' '15' '20' '25' '26' '31' '36' '37' '41' '42' '47' '48' {
+      openNum(num, $play-method-name-bd-color-blue)
+    }
+    for num in '05' '06' '11' '16' '17' '21' '22' '27' '28' '32' '33' '38' '39' '43' '44' '49' {
+      openNum(num, $play-method-name-bd-color-green)
+    }
   }
 }

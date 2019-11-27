@@ -9,7 +9,7 @@
     width 170px
     height 80px
     background-color $theme-bg-color
-    border-right solid 0.01rem $theme-bd-color-3
+    border-right solid 1px $theme-bd-color-3
     display flex
     flex-direction column
     align-items center
@@ -17,9 +17,6 @@
     border-radius 10px
     cursor pointer
     margin-bottom 10px
-    // &.no-bd-r {
-    //   border-right none
-    // }
     &.selected {
       background-color $sub-method-menu-item-selected-bg-color
       color $theme-txt-color4
@@ -30,25 +27,7 @@
         color $theme-txt-color4
       }
     }
-    // &.layout-ud {
-    //   text-align center
-    // }
-    // &.w110 {
-    //   width 1.1rem
-    // }
-    // &.w180 {
-    //   width 1.8rem
-    // }
-    // &.h60 {
-    //   height 0.6rem
-    // }
-    // &.h40 {
-    //   height 0.4rem
-    // }
   }
-  // .pd-t-12 {
-  //   padding-top 0.12rem
-  // }
   .odd-pd-l-5 .odd {
     padding-left 0.05rem
   }
@@ -60,5 +39,14 @@
   }
   .layout-lr {
     display flex
+  }
+  &.hc6 {
+    padding-bottom 0
+    .sub-method-item-ls {
+      .sub-method-item {
+        width 348px
+        height 58px
+      }
+    }
   }
 }

@@ -107,6 +107,38 @@ export const methodTabs: any = {
     changpai: [],
     duanpai: [],
     yskd: []
+  },
+  hc6: {
+    tema: [
+      {title: '特码大小', name: 'zh_dx', subM: []},
+      {title: '特码单双', name: 'zh_ds', subM: []}
+    ],
+    texiao: [],
+    sebo: [],
+    zhengyima: [
+      {title: '正一码大小', name: 'zh_dx', subM: []},
+      {title: '正一码单双', name: 'zh_ds', subM: []}
+    ],
+    zhengerma: [
+      {title: '正二码大小', name: 'zh_dx', subM: []},
+      {title: '正二码单双', name: 'zh_ds', subM: []}
+    ],
+    zhengshanma: [
+      {title: '正三码大小', name: 'zh_dx', subM: []},
+      {title: '正三码单双', name: 'zh_ds', subM: []}
+    ],
+    zhengshima: [
+      {title: '正四码大小', name: 'zh_dx', subM: []},
+      {title: '正四码单双', name: 'zh_ds', subM: []}
+    ],
+    zhengwuma: [
+      {title: '正五码大小', name: 'zh_dx', subM: []},
+      {title: '正五码单双', name: 'zh_ds', subM: []}
+    ],
+    zhengliuma: [
+      {title: '正六码大小', name: 'zh_dx', subM: []},
+      {title: '正六码单双', name: 'zh_ds', subM: []}
+    ]
   }
 }
 

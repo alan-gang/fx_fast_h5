@@ -58,6 +58,13 @@ let games: GameCategory[] = [
       {id: 26, mid: '85', name:'北京快三', checked: false},
       {id: 33, mid: '19', name:'幸福快三', checked: false}
     ]
+  },
+  {
+    type: 'hc6',
+    name: '六合彩',
+    items: [
+      {id: 28, mid: '95', name: '六合彩', checked: false}
+    ]
   }
 ];
 

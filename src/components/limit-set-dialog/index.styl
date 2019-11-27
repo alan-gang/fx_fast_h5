@@ -1,37 +1,50 @@
 .limit-set-content {
-  width 4.3rem
-  height 2.6rem
-  border-radius 0.05rem
-  padding-top 0.3rem
-  .ant-btn-danger {
-    background $limit-set-btn-bg-color
-  }
-  .mgt-35 {
-    margin-top 0.35rem
-  }
-  .game-logo {
-    width 100%
-    height 0.6rem
-    background-position center
-    background-repeat no-repeat
-    background-size 1.8rem 0.5rem
-    position relative
-    for n, i in $game-ids {
-      &.logo-{n} {
-        background-image url('../../assets/images/default/gameheader/ng/' + n + '.png');
-      }
-      &.icon-game-wbwfc {
-        background-size 1.85rem
-      }
+  padding 66px 25px 0 25px
+  .btn-limit-amount {
+    width 180px
+    height 120px
+    background-color $theme-btn-bg-color1
+    margin 0 8px
+    &.selected {
+      background $theme-btn-bg-color
+      color $theme-txt-color4 
     }
   }
-  .limit-list {
-    margin-top 0.2rem
-    .btn-limit-amount {
-      margin-right 0.1rem
-      &:hover {
-        opacity 0.85
-      }
-    }
+  .am-button {
+    display flex
+  }
+  .limit-explain-tip {
+    text-align left
+    font-size 22px
+    margin-top 30px
+  }
+  .btn-confirm {
+    background $theme-btn-bg-color
+    color $theme-txt-color4 
+    margin-top 66px
+  }
+}
+.limit-set-header {
+  height 100px
+  position relative
+  background $theme-btn-bg-color
+  color $theme-txt-color4
+  font-size 32px
+  .am-icon-cross {
+    width 41px
+    height 41px
+    position absolute
+    right 20px
+    top 20px
+  }
+}
+.am-modal-wrap .am-modal.limit-set-modal {
+  width 620px
+  height 620px
+  .am-modal-header {
+    padding 0
+  }
+  .am-modal-content {
+    border-radius: 30px 30px 15px 15px;
   }
 }

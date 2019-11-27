@@ -61,7 +61,13 @@ export function bet(params: object = {}) {
 export function getCfgInfo(args: object = {}) {
   return http.post('/login/login.do?method=getCfgInfo', args);
 }
-
+/**
+ * 下注
+ * @param params 
+ */
+export function booking(params: object = {}) {
+  return http.post('/booking.do?method=add', params);
+}
 /*
   获取投注记录
   @param params {
@@ -137,6 +143,7 @@ export default {
   getUserBalance,
   getCfgInfo,
   bet,
+  booking,
   historyIssueByDate,
   myNewPoint,
   sysNotices,

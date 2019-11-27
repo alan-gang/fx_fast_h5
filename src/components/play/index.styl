@@ -1,33 +1,43 @@
 .play-view {
-  padding 10px 25px 0 10px
-  .pos-lebel {
+  padding 10px 10px 0 10px
+  .pos-label {
     text-align center
     height 70px
     box-sizing border-box
     flex-direction column
     font-size 28px
+    align-items center
+    justify-content center
     &.hide {
       display none
     }
-    .subn {
+    .sub-pn {
       color $theme-txt-color2
       font-size 24px
     }
   }
+  .pos-label-row {
+    .pos-label {
+      flex-direction row
+    }
+  }
+  .pos-label-fz24 .pos-label {
+     font-size 24px
+  }
   .method {
-    border solid 0.01rem $theme-bd-color-1
     &.col {
       display flex
     }
     .ds-row {
-      margin-bottom 14px
+      margin-bottom 12px
       display block
+      box-sizing border-box
       .ds-col {
         float left
       }
     }
     .method-item-col {
-      padding 0 8px 0 0
+      padding 0 10px 0 0
     }
     .method-item {
       display flex
@@ -45,13 +55,16 @@
           color $play-method-item-selected-txt-color
         }
       }
-      
+      &.icon {
+        flex-direction row
+      }
     }
     methodItemcircleStyle($width, $height) {
       border-radius 50%
       width $width
       height $height
     }
+    // 玩法项圆圈样式  
     .method-item-col.circle {
       &.large .method-item {
         margin 0 0 10px 20px
@@ -66,38 +79,48 @@
         methodItemcircleStyle(78px, 78px)
       }
     }
+    // 名字圆圈样式 
+    .method-item-col.ncircle {
+      .method-item {
+        flex-direction row
+      }
+      .odd {
+        padding-left 8px
+      }
+      &.xsmall .method-item-name {
+        display inline-block
+        width 50px
+        height 50px
+        line-height 50px
+        text-align center
+        border-radius 50%
+        box-sizing border-box
+      }
+    }
     .icon {
-      height 0.7rem
+      height 60px
       .method-item-name {
-        height 0.7rem
+        height 60px
         background-color transparent
         border-radius 0
         border none
       }
-      .ant-input {
-        width 0.9rem
-      }
-    }
-    .white-bg-img {
-      height 0.7rem
-      .method-item-name {
-        width 1.6rem
-        height 0.5rem
-        border-radius 0.08rem
-        font-weight bold
-      }
     }
     &.no-bd-b-pos-label {
-      .pos-lebel {
+      .pos-label {
         border-bottom none
       }
+    }
+  }
+  .no-slt-m-item {
+    .method-item {
     }
   }
   .layout-col-float {
     .ds-row {
       display block
       clear left
-      .pos-lebel {
+      .pos-label {
         height 160px
       }
     }
@@ -106,14 +129,18 @@
     }
   }
   .odd {
-    min-width 0.5rem
+    min-width 50px
     color $theme-txt-color1
-    padding 0 0.04rem
+    padding 0 4px
+  }
+  .row-odd {
+    min-width 100px
+    color $theme-txt-color1
   }
   .method-item-name {
-    min-width 0.25rem
-    height 0.25rem
-    line-height 0.25rem
+    min-width 25px
+    height 25px
+    line-height 25px
     border-radius 50%
     cursor pointer
     display flex
@@ -126,18 +153,190 @@
       border-color transparent
     }
   }
+  .pd-l-12 {
+    padding-left 12px
+  }
+  .pd-b-12 {
+    .ds-col {
+      padding-bottom 12px
+    }
+  }
+  .no-m-item-bg {
+    .method-item.selected {
+      background-color transparent
+      border-color transparent
+    }
+  }
+  .row-bar {
+    padding 0 10px
+    .ds-row {
+      background-color $theme-txt-color4
+      border-radius 10px
+    }
+    .ds-row.selected {
+      background-color $play-method-item-selected-bg-color
+    }
+  }
+  .row-bg-white {
+    .ds-row {
+      background-color $theme-txt-color4
+    }
+  }
+  posLabelHeight($height) {
+    .pos-label {
+      height $height
+    }
+  }
+  &.pk10 {
+    .gyhz-dw {
+      .ds-col {
+        margin-bottom 14px
+      }
+    }
+  }
   &.k3 {
+    .method-item {
+      height 110px
+    }
+    .ds-col {
+      margin-bottom 12px
+    }
+    .ds-row {
+      margin-bottom 0
+    }
+    .weishaiquanshai {
+      .method-item.icon {
+        .icon-item {
+          margin-right 2px
+        }
+      }
+      posLabelHeight(360px)
+      .ds-row:nth-child(2) {
+        posLabelHeight(110px)
+        .method-item {
+          flex-direction row
+          .odd {
+            padding-left 10px
+          }
+        }
+      }
+    }
+    .dianshu {
+      posLabelHeight(460px)
+    }
+    .changpai {
+      .method-item.icon {
+        .icon-item {
+          margin-right 2px
+        }
+      }
+      posLabelHeight(600px)
+    }
+    .pos-label-h-3 {
+      posLabelHeight(360px)
+    }
+    .pos-label-h-2 {
+      posLabelHeight(230px)
+    }
     dice() {
       display inline-block
-      width 0.5rem
-      height 0.5rem
-      background-size 0.5rem
-      margin-right 0.04rem
+      width 60px
+      height 60px
+      background-size 60px
+      margin-right 10px
     }
     for num in 1 2 3 4 5 6 {
       .icon .method-item-name .icon-item-{num} {
         background url("../../assets/images/default/dice-" + num + "@2x.png") center no-repeat
         dice()
+      }
+    }
+  }
+  &.hc6 {
+    .row-odd {
+      padding-left 20px
+    }
+    .method-item {
+      &.selected {
+        background-color $theme-bg-color
+        border solid 2px $theme-bd-color1
+        color $theme-txt-color
+        .odd {
+          color $theme-txt-color1
+        }
+      }
+    }
+    .ncircle {
+      .method-item {
+        &.selected {
+          .method-item-name {
+            border-color $theme-bd-color3
+            // color $theme-txt-color4
+          }    
+        }
+      }
+      .method-item-name {
+        border-style solid
+        border-width 2px
+      }
+      methodItemName($num, $color) {
+        .method-item-name[n=\"{$num}\"] {
+          border-color $color !important
+          color $color !important
+        }  
+      }
+      for num in '01' '02' '07' '08' '12' '13' '18' '19' '23' '24' '29' '30' '34' '35' '40' '45' '46' {
+        methodItemName(num, $play-method-name-bd-color-red)
+      }
+      for num in '03' '04' '09' '10' '14' '15' '20' '25' '26' '31' '36' '37' '41' '42' '47' '48' {
+        methodItemName(num, $play-method-name-bd-color-blue)
+      }
+      for num in '05' '06' '11' '16' '17' '21' '22' '27' '28' '32' '33' '38' '39' '43' '44' '49' {
+        methodItemName(num, $play-method-name-bd-color-green)
+      }
+    }
+  }
+
+  .row-bar {
+    .ds-row {
+      &.selected {
+        background-color $theme-bg-color
+        border solid 2px $theme-bd-color1
+      }
+    }
+    .method-item {
+      &.selected {
+        border-color $theme-bd-color3
+      }
+    }
+    &.texiao {
+      .pos-label {
+        padding 0 60px 0 80px
+      }
+      .ncircle.xsmall {
+        padding-right 30px
+      }
+    }
+    &.sebo {
+      .ds-row {
+        padding 30px 0 0 0
+        box-sizing border-box
+        &:nth-child(1) .pos-label {
+          color $play-method-name-bd-color-red
+        }
+        &:nth-child(2) .pos-label {
+          color $play-method-name-bd-color-blue
+        }
+        &:nth-child(3) .pos-label {
+          color $play-method-name-bd-color-green
+        }
+      }
+      posLabelHeight(240px)
+      .pos-label {
+        padding 0 60px 0 30px
+      }
+      .ncircle.xsmall {
+        padding-right 30px
       }
     }
   }

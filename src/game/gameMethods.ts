@@ -129,7 +129,7 @@ export let methodsConfig: MethodsConfig = {
       name: '整合',
       ename: 'zhenghe',
       recentType: [hz({range: [{start: 0, end: 1}, {start: 1, end: 2}], changeTitle: ['冠亚开奖号码'], min: 11})],
-      ids: ['4050:1', '4053:1', '4053:2']
+      ids: ['4053:1', '4053:2', '4050:1']
     },
     {
       name: '龙虎',
@@ -138,15 +138,20 @@ export let methodsConfig: MethodsConfig = {
       ids: ['4054:1']
     },
     {
-      name: '定位01-10',
+      name: '定位01-05',
       ename: 'dwgy',
-      ids: ['4055:1:1', '4055:1:2']
+      ids: ['4055:1:1']
+    },
+    {
+      name: '定位05-10',
+      ename: 'dwgy',
+      ids: ['4055:1:2']
     },
     {
       name: '冠亚组合',
       ename: 'gyhz',
       recentType: [hz({range: [{start: 0, end: 1}, {start: 1, end: 2}], changeTitle: ['冠亚', ['亚军']], min: 11})],
-      ids: ['4050:1', '4051:1', '4052:1']
+      ids: ['4050:2', '4051:1', '4052:1']
     }
   ],
   [LOTTERY_TYPES.K3]: [
@@ -191,6 +196,66 @@ export let methodsConfig: MethodsConfig = {
       ename: 'yskd',
       recentType: [kd],
       ids: ['5057:1']
+    }
+  ],
+  [LOTTERY_TYPES.HC6]: [
+    {
+      name: '特码',
+      ename: 'tema',
+      recentType: [],
+      ids: ['7015:1', '7001:1']
+    },
+    {
+      name: '特肖',
+      ename: 'texiao',
+      recentType: [],
+      ids: ['7007:1'],
+      subMethods: [
+        {s: false, name: '家禽', v: '1', oddIndex: 0, class: '', odd: '', noOdd: true, ids: ['7007:1']},
+        {s: false, name: '野兽', v: '2', oddIndex: 0, class: '', odd: '', noOdd: true, ids: ['7007:1']}
+      ]
+    },
+    {
+      name: '色波',
+      ename: 'sebo',
+      recentType: [],
+      ids: ['7005:1']
+    },
+    {
+      name: '正一码',
+      ename: 'zhengyima',
+      recentType: [],
+      ids: ['7009:1']
+    },
+    {
+      name: '正二码',
+      ename: 'zhengerma',
+      recentType: [],
+      ids: ['7010:1']
+    },
+    {
+      name: '正三码',
+      ename: 'zhengshanma',
+      recentType: [],
+      ids: ['7011:1']
+    },
+    {
+      name: '正四码',
+      ename: 'zhengshima',
+      recentType: [],
+      ids: ['7012:1']
+    },
+    {
+      name: '正五码',
+      ename: 'zhengwuma',
+      recentType: [],
+      ids: ['7013:1']
+    },
+    {
+      name: '正六码',
+      ename: 'zhengliuma',
+      recentType: [],
+      ids: ['7014:1']
     }
   ]
 };

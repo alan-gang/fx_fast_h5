@@ -48,6 +48,9 @@ class AppHeader extends Component<Props, object> {
   togglePanel () {
     store.common.togglePanel()
   }
+  setHandler = () => {
+    Bus.emit('onSetLimit')
+  }
   getHeaderInner () {
     return (<React.Fragment>{[
       // 大厅
@@ -70,7 +73,7 @@ class AppHeader extends Component<Props, object> {
             <div className="fs-24">余额: ￥{ this.props.store.user.balance || '0.00' }<span className="mgl-10 refresh inlb va-b pos-r pot-2"></span></div>
           </Flex.Item>,
           <Flex.Item className="txt-r pdr-22" key="2">
-            <span className="inlb clickable mgl-20 setting"></span>
+            <span className="inlb clickable mgl-20 setting" onClick={this.setHandler}></span>
             <Popover
               visible={this.state.popoverVisible}
               onSelect={ this.popoverInnerClick }
