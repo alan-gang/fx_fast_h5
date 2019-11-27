@@ -16,6 +16,7 @@ import Socket from './socket';
 import 'lib-flexible';
 import { Drawer, List} from 'antd-mobile';
 import Panel from './views/panel';
+import BookLeadingFloat from './views/book-leading/float';
 
 
 @observer
@@ -101,6 +102,9 @@ class App extends Component<Props, object> {
       <Provider store={store}>
         <Router>
           <Panel></Panel>
+          <Route path="/game/:id">
+            <BookLeadingFloat/>
+          </Route>
           <article className="pg-c">
             <AppHeader />
             <Suspense fallback={<Loading />}>
