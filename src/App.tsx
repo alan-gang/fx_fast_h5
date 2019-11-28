@@ -2,7 +2,7 @@ import React, { Component, Suspense } from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import AppHeader from './components/app-header';
-import { GameMenu, Loading } from './components';
+// import { GameMenu, Loading } from './components';
 import RouterConfig  from './router/index';
 import { Provider } from 'mobx-react';
 import store from './store';
@@ -14,7 +14,7 @@ import './assets/style/common/common.styl';
 import './App.css';
 import Socket from './socket';
 import 'lib-flexible';
-import { Drawer, List} from 'antd-mobile';
+import { Drawer, List, Toast } from 'antd-mobile';
 import Panel from './views/panel';
 
 
@@ -52,6 +52,8 @@ class App extends Component<Props, object> {
         this.updateBalance();
         store.game.updateAvailableGames();
         // this.initSocket();
+      } else {
+        Toast.fail('请登录！');
       }
     });
   }
@@ -103,9 +105,9 @@ class App extends Component<Props, object> {
           <Panel></Panel>
           <article className="pg-c">
             <AppHeader />
-            <Suspense fallback={<Loading />}>
+            {/* <Suspense fallback={<Loading />}>
               <GameMenu />
-            </Suspense>
+            </Suspense> */}
             <article className="page-view">
               <RouterConfig />
             </article>
