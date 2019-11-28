@@ -12,8 +12,8 @@ interface Props extends RouteComponentProps {
 }
 
 const popoverInner: any[] = [
-  {name: '官方玩法', },
-  {name: '基诺玩法', },
+  {name: '官方玩法', out: true, url: '/?from=KQ'},
+  {name: '基诺玩法', out: true, url: '/keno/?from=KQ'},
   {name: '彩种大厅', link: '/'},
   {name: '投注记录', link: '/betRecords'},
   {name: '历史开奖', link: '/openIssueHistory', gameId: true},
@@ -39,10 +39,15 @@ class AppHeader extends Component<Props, object> {
     this.setState({gameName: (getGameById(id) || {}).name, gameId: id})
   }
   popoverInnerClick = (node: any, index: number = 0): void => {
-    // Todo
-    if (popoverInner[index].link) this.props.history.push(popoverInner[index].link + (popoverInner[index].gameId ? `/${this.state.gameId}` : ''))
-    else Toast.info(popoverInner[index].name)
-    this.setState({popoverVisible: false})
+    const menu = popoverInner[index];
+    if (menu.out) {
+      window.location.href = menu.url;
+    } else if (menu.link) {
+      this.props.history.push(menu.link + (menu.gameId ? `/${this.state.gameId}` : ''));
+    } else {
+      Toast.info(menu.name);
+    }
+    this.setState({popoverVisible: false});
   }
   togglePanel () {
     store.common.togglePanel()
