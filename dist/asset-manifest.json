@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/fastm/m/fastm/static/css/main.c1a4bc48.chunk.css",
+    "main.css": "/fastm/m/fastm/static/css/main.c0f8fd60.chunk.css",
     "main.js": "/fastm/m/fastm/static/js/main.285bb480.chunk.js",
     "main.js.map": "/fastm/m/fastm/static/js/main.285bb480.chunk.js.map",
-    "runtime-main.js": "/fastm/m/fastm/static/js/runtime-main.40e6d8c9.js",
-    "runtime-main.js.map": "/fastm/m/fastm/static/js/runtime-main.40e6d8c9.js.map",
-    "m/fastm/static/css/2.2f4ee5b1.chunk.css": "/fastm/m/fastm/static/css/2.2f4ee5b1.chunk.css",
+    "runtime-main.js": "/fastm/m/fastm/static/js/runtime-main.8553d810.js",
+    "runtime-main.js.map": "/fastm/m/fastm/static/js/runtime-main.8553d810.js.map",
+    "m/fastm/static/css/2.36d16a77.chunk.css": "/fastm/m/fastm/static/css/2.36d16a77.chunk.css",
     "m/fastm/static/js/2.b9e07123.chunk.js": "/fastm/m/fastm/static/js/2.b9e07123.chunk.js",
     "m/fastm/static/js/2.b9e07123.chunk.js.map": "/fastm/m/fastm/static/js/2.b9e07123.chunk.js.map",
-    "m/fastm/static/css/3.b24fd09e.chunk.css": "/fastm/m/fastm/static/css/3.b24fd09e.chunk.css",
+    "m/fastm/static/css/3.62493e47.chunk.css": "/fastm/m/fastm/static/css/3.62493e47.chunk.css",
     "m/fastm/static/js/3.2fc7ed21.chunk.js": "/fastm/m/fastm/static/js/3.2fc7ed21.chunk.js",
     "m/fastm/static/js/3.2fc7ed21.chunk.js.map": "/fastm/m/fastm/static/js/3.2fc7ed21.chunk.js.map",
     "m/fastm/static/css/4.6f70cc57.chunk.css": "/fastm/m/fastm/static/css/4.6f70cc57.chunk.css",
@@ -27,18 +27,18 @@
     "m/fastm/static/js/10.bc56bcf0.chunk.js": "/fastm/m/fastm/static/js/10.bc56bcf0.chunk.js",
     "m/fastm/static/js/10.bc56bcf0.chunk.js.map": "/fastm/m/fastm/static/js/10.bc56bcf0.chunk.js.map",
     "index.html": "/fastm/index.html",
-    "m/fastm/static/css/2.2f4ee5b1.chunk.css.map": "/fastm/m/fastm/static/css/2.2f4ee5b1.chunk.css.map",
-    "m/fastm/static/css/3.b24fd09e.chunk.css.map": "/fastm/m/fastm/static/css/3.b24fd09e.chunk.css.map",
+    "m/fastm/static/css/2.36d16a77.chunk.css.map": "/fastm/m/fastm/static/css/2.36d16a77.chunk.css.map",
+    "m/fastm/static/css/3.62493e47.chunk.css.map": "/fastm/m/fastm/static/css/3.62493e47.chunk.css.map",
     "m/fastm/static/css/4.6f70cc57.chunk.css.map": "/fastm/m/fastm/static/css/4.6f70cc57.chunk.css.map",
-    "m/fastm/static/css/main.c1a4bc48.chunk.css.map": "/fastm/m/fastm/static/css/main.c1a4bc48.chunk.css.map",
-    "precache-manifest.14659d62701cc39a36fece2b6630f6c8.js": "/fastm/precache-manifest.14659d62701cc39a36fece2b6630f6c8.js",
+    "m/fastm/static/css/main.c0f8fd60.chunk.css.map": "/fastm/m/fastm/static/css/main.c0f8fd60.chunk.css.map",
+    "precache-manifest.f6f0ba534e34b6643fbe84f04322e9a4.js": "/fastm/precache-manifest.f6f0ba534e34b6643fbe84f04322e9a4.js",
     "service-worker.js": "/fastm/service-worker.js"
   },
   "entrypoints": [
-    "m/fastm/static/js/runtime-main.40e6d8c9.js",
-    "m/fastm/static/css/2.2f4ee5b1.chunk.css",
+    "m/fastm/static/js/runtime-main.8553d810.js",
+    "m/fastm/static/css/2.36d16a77.chunk.css",
     "m/fastm/static/js/2.b9e07123.chunk.js",
-    "m/fastm/static/css/main.c1a4bc48.chunk.css",
+    "m/fastm/static/css/main.c0f8fd60.chunk.css",
     "m/fastm/static/js/main.285bb480.chunk.js"
   ]
 }
