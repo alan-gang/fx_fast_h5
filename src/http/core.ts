@@ -35,6 +35,7 @@ axios.interceptors.response.use(function(response: any) {
   response = response.data;
   if (response.success === -1) {
     Toast.fail('请重新登录！');
+    return new Promise(function(){})
   }
   return response;
 }, function(error) {

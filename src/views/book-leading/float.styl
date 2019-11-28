@@ -1,0 +1,48 @@
+.leading-book-float {
+  width 10vw
+  height 66px
+  border-top-left-radius 30px
+  border-bottom-left-radius 30px
+  background-color rgba(0,0,0, .8)
+  transition width linear .3s
+  .history{
+    bottom -100%
+    opacity 0
+    transition bottom linear .2s
+  }
+  .mask {
+    opacity 0
+    top 100%
+    transition all linear .2s
+  }
+  .leading-book-item, .leading-book-more{
+    display none
+  }
+  &.expand {
+    justify-content space-between
+    width 80vw
+    height 100px
+    border-top-left-radius 50px
+    border-bottom-left-radius 50px
+    .leading-book-item, .leading-book-more {
+      display block
+    }
+  }
+  .leading-book-item {
+    min-width 50vw
+  }
+  .leading-book-more {
+    color rgb(75,151,255)
+    text-decoration underline
+  }
+  &.history {
+    .history{
+      bottom 0
+      opacity 1
+    }
+    .mask {
+      top 0
+      opacity .6
+    }
+  }
+}

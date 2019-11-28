@@ -1,6 +1,6 @@
 import React, { Component, Suspense } from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import AppHeader from './components/app-header';
 // import { GameMenu, Loading } from './components';
 import RouterConfig  from './router/index';
@@ -16,7 +16,7 @@ import Socket from './socket';
 import 'lib-flexible';
 import { Drawer, List, Toast } from 'antd-mobile';
 import Panel from './views/panel';
-
+import BookLeadingFloat from './views/book-leading/float';
 
 @observer
 class App extends Component<Props, object> {
@@ -103,6 +103,9 @@ class App extends Component<Props, object> {
       <Provider store={store}>
         <Router>
           <Panel></Panel>
+          <Route path="/game/:id">
+            { store.local.bookLeading ?  <BookLeadingFloat/> : '' }
+          </Route>
           <article className="pg-c">
             <AppHeader />
             {/* <Suspense fallback={<Loading />}>

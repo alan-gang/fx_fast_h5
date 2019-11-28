@@ -67,8 +67,8 @@ class test extends React.Component {
   getOrderList = () => {
     this.setState({ refreshing: true, isLoading: true })
     orderList({
-      beginDate: (new Date())._setHMS('0:0:0')._bf(-7)._toAllString(),
-      endDate: (new Date())._setHMS('0:0:0')._toAllString(),
+      beginDate: (new Date())._setHMS('0:0:0')._bf(-6)._toAllString(),
+      endDate: (new Date())._setHMS('23:59:59')._toAllString(),
       page: page,
       pageSize: pageSize,
       isfast: 1
@@ -129,6 +129,7 @@ class test extends React.Component {
             refreshing={this.state.refreshing}
             onRefresh={this.onRefresh}
           />}
+          initialListSize={15}
           onEndReached={this.onEndReached}
           pageSize={pageSize}
         />

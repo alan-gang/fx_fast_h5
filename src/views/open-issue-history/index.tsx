@@ -39,7 +39,6 @@ class openIssueHistory extends Component<Props, object> {
       hasMore: true,
     }
     this.init()
-    this.list()
   }
   init () {
     page = 0
