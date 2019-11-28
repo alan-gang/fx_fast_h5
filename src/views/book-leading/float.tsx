@@ -60,7 +60,7 @@ class BookLeadingFloat extends React.Component<Props, object> {
           <div className="mask bgc-0 o_60 fixed pol-0 pob-0 por-0 pot-0 z_0" onClick={(e) => this.setState({
           history: false
           })}></div>
-          <div className="history fixed pol-0 pob-0 wp_100 hvh_70 bgc-white">
+          <div className="history fixed pol-0 pob-0 hvh_70 wp_100 bgc-white">
             <BookLeadingHistory withAction={true} init={this.state.history} />
           </div>
 

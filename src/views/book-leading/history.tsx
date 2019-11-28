@@ -36,6 +36,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
   scrollNode?: any
   timeoutTimer: any
   timer: any
+  audio: any
   constructor (props: Props) {
     super(props)
     this.state = {
@@ -54,11 +55,13 @@ class BookLeadingHistory extends React.Component<Props, object> {
     Bus.on('BookLeadingRefresh', this.init)
     Bus.on('__pushBetRemind', this.__pushBetRemind)
   }
-  __pushBetRemind (rd: any) {
-    data = data.concat(rd)
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(data),
-    })
+  __pushBetRemind = (rd: any) => {
+    if (data[0] && this.state.dataSource) {
+      data = data.concat(rd)
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(data),
+      })
+    }
   }
   componentWillReceiveProps (next: any) {
     if (!this.props.init && next.init) {
@@ -97,6 +100,11 @@ class BookLeadingHistory extends React.Component<Props, object> {
     page = 0
     data = []
     this.list()
+    this.props.store.local.bookLeadingVoice && this.__music()
+  }
+  __music () {
+    // if (!this.audio) this.audio = new window.Audio(process.env.PUBLIC_URL + '/media/24_Ctu.mp3').play()
+    // this.audio.paused && this.audio.play()
   }
   list () {
     getBetRemind().then((rep: any) => {
@@ -160,6 +168,11 @@ class BookLeadingHistory extends React.Component<Props, object> {
             rd.timming = rep.saleend - rep.current
             this.countDown(rd, rid)
           }
+        } else {
+          if (this.props.init) Toast.fail(rep.msg)
+          setTimeout(() => {
+            this.removeRd(rd, rid)
+          }, 3000)
         }
       })
   }
@@ -207,10 +220,17 @@ class BookLeadingHistory extends React.Component<Props, object> {
     this.setState({amount})
   }
   componentDidMount() {
-    let scrollNode: any = ReactDOM.findDOMNode(this.scrollNode)
-    this.setState({
-      height: this.state.height - scrollNode.offsetTop
-    })
+    if (!this.props.withAction) {
+      let scrollNode: any = ReactDOM.findDOMNode(this.scrollNode)
+      this.setState({
+        height: this.state.height - scrollNode.offsetTop
+      })
+    } else {
+      let n: any = document.querySelector('.history.fixed')
+      this.setState({
+        height: n.clientHeight
+      })
+    }
     this.init()
   }
   // 获取赔率数据
@@ -296,6 +316,9 @@ class BookLeadingHistory extends React.Component<Props, object> {
       limitLevel: this.getLimit(rd.lotteryId).level
     })}).then((res: any) => {
       if (res.success === 1) {
+        rd.odds.forEach((x: any) => {
+          x.v = ''
+        })
         Toast.info('投注成功')
       } else {
         Toast.fail(res.msg || '投注失败')
@@ -349,6 +372,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
           </span>
 
         </div>
+        <div className="wp_100">
         {
           rd.ludanList[0] && rid === this.state.activeIndex ? <LundanTable
             maxColumns={19} 
@@ -358,6 +382,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
             } 
             /> : ''
         }
+        </div>
         {
           rid === this.state.activeIndex && this.props.withAction ? <div className="book-leading-action">
             <div className="flex fs-26 jc-sb mgt-10 mgb-20 c-3">

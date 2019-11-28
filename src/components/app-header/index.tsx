@@ -20,7 +20,6 @@ const popoverInner: any[] = [
   {name: '玩法说明', link: '/playMethodRule', gameId: true},
   {name: '彩种说明', link: '/instruction', gameId: true},
   {name: '投注提醒', link: '/BookLeadingSettings', gameId: true},
-  {name: '投注提醒历史', link: '/BookLeadingHistory', gameId: true},
 ]
 
 @inject("store")

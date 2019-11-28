@@ -6,13 +6,14 @@
   background-color rgba(0,0,0, .8)
   transition width linear .3s
   .history{
-    height 0
-    transition height linear .2s
+    bottom -100%
+    opacity 0
+    transition bottom linear .2s
   }
   .mask {
     opacity 0
     top 100%
-    transition all linear .1s
+    transition all linear .2s
   }
   .leading-book-item, .leading-book-more{
     display none
@@ -36,7 +37,8 @@
   }
   &.history {
     .history{
-      height 70vh
+      bottom 0
+      opacity 1
     }
     .mask {
       top 0
