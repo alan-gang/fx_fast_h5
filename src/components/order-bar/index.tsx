@@ -5,7 +5,7 @@ import { Button, Toast, Modal } from 'antd-mobile';
 import CoinSet from '../coin-set';
 import APIs from '../../http/APIs';
 import calc from '../../game/calc';
-import { removeRepeat2DArray, countRepeat } from '../../utils/game';
+import { countRepeat } from '../../utils/game';
 import { LOTTERY_TYPES } from '../../utils/config';
 
 import './index.styl';
@@ -176,7 +176,6 @@ class OrderBar extends Component<Props, object> {
         let nc = methodItem.rows.map((row: any) => {
           return row.nc;
         });
-        nc = removeRepeat2DArray(nc);
         let contents: any[] = [];
         let param = {
           methodId: methodItem.id.split(':')[0],

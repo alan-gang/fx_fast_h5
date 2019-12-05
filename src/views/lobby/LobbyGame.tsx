@@ -173,6 +173,7 @@ class LobbyGame extends Component<Props, object> {
             issueList={this.state.issueList.slice(0).reverse()} 
             methodMenuName={this.state.methodMenuName} 
             defaultMenu={this.state.defaultMenu} 
+            isScroll={false}
           />
         </div>
         {/* <LimitSetDialog isShow={this.state.isShowLimitSetDialog} gameId={this.props.gameId} limitLevelList={this.state.limitLevelList} onLimitChoiceCB={this.onLimitChoiceCB} onCloseHandler={this.onCloseLimitChoiceHandler} /> */}

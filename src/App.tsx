@@ -2,7 +2,6 @@ import React, { Component, Suspense } from 'react';
 import { HashRouter as Router, Route } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
 import AppHeader from './components/app-header';
-// import { GameMenu, Loading } from './components';
 import RouterConfig  from './router/index';
 import { Provider } from 'mobx-react';
 import store from './store';
@@ -108,9 +107,6 @@ class App extends Component<Props, object> {
           </Route>
           <article className="pg-c">
             <AppHeader />
-            {/* <Suspense fallback={<Loading />}>
-              <GameMenu />
-            </Suspense> */}
             <article className="page-view">
               <RouterConfig />
             </article>

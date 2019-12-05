@@ -16,6 +16,7 @@ interface Props {
   issueList: any[];
   defaultMenu?: string;
   isShowLudanMenu?: boolean;
+  isScroll?: boolean;
 }
 
 interface State {
@@ -64,7 +65,7 @@ class Ludan extends Component<Props, object> {
     return (
       <section className="ludan-view">
         {this.props.isShowLudanMenu !== false && <LudanMenu selectedMenu={this.state.selectedMenu} tabs={this.state.tabs} updateMenu={this.updateMenu} />}
-        <LundanTable maxColumns={this.props.maxColumns} maxRows={this.props.maxRows} ludanList={this.state.ludanList} />
+        <LundanTable maxColumns={this.props.maxColumns} maxRows={this.props.maxRows} ludanList={this.state.ludanList} isScroll={this.props.isScroll} />
       </section>  
     )
   }

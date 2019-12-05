@@ -1,11 +1,11 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react';
-import { PullToRefresh, ListView, Button, Toast } from 'antd-mobile'
+import { PullToRefresh, ListView, Toast } from 'antd-mobile'
 import * as ReactDOM from 'react-dom'
 import { getBetRemind, historyIssue } from 'src/http/APIs'
 import LundanTable from 'comp/ludan/LundanTable'
 import { getLuDanListByMethod } from 'src/utils/ludan'
-import { getGameTypeByGameId } from 'src/game/games'
+import { getAllGameIds, getGameTypeByGameId } from 'src/game/games'
 import './history.styl' 
 import methodItems from 'src/game/methodItems'
 import APIs from 'src/http/APIs'
@@ -60,7 +60,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
       data = data.concat(rd)
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(data),
-      })
+      }, this.filterData)
     }
   }
   componentWillReceiveProps (next: any) {
@@ -122,7 +122,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
           refreshing: false,
           isLoading: false,
           hasMore: rep.data.length >= pageSize,
-        })
+        }, this.filterData)
         let rd: any = data[0]
         this.getHistoryIssue(rd.lotteryId, '0', rd)
       }
@@ -350,6 +350,29 @@ class BookLeadingHistory extends React.Component<Props, object> {
       dataSource: this.state.dataSource.cloneWithRows(data),
     }) 
   }
+  getFilterAvailableGames = function(interfaceGameIds: number[]) {
+    return getAllGameIds().filter((id: number) => interfaceGameIds.includes(id))
+  }
+  filterData() {
+    if (this.props.store.game.availableGames && this.props.store.game.availableGames.length > 0) {
+      this.updateFilteredData(this.props.store.game.availableGames);
+    } else {
+      APIs.getLotterys().then((d: any) => {
+        if (d.lotteryList) {
+          this.updateFilteredData(d.lotteryList.map((game: any) => game.lotteryId));
+        }
+      });
+    }
+  }
+  componentWillUnmount() {
+    Bus.off('BookLeadingRefresh', this.init);
+    Bus.off('__pushBetRemind', this.__pushBetRemind);
+  }
+  updateFilteredData(availableGames: any) {
+    let games = this.getFilterAvailableGames(availableGames);
+    data = data.filter((item: any) => games.includes(item.lotteryId));
+    this.setState({dataSource: this.state.dataSource.cloneWithRows(data)});
+  }
   renderRow = (rd: any, sid: any, rid: any) => {
     if (!rd) {
       return <div></div>
@@ -370,13 +393,13 @@ class BookLeadingHistory extends React.Component<Props, object> {
           <span className={`${this.state.activeIndex === rid ? 'rz_180' : ''} pdl-5 inlb w-33 h-33 rp_50 mgl-20 bgc-109 c-white`}>
             <span className="icon-triangle down"></span>
           </span>
-
         </div>
         <div className="wp_100">
         {
-          rd.ludanList[0] && rid === this.state.activeIndex ? <LundanTable
+          rd.ludanList && rd.ludanList[0] && rid === this.state.activeIndex ? <LundanTable
             maxColumns={19} 
             maxRows={6} 
+            isScroll={false}
             ludanList={
               getLuDanListByMethod(rd.ludanList.slice(0).reverse(), getGameTypeByGameId(this.state.activeGameId), rd.codeStyle)
             } 

@@ -26,9 +26,18 @@ class BookLeadingFloat extends React.Component<Props, object> {
         timming: 0
       }
     }
-    Bus.on('BookLeadingCurrent', (rd) => {
-      this.setState({rd})
-    })
+  }
+  bookLeadingCurrentHandler = (rd: any) => {
+    this.setState({rd})
+  }
+  componentDidMount() {
+    Bus.on('BookLeadingCurrent', this.bookLeadingCurrentHandler);
+  }
+  closeFloatHandler = () => {
+    this.setState({history: false})
+  }
+  componentWillUnmount() {
+    Bus.off('BookLeadingCurrent', this.bookLeadingCurrentHandler);
   }
   render () {
     return (
@@ -62,11 +71,9 @@ class BookLeadingFloat extends React.Component<Props, object> {
           })}></div>
           <div className="history fixed pol-0 pob-0 hvh_70 wp_100 bgc-white">
             <BookLeadingHistory withAction={true} init={this.state.history} />
+            <div className="close-bar" onClick={this.closeFloatHandler}>点击收起</div>
           </div>
-
         </div>
-        
-
       </div>
     )
   }
