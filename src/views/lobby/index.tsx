@@ -5,6 +5,7 @@ import { RouteComponentProps } from "react-router-dom";
 import LobbyGame from './LobbyGame';
 import { getGamesByType, getAllGames } from '../../game/games';
 import { Game } from '../../typings/games';
+import { getUrlParams } from '../../utils/common';
 
 import './index.styl';
 
@@ -32,18 +33,19 @@ class Lobby extends Component<Props, object> {
       curGameType: this.DEFAULT_GAME_TYPE,
       curGames
     }
+    this.checkFrom();
   }
   componentWillMount() {
     if (this.state.curGames.length <= 0) {
       this.props.store.game.getAvailableGames((availableGames: number[]) => {
         this.setState({
           curGames: this.filterAvailableGames(getAllGames())
-        })
+        }, this.checkFrom)
       });
     }
   }
   goto = (path: string) => {
-    this.props.history.push(path)
+    this.props.history.push(path);
   }
   onMenuChanged = (type: string) => {
     this.setState({curGames: type === this.DEFAULT_GAME_TYPE ? getAllGames() : getGamesByType(type)})
@@ -57,6 +59,16 @@ class Lobby extends Component<Props, object> {
       }
     });
     return tempGames;
+  }
+  checkFrom() {
+    let gameId: string = getUrlParams('gameid');
+    if (gameId && this.state.curGames.length > 0) {
+      let curGames = this.state.curGames;
+      let game = curGames.find((game) => game.id === parseInt(gameId, 10));
+      if (game) {
+        this.goto(`/game/${gameId}`);
+      }
+    }
   }
   render() {
     return (

@@ -1,7 +1,9 @@
 import React, { Suspense, lazy } from 'react';
-import { Route, RouteProps } from "react-router-dom";
+import { Route, RouteProps, Switch } from "react-router-dom";
 import Loading from '../components/router-loading/index';
 import { inject } from 'mobx-react';
+
+import NoMatch from './NoMatch';
 
 interface ExtendRouteProps extends RouteProps {
   routes?: RouteProps[]
@@ -68,7 +70,6 @@ const RouteWithSubRoutes = (route: ExtendRouteProps) => (
   />
 );
 
-
 @inject("store")
 class RouterConfig extends React.Component<Props, object> {
   componentWillMount() {
@@ -77,11 +78,14 @@ class RouterConfig extends React.Component<Props, object> {
     return (
       <>
         <Suspense fallback={<Loading />}>
-          {routes.map((route, i) => {
-            return (
-              <RouteWithSubRoutes key={i} {...route} />
+          <Switch>
+            {routes.map((route, i) => {
+              return (              
+                <RouteWithSubRoutes key={i} {...route} />
+              )}
             )}
-          )}
+            <Route component={NoMatch}></Route>
+          </Switch>
         </Suspense>
       </>
     )
