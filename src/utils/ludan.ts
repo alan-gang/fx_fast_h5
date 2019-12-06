@@ -424,7 +424,8 @@ export function getLuDanListByMethod(issueList: any[], type: string, name: strin
           default:
             break;
         }
-        if (ludanItems.indexOf(item) !== -1) {
+        // 和不占一列，可以显示在一列的中间和末尾
+        if (ludanItems.indexOf(item) !== -1 || item === '和') {
           ludanItems.push(item);
         } else {
           if (ludanItems.length > 0) {
@@ -432,6 +433,10 @@ export function getLuDanListByMethod(issueList: any[], type: string, name: strin
             ludanItems = [];
           }
           ludanItems.push(item);
+        }
+        // 丢弃第一列第一项为“和”的数据
+        if (issueList.length === 1 && issueList[0].length > 0 && issueList[0][0] === '和') {
+          issueList[0].shift();
         }
         // 最个一个
         if (issueList.length - 1 === i) {
@@ -452,6 +457,10 @@ export function getLuDanListByMethod(issueList: any[], type: string, name: strin
   return ludanList.slice(ludanList.length >= maxColumns ? Math.abs(ludanList.length - maxColumns + 1) : 0);
 }
 
+export function countRepeat(list: string[], char: string): number {
+  return list.filter(item => item === char).length;
+}
+
 export function getCellData(ludanList: any[], c: number, r: number, maxRows: number = MAX_ROWS): string {
   if (!ludanList) return '';
   if (ludanList[c] && ludanList[c][r]) {
@@ -459,7 +468,7 @@ export function getCellData(ludanList: any[], c: number, r: number, maxRows: num
       return ludanList[c][r];
     }
     if (r === maxRows - 1 && ludanList[c].length > maxRows) {
-      return String(ludanList[c].length);
+      return String(ludanList[c].length - countRepeat(ludanList[c], '和')); // 求重复数排除“和”
     } else {
       return ludanList[c][r];
     }
