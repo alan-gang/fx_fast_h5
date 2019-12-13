@@ -11,7 +11,8 @@ import { timeFormat } from '../../utils/date'
 @inject('store')
 @observer
 class BookLeadingFloat extends React.Component<Props, object> {
-  state: any
+  state: any;
+  elMask: any;
   constructor(props: any) {
     super(props)
     this.state = {
@@ -32,17 +33,24 @@ class BookLeadingFloat extends React.Component<Props, object> {
   }
   componentDidMount() {
     Bus.on('BookLeadingCurrent', this.bookLeadingCurrentHandler);
+    this.elMask = document.querySelector('.mask');
+    this.elMask && this.elMask.addEventListener('touchmove', this.disMove, { passive: false });
   }
   closeFloatHandler = () => {
     this.setState({history: false})
   }
   componentWillUnmount() {
     Bus.off('BookLeadingCurrent', this.bookLeadingCurrentHandler);
+    this.elMask && this.elMask.removeEventListener('touchmove', this.disMove, { passive: false });
   }
   maskHandler = (e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => {
     this.setState({history: false});
   }
   maskTouchMoveHandler = (e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  disMove(e: any) {
     e.preventDefault();
     e.stopPropagation();
   }
@@ -70,9 +78,9 @@ class BookLeadingFloat extends React.Component<Props, object> {
         <Link to="/BookLeadingHistory/1">
           <span className="leading-book-more clickable" >更多</span>
         </Link>
-        <div onClick={(e) => e.stopPropagation()}>
+        <div onClick={(e) => {e.stopPropagation()}}>
           <div className="mask bgc-0 o_60 fixed pol-0 pob-0 por-0 pot-0 z_0" onClick={(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => this.maskHandler(e)} onTouchMove={(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => this.maskTouchMoveHandler(e)}></div>
-          <div className="history fixed pol-0 pob-0 hvh_70 wp_100 bgc-white">
+          <div className="history fixed pol-0 pob-0 hvh_70 wp_100 bgc-white book-leading-history-wp">
             <BookLeadingHistory withAction={true} init={this.state.history} />
             <div className="close-bar" onClick={this.closeFloatHandler}>点击收起</div>
           </div>
