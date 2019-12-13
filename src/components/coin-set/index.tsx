@@ -6,6 +6,7 @@ import './index.styl';
 interface Props {
   store?: any;
   coinChoosed(value: string): void;
+  value?: number;
 }
 
 interface Coin {
@@ -36,6 +37,10 @@ class CoinSet extends PureComponent<Props, {}> {
   onCoinHandler = (coin: Coin, index: number) => {
     this.setState({selectedIndex: index})
     this.props.coinChoosed(coin.value);
+  }
+  componentWillReceiveProps(nextProps: Props) {
+    console.log('props=', this.props, ' nextProps=', nextProps)
+    this.setState({selectedIndex: this.state.coins.findIndex((c) => c.value === String(nextProps.value))})
   }
   render() {
     return (

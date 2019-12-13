@@ -53,6 +53,7 @@ class LobbyGame extends Component<Props, object> {
     let gameType = getGameTypeByGameId(props.gameId);
     let limitItem = props.store.game.getLimitListItemById(props.gameId);
     let bestLudan: BestLudanItem = limitItem && limitItem.bestLudan;
+    console.log('bestLudan=', JSON.stringify(limitItem && limitItem.bestLudan));
     // let ludanTab = getLunDanTabByName(gameType, bestLudan && bestLudan.codeStyle);
     let bestLudanName = (getLunDanFullTitleByName(gameType, bestLudan && bestLudan.codeStyle) || bestLudanConfig[gameType].title) + '路单';
     let methodMenuName = getMethodENameByLudanName(gameType, bestLudan && bestLudan.codeStyle) || bestLudanConfig[gameType].methodMenuName;

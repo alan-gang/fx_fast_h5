@@ -404,7 +404,7 @@ class OrderBar extends Component<Props, object> {
   render() {
     let elements = (
       <section className="order-bar-view">
-        {this.state.showCoinSet && <section>{<CoinSet coinChoosed={this.coinChoosed} />}</section>}
+        {this.state.showCoinSet && <section>{<CoinSet coinChoosed={this.coinChoosed} value={this.state.amount} />}</section>}
         <section className="flex ai-c jc-sb order-sec">
           <div>
             <div className="flex ai-c fast-amount-wp">

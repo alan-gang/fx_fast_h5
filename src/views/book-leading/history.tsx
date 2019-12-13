@@ -51,6 +51,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
       activeIndex:  -1,
       activeGameId: 0,
       amount: 10,
+      curVal: 0
     }
     Bus.on('BookLeadingRefresh', this.init)
     Bus.on('__pushBetRemind', this.__pushBetRemind)
@@ -237,6 +238,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
   getOdd = (odd: any, rd: any) => {
     let type = odd.n
     let limitItem = this.props.store.game.getLimitListItemById(rd.lotteryId)
+    // console.log('odd=', odd, ' rd=', rd, ' limitItem=', limitItem)
     if (limitItem) {
       let arr: any[] = limitItem.items[rd.methodId]
       if (arr) {
@@ -346,8 +348,17 @@ class BookLeadingHistory extends React.Component<Props, object> {
   }
   inputChange (e: any, x: any) {
     (x.v = e.target.value)
+    console.log('x.v=', x.v)
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(data),
+      curVal: x.v
+    }) 
+  }
+  defaultInputHandler = (x: any, v: any) => {
+    x.v = v;
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(data),
+      curVal: x.v
     }) 
   }
   getFilterAvailableGames = function(interfaceGameIds: number[]) {
@@ -415,20 +426,20 @@ class BookLeadingHistory extends React.Component<Props, object> {
             <div className="mgb-20">
               {
                 rd.odds.map((x: any, i: number) => {
-                  return <div className="book-leading-item wp_50 inlb mgb-10" key={i} onClick={ (e) => (x.v = x.v ? '' : this.state.amount)}>
+                  return <div className="book-leading-item wp_50 inlb mgb-10" key={i} onClick={ (e) => this.defaultInputHandler(x, x.v = x.v ? '' : this.state.amount)}>
                     <span className={`${ x.v ? 'bgc-deeporange c-white' : 'bgc-white' } book-leading-ball r_5 inlb  minw-54 hlh-54 txt-c fw-b mgr-2 pdl-5 pdr-5`}>{x.n}</span>
                     <span className="book-leading-odd c-deeporange">{x.odd}</span>
                     <input className={`bgc-white c-deeporange book-leading-input  w-180 hlh-54 pdl-15 pdr-15 mgl-10  fw-b`} 
-                    type="number" pattern="[0-9]*"
-                    onClick={ (e) => x.v && e.stopPropagation() }
-                    value={x.v} 
-                    onChange={ (e) => this.inputChange(e, x)} />
+                      type="number" pattern="[0-9]*"
+                      onClick={ (e) => x.v && e.stopPropagation() }
+                      value={x.v} 
+                      onChange={ (e) => this.inputChange(e, x)} />
                   </div>
                 })
               }
               
             </div>
-            <div className="mgb-20">{<CoinSet coinChoosed={this.coinChoosed} />}</div>
+            <div className="mgb-20">{<CoinSet coinChoosed={this.coinChoosed} value={this.state.curVal} />}</div>
             <div className="bgc-deeporange clickable r_15 c-white hlh-72 txt-c fs-28 fw-b " onClick={(e) => this.__kqbooking(rd)}>立即投注</div>
 
           </div> : ''
