@@ -39,7 +39,11 @@ class CoinSet extends PureComponent<Props, {}> {
     this.props.coinChoosed(coin.value);
   }
   componentWillReceiveProps(nextProps: Props) {
-    this.setState({selectedIndex: this.state.coins.findIndex((c) => c.value === String(nextProps.value)) || -1})
+    let index = this.state.coins.findIndex((c) => c.value === String(nextProps.value));
+    if (parseInt(this.props.store.user.balance, 10) === nextProps.value) {
+      index = this.state.coins.length - 1;
+    }
+    this.setState({selectedIndex:  index === undefined ? -1 : index});
   }
   render() {
     return (

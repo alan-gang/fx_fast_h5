@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { MouseEvent, TouchEvent } from 'react'
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom'
 import { Icon } from 'antd-mobile'
@@ -39,6 +39,13 @@ class BookLeadingFloat extends React.Component<Props, object> {
   componentWillUnmount() {
     Bus.off('BookLeadingCurrent', this.bookLeadingCurrentHandler);
   }
+  maskHandler = (e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => {
+    this.setState({history: false});
+  }
+  maskTouchMoveHandler = (e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }
   render () {
     return (
       <div className={`${this.state.history ? 'history' : ''} flex ai-c fs-24 pdl-15 pdr-15 leading-book-float pos-a z_1002 por-0 pot-90 c-white ${this.state.expand ? 'expand' : ''}`}
@@ -57,18 +64,14 @@ class BookLeadingFloat extends React.Component<Props, object> {
           </div>  
           <div className="mgt-15">
             <span className="c-deeporange mgr-20">{this.state.rd.timming > 0 ? timeFormat(this.state.rd.timming) : ''}</span>
-            <span className="bgc-deeporange pdl-10 pdr-10 pdt-5 pdb-5 " onClick={ (e: any) => this.setState({
-              history: !this.state.history
-            }) }>快速投注</span>
+            <span className="bgc-deeporange pdl-10 pdr-10 pdt-5 pdb-5 " onClick={ (e: any) => this.setState({history: !this.state.history}) }>快速投注</span>
           </div>  
         </div>
         <Link to="/BookLeadingHistory/1">
           <span className="leading-book-more clickable" >更多</span>
         </Link>
         <div onClick={(e) => e.stopPropagation()}>
-          <div className="mask bgc-0 o_60 fixed pol-0 pob-0 por-0 pot-0 z_0" onClick={(e) => this.setState({
-          history: false
-          })}></div>
+          <div className="mask bgc-0 o_60 fixed pol-0 pob-0 por-0 pot-0 z_0" onClick={(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => this.maskHandler(e)} onTouchMove={(e: MouseEvent<HTMLDivElement> | TouchEvent<HTMLDivElement>) => this.maskTouchMoveHandler(e)}></div>
           <div className="history fixed pol-0 pob-0 hvh_70 wp_100 bgc-white">
             <BookLeadingHistory withAction={true} init={this.state.history} />
             <div className="close-bar" onClick={this.closeFloatHandler}>点击收起</div>

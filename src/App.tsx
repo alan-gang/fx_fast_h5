@@ -101,7 +101,7 @@ class App extends Component<Props, object> {
     return (
       <Provider store={store}>
         <Router>
-          <Panel></Panel>
+          <Panel />
           <Route path="/game/:id">
             { store.local.bookLeading ?  <BookLeadingFloat/> : '' }
           </Route>

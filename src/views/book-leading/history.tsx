@@ -348,17 +348,16 @@ class BookLeadingHistory extends React.Component<Props, object> {
   }
   inputChange (e: any, x: any) {
     (x.v = e.target.value)
-    console.log('x.v=', x.v)
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(data),
-      curVal: x.v
+      curVal: parseInt(x.v, 10)
     }) 
   }
   defaultInputHandler = (x: any, v: any) => {
     x.v = v;
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(data),
-      curVal: x.v
+      curVal: parseInt(x.v, 10)
     }) 
   }
   getFilterAvailableGames = function(interfaceGameIds: number[]) {
