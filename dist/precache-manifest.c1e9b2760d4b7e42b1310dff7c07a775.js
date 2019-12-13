@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1d6543f4b4887da3ec05ea178173cb3a",
+    "revision": "b94ab60ba3ecf740d9aad5ef454c9834",
     "url": "/fastm/index.html"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fastm/m/fastm/static/css/4.a00d28cc.chunk.css"
   },
   {
-    "revision": "be299c882c70a7008df5",
-    "url": "/fastm/m/fastm/static/css/main.5cb7f48b.chunk.css"
+    "revision": "10b0edf254ab26a3eaa4",
+    "url": "/fastm/m/fastm/static/css/main.d24faff1.chunk.css"
   },
   {
     "revision": "7f87782e3d1130971e03",
@@ -56,8 +56,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fastm/m/fastm/static/js/9.9eb8608e.chunk.js"
   },
   {
-    "revision": "be299c882c70a7008df5",
-    "url": "/fastm/m/fastm/static/js/main.0d1ab512.chunk.js"
+    "revision": "10b0edf254ab26a3eaa4",
+    "url": "/fastm/m/fastm/static/js/main.43585136.chunk.js"
   },
   {
     "revision": "58ab7e9446c2e2a66b00",
