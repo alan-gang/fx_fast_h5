@@ -395,7 +395,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
             <span>
               <span className="mgr-20">{ rd.pos }<span className="c-red">{ rd.notifyVal }</span></span>
               <span>
-                { [null, '长龙', '单跳', '单边跳', '一厅两房', '拍拍连'][rd.notifyType] || '连出' }<span className="c-red">{ rd.contCount }</span>期
+                { [null, '长龙', '单跳', '单边跳', '一厅两房', '拍拍连'][rd.notifyType] || '连出' }<span className="c-red">{ rd.contCount }</span>{rd.unit}
               </span>
             </span>
 

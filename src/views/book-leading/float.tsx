@@ -67,7 +67,7 @@ class BookLeadingFloat extends React.Component<Props, object> {
             <span className="mgr-20">{ this.state.rd.lotteryName }</span>
             <span className="mgr-20">{ this.state.rd.pos }{ this.state.rd.notifyVal }</span>
             <span className="mgr-20">
-              { [null, '长龙', '单跳', '单边跳', '一厅两房', '拍拍连'][this.state.rd.notifyType] || '连出' }{ this.state.rd.contCount }期
+              { [null, '长龙', '单跳', '单边跳', '一厅两房', '拍拍连'][this.state.rd.notifyType] || '连出' }{ this.state.rd.contCount }{this.state.rd.unit}
             </span>
           </div>  
           <div className="mgt-15">
