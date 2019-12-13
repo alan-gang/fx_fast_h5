@@ -218,7 +218,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
   }
   coinChoosed = (value: string) => {
     let amount: number = value === 'all' ? parseInt(this.props.store.user.balance, 10): parseInt(value, 10);
-    this.setState({amount})
+    this.setState({amount, curVal: amount})
   }
   componentDidMount() {
     if (!this.props.withAction) {
