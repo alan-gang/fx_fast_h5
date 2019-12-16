@@ -15,17 +15,29 @@ class GameMenu extends React.Component<Props, object> {
     // active game type
     type: games[0].type,
     // active game id
+    games: games[0].items,
     id: 0,
   }
   constructor(props: Props) {
     super(props)
     Bus.on('gameIdChanged', this.activeGame);
   }
+  componentDidMount() {
+    this.updateGames(this.state.type);
+  }
   togglePanel () {
     store.common.togglePanel()
   }
   activeType (x: any) {
     this.setState({type: x.type})
+    this.updateGames(x.type);
+  }
+  updateGames(type: string) {
+    let games = getGamesByType(type);
+    this.props.store.game.getAvailableGames(() => {
+      games = this.props.store.game.availableGames.length > 0 ? ((games || []).filter((game) => this.props.store.game.hasAvailableGame(game.id))) : games;
+      this.setState({games})
+    });
   }
   activeGame = (id: any) => {
     this.setState({id: id})
@@ -41,10 +53,10 @@ class GameMenu extends React.Component<Props, object> {
       </div>
 
       <div className="pos-a pot-88 pob-0 por-0 right wp_70 fs-24 o_a" onClick={this.togglePanel}>
-        { getGamesByType(this.state.type).map((x, i) => <Link to={'/game/' + x.id} key={i}  className={ (x.id === this.state.id ? 'active c-deeporange' : '') + ' right-item clickable effect-gray inlb wp_50 pdt-130 pdb-20 txt-c _gid' + x.id }>{x.name}</Link>) }
+        { this.state.games.map((x, i) => <Link to={'/game/' + x.id} key={i}  className={ (x.id === this.state.id ? 'active c-deeporange' : '') + ' right-item clickable effect-gray inlb wp_50 pdt-130 pdb-20 txt-c _gid' + x.id }>{x.name}</Link>) }
       </div>
 
     </div>)
   }
 }
-export default GameMenu
+export default GameMenu;
