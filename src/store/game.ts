@@ -47,6 +47,20 @@ class MyGame {
   getLimitListItemById(id: number): LimitListItem | undefined {
     return this.limitList.find((item: LimitListItem) => id === item.id );
   }
+  
+  /**
+   * 根据游戏ID，限红级别获取快钱限红范围数据
+   * @param id 
+   * @param level 限红级别
+   */
+  @action
+  getKqLimitLevelItemById(id: number, level: number): LimitLevelItem | undefined {
+    let curGameLimitItem = this.getLimitListItemById(id);
+    if (curGameLimitItem) {
+      return (curGameLimitItem.kqPrizeLimit || []).find((limitItem) => limitItem.level === level);
+    }
+    return;
+  }
 
   /**
    * 获取当前游戏的快钱限红级别列表
