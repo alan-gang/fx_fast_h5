@@ -279,6 +279,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
     return new Promise((resolve, reject) => {
       // 没有输入
       if (!rd.odds.filter((x: any) => x.v)[0]) {
+        Toast.info('请输入金额')
         reject(new Error('0'))
       // 限红
       } if (rd.odds.filter((x: any) => x.v && (x.v > maxAmt || x.v < minAmt))[0]) {
