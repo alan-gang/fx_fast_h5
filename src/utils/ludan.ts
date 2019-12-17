@@ -438,21 +438,21 @@ export function getLuDanListByMethod(issueList: any[], type: string, name: strin
         if (issueList.length === 1 && issueList[0].length > 0 && issueList[0][0] === '和') {
           issueList[0].shift();
         }
-        // 最个一个
-        if (issueList.length - 1 === i) {
-          if (ludanItems.length < maxRows) {
-            ludanItems.push('icon-cur');
-            ludanList.push(ludanItems);
-            ludanItems = [];
-          } else {
-            ludanList.push(ludanItems);
-            ludanItems = [];
-            ludanItems.push('icon-cur');
-            ludanList.push(ludanItems);
-          }
-        }
       }
     });
+    // 最个一个
+    if (issueList.length - 1 === i) {
+      if (ludanItems.length < maxRows) {
+        ludanItems.push('icon-cur');
+        ludanList.push(ludanItems);
+        ludanItems = [];
+      } else {
+        ludanList.push(ludanItems);
+        ludanItems = [];
+        ludanItems.push('icon-cur');
+        ludanList.push(ludanItems);
+      }
+    }
   });
   return ludanList.slice(ludanList.length >= maxColumns ? Math.abs(ludanList.length - maxColumns + 1) : 0);
 }
