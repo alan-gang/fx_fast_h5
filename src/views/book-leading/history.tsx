@@ -387,7 +387,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
     this.setState({dataSource: this.state.dataSource.cloneWithRows(data)});
   }
   keyupHandler = (rd: any, event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.keyCode = KEY_ENTER) {
+    if (event.keyCode === KEY_ENTER) {
       this.__kqbooking(rd)
     }
   }
