@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { KeyboardEvent } from 'react'
 import { inject, observer } from 'mobx-react';
 import { PullToRefresh, ListView, Toast } from 'antd-mobile'
 import * as ReactDOM from 'react-dom'
@@ -29,6 +29,7 @@ const pageSize = 200
 // 数据
 let data: object[] = []
 
+const KEY_ENTER = 13;
 @inject('store')
 @observer
 class BookLeadingHistory extends React.Component<Props, object> {
@@ -384,6 +385,11 @@ class BookLeadingHistory extends React.Component<Props, object> {
     data = data.filter((item: any) => games.includes(item.lotteryId));
     this.setState({dataSource: this.state.dataSource.cloneWithRows(data)});
   }
+  keyupHandler = (rd: any, event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.keyCode = KEY_ENTER) {
+      this.__kqbooking(rd)
+    }
+  }
   renderRow = (rd: any, sid: any, rid: any) => {
     if (!rd) {
       return <div></div>
@@ -399,7 +405,6 @@ class BookLeadingHistory extends React.Component<Props, object> {
                 { [null, '长龙', '单跳', '单边跳', '一厅两房', '拍拍连'][rd.notifyType] || '连出' }<span className="c-red">{ rd.contCount }</span>{rd.unit}
               </span>
             </span>
-
           </div>
           <span className={`${this.state.activeIndex === rid ? 'rz_180' : ''} pdl-5 inlb w-33 h-33 rp_50 mgl-20 bgc-109 c-white`}>
             <span className="icon-triangle down"></span>
@@ -433,18 +438,16 @@ class BookLeadingHistory extends React.Component<Props, object> {
                       type="number" pattern="[0-9]*"
                       onClick={ (e) => x.v && e.stopPropagation() }
                       value={x.v} 
+                      onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => this.keyupHandler(rd, e)}
                       onChange={ (e) => this.inputChange(e, x)} />
                   </div>
                 })
               }
-              
             </div>
             <div className="mgb-20">{<CoinSet coinChoosed={this.coinChoosed} value={this.state.curVal} />}</div>
             <div className="bgc-deeporange clickable r_15 c-white hlh-72 txt-c fs-28 fw-b " onClick={(e) => this.__kqbooking(rd)}>立即投注</div>
-
           </div> : ''
         }
-        
       </div>
     )
   }
