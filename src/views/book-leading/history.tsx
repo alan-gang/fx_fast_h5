@@ -320,6 +320,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
       limitLevel: this.getLimit(rd.lotteryId).level
     })}).then((res: any) => {
       if (res.success === 1) {
+        this.props.store.user.updateBalance();
         rd.odds.forEach((x: any) => {
           x.v = ''
         })
