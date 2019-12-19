@@ -12,6 +12,7 @@ function getStyle(d: string): string {
     case '总大':
     case '总单':
     case '和尾大':
+    case '红':
       return 'bgc-r';
     case '小':
     case '总小':
@@ -19,10 +20,12 @@ function getStyle(d: string): string {
     case '总双':  
     case '虎':
     case '和尾小':
+    case '蓝':
       return 'bgc-b';
     case '和':
     case '30':
     case '11':
+    case '绿':
       return 'bgc-g';
     default:
       if (/\d/.test(d)) return 'bgc-y';

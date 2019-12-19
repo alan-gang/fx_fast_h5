@@ -100,4 +100,5 @@ methods.set('hc6_zwm_dx', {id: '311', title: '正五码大小', methodId: '7013'
 methods.set('hc6_zwm_ds', {id: '312', title: '正五码单双', methodId: '7013', method: 'zwm_ds', type: LOTTERY_TYPES.HC6});
 methods.set('hc6_zlm_dx', {id: '313', title: '正六码大小', methodId: '7014', method: 'zlm_dx', type: LOTTERY_TYPES.HC6});
 methods.set('hc6_zlm_ds', {id: '314', title: '正六码单双', methodId: '7014', method: 'zlm_ds', type: LOTTERY_TYPES.HC6});
+methods.set('hc6_seibo_hll', {id: '315', title: '色波', methodId: '7005', method: 'seibo_hll', type: LOTTERY_TYPES.HC6});
 

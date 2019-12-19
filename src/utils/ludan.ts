@@ -114,7 +114,9 @@ export const methodTabs: any = {
       {title: '特码单双', name: 'tm_ds', subM: []}
     ],
     texiao: [],
-    sebo: [],
+    sebo: [
+      {title: '色波路单', name: 'seibo_hll', subM: []},
+    ],
     zhengyima: [
       {title: '正一码大小', name: 'zym_dx', subM: []},
       {title: '正一码单双', name: 'zym_ds', subM: []}
@@ -386,6 +388,7 @@ export function getLuDanListByMethod(issueList: any[], type: string, name: strin
           case 'zwm_ds':
           case 'zlm_dx':
           case 'zlm_ds':
+          case 'seibo_hll':
             item = cs.value[0][mObj.method.split('_')[1]];
             break;
           case 'wg_lhh':
