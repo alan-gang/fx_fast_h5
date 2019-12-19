@@ -236,10 +236,8 @@ class BookLeadingHistory extends React.Component<Props, object> {
     this.init()
   }
   // 获取赔率数据
-  getOdd = (odd: any, rd: any) => {
-    let type = odd.n
+  getOdd = (type: any, rd: any) => {
     let limitItem = this.props.store.game.getLimitListItemById(rd.lotteryId)
-    // console.log('odd=', odd, ' rd=', rd, ' limitItem=', limitItem)
     if (limitItem) {
       let arr: any[] = limitItem.items[rd.methodId]
       if (arr) {
