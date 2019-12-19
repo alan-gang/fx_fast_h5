@@ -128,7 +128,7 @@ class GameHeader extends Component<Props, object> {
           <div>第{this.props.lastIssue}期：</div>
           <div className="nums-wp">
             {this.props.openNumbers.map((num: string, i: number) => (
-              this.renderOpenNumbers(num, i)
+              <React.Fragment  key={i}>{this.renderOpenNumbers(num, i)}</React.Fragment>
             ))}
           </div>
         </section>
