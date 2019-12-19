@@ -353,7 +353,7 @@ class OrderBar extends Component<Props, object> {
       this.resetAmount();
       Toast.hide();
       if (success === 1) {
-        Toast.success('投注成功');
+        Toast.success('投注成功', 2);
         this.props.store.user.updateBalance();
         this.props.orderFinishCB(true);
       } else {

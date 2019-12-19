@@ -32,7 +32,7 @@ export function getIssuesByGameIds(params: object = {}) {
 export function historyIssue(params: object = {}) {
   params = Object.assign({
     pageNum: 1,
-    size: 30,
+    size: 60,
     v: 1
   }, params);
   return http.get('/issue.do?method=recentlyCode', { params });

@@ -22,6 +22,7 @@ import Bus from '../../utils/eventBus'
 import { LOTTERY_TYPES } from '../../utils/config';
 import { ANIMALS_POULTRY, ANIMALS_BEAST } from '../../game/hc6';
 import './index.styl';
+import { getUrlParams } from '../../utils/common';
 
 interface IProps {
   store?: any;
@@ -130,6 +131,19 @@ class Game extends Component<Props, object> {
     this.getHistoryIssue(this.id);
     // this.getLimitData(this.id);
   }
+  getLoginData() {
+    let sessionData: any = sessionStorage.getItem('sessionData');
+    let agentCode = getUrlParams('agentCode');
+    let param = getUrlParams('param');
+    let data = {
+      agentCode,
+      param
+    };
+    if (!agentCode && !param && sessionData) {
+      data = JSON.parse(sessionData);
+    }
+    return data;
+  }
   initSocket() {
     this.mysocket = new Socket({
       url: this.props.store.common.broadcaseWSUrl,
@@ -148,7 +162,16 @@ class Game extends Component<Props, object> {
     }, true);
   }
   componentDidMount() {
-    this.initSocket();
+    if (this.props.store.common.broadcaseWSUrl) {
+      this.initSocket();
+    } else {
+      APIs.signIn(this.getLoginData()).then((data: any) => {
+        if (data.success > 0) {
+          this.props.store.common.setBroadcaseWSUrl(data.broadcaseWSUrl);
+          this.initSocket();
+        }
+      });
+    }
     Bus.on('onSetLimit', this.onSetLimit);
   }
   onSetLimit = () => {
