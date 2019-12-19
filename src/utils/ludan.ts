@@ -110,34 +110,34 @@ export const methodTabs: any = {
   },
   hc6: {
     tema: [
-      {title: '特码大小', name: 'zh_dx', subM: []},
-      {title: '特码单双', name: 'zh_ds', subM: []}
+      {title: '特码大小', name: 'tm_dx', subM: []},
+      {title: '特码单双', name: 'tm_ds', subM: []}
     ],
     texiao: [],
     sebo: [],
     zhengyima: [
-      {title: '正一码大小', name: 'zh_dx', subM: []},
-      {title: '正一码单双', name: 'zh_ds', subM: []}
+      {title: '正一码大小', name: 'zym_dx', subM: []},
+      {title: '正一码单双', name: 'zym_ds', subM: []}
     ],
     zhengerma: [
-      {title: '正二码大小', name: 'zh_dx', subM: []},
-      {title: '正二码单双', name: 'zh_ds', subM: []}
+      {title: '正二码大小', name: 'zem_dx', subM: []},
+      {title: '正二码单双', name: 'zem_ds', subM: []}
     ],
     zhengshanma: [
-      {title: '正三码大小', name: 'zh_dx', subM: []},
-      {title: '正三码单双', name: 'zh_ds', subM: []}
+      {title: '正三码大小', name: 'zsanm_dx', subM: []},
+      {title: '正三码单双', name: 'zsanm_ds', subM: []}
     ],
     zhengshima: [
-      {title: '正四码大小', name: 'zh_dx', subM: []},
-      {title: '正四码单双', name: 'zh_ds', subM: []}
+      {title: '正四码大小', name: 'zsim_dx', subM: []},
+      {title: '正四码单双', name: 'zsim_ds', subM: []}
     ],
     zhengwuma: [
-      {title: '正五码大小', name: 'zh_dx', subM: []},
-      {title: '正五码单双', name: 'zh_ds', subM: []}
+      {title: '正五码大小', name: 'zwm_dx', subM: []},
+      {title: '正五码单双', name: 'zwm_ds', subM: []}
     ],
     zhengliuma: [
-      {title: '正六码大小', name: 'zh_dx', subM: []},
-      {title: '正六码单双', name: 'zh_ds', subM: []}
+      {title: '正六码大小', name: 'zlm_dx', subM: []},
+      {title: '正六码单双', name: 'zlm_ds', subM: []}
     ]
   }
 }
@@ -225,6 +225,9 @@ export function getNoSubMenuMethods(type: string) {
  * @param name 名字
  */
 export function getMethodENameByLudanName(type: string, name: string): any {
+  if (!type || !name) {
+    return null
+  }
   let types = methodTabs[type];
   let keys = Object.keys(types);
   let tabs;
@@ -257,6 +260,9 @@ export function getMethodENameByLudanName(type: string, name: string): any {
  * @param name 名字
  */
 export function getLunDanTabByName(type: string, name: string): any {
+  if (!type || !name) {
+    return null
+  }
   let types = methodTabs[type];
   let keys = Object.keys(types);
   let tabs;
@@ -366,6 +372,20 @@ export function getLuDanListByMethod(issueList: any[], type: string, name: strin
           case 'zh_ds':
           case 'zhw_wsdx':
           case 'zhw_wsds':
+          case 'tm_dx':
+          case 'tm_ds':
+          case 'zym_dx':
+          case 'zym_ds':
+          case 'zem_dx':
+          case 'zem_ds':
+          case 'zsanm_dx':
+          case 'zsanm_ds':
+          case 'zsim_dx':
+          case 'zsim_ds':
+          case 'zwm_dx':
+          case 'zwm_ds':
+          case 'zlm_dx':
+          case 'zlm_ds':
             item = cs.value[0][mObj.method.split('_')[1]];
             break;
           case 'wg_lhh':

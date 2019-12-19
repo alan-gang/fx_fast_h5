@@ -85,3 +85,19 @@ methods.set('pk10_gy_ds', {id: '118', title: '冠亚和单双', methodId: '4053'
 
 methods.set('k3_zh_dx', {id: '200', title: '大小', methodId: '5018', method: 'zh_dx', type: LOTTERY_TYPES.K3});
 methods.set('k3_zh_ds', {id: '201', title: '单双', methodId: '5018', method: 'zh_ds', type: LOTTERY_TYPES.K3});
+
+methods.set('hc6_tm_dx', {id: '301', title: '特码大小', methodId: '7015', method: 'tm_dx', type: LOTTERY_TYPES.HC6});
+methods.set('hc6_tm_ds', {id: '302', title: '特码单双', methodId: '7015', method: 'tm_ds', type: LOTTERY_TYPES.HC6});
+methods.set('hc6_zym_dx', {id: '303', title: '正一码大小', methodId: '7009', method: 'zym_dx', type: LOTTERY_TYPES.HC6});
+methods.set('hc6_zym_ds', {id: '304', title: '正一码单双', methodId: '7009', method: 'zym_ds', type: LOTTERY_TYPES.HC6});
+methods.set('hc6_zem_dx', {id: '305', title: '正二码大小', methodId: '7009', method: 'zem_dx', type: LOTTERY_TYPES.HC6});
+methods.set('hc6_zem_ds', {id: '306', title: '正二码单双', methodId: '7009', method: 'zem_ds', type: LOTTERY_TYPES.HC6});
+methods.set('hc6_zsanm_dx', {id: '307', title: '正三码大小', methodId: '7011', method: 'zsanm_dx', type: LOTTERY_TYPES.HC6});
+methods.set('hc6_zsanm_ds', {id: '308', title: '正三码单双', methodId: '7011', method: 'zsanm_ds', type: LOTTERY_TYPES.HC6});
+methods.set('hc6_zsim_dx', {id: '309', title: '正四码大小', methodId: '7012', method: 'zsim_dx', type: LOTTERY_TYPES.HC6});
+methods.set('hc6_zsim_ds', {id: '310', title: '正四码单双', methodId: '7012', method: 'zsim_ds', type: LOTTERY_TYPES.HC6});
+methods.set('hc6_zwm_dx', {id: '311', title: '正五码大小', methodId: '7013', method: 'zwm_dx', type: LOTTERY_TYPES.HC6});
+methods.set('hc6_zwm_ds', {id: '312', title: '正五码单双', methodId: '7013', method: 'zwm_ds', type: LOTTERY_TYPES.HC6});
+methods.set('hc6_zlm_dx', {id: '313', title: '正六码大小', methodId: '7014', method: 'zlm_dx', type: LOTTERY_TYPES.HC6});
+methods.set('hc6_zlm_ds', {id: '314', title: '正六码单双', methodId: '7014', method: 'zlm_ds', type: LOTTERY_TYPES.HC6});
+
