@@ -16,6 +16,7 @@ interface Props {
 }
 
 interface State {
+  limitLevelList: LimitLevelItem[];
   curLimitIndex: number;
   level: number;
 }
@@ -26,17 +27,28 @@ class LimitSetDialog extends Component<Props, object> {
   state: State;
   constructor(props: Props) {
     super(props);
-    let level = ((props.store.game.getGameLimitLevelByGameId(props.gameId) || {}).level) || 1;
-    let index = props.limitLevelList.findIndex((item) => item.level === level);
     this.state = {
-      curLimitIndex: index,
-      level
+      limitLevelList: [],
+      curLimitIndex: 0,
+      level: 1
     }
   }
+  componentWillMount() {
+    this.init(this.props);
+  }
+  init(props: Props) {
+    let level = ((props.store.game.getGameLimitLevelByGameId(props.gameId) || {}).level) || 1;
+    let limitItem = props.store.game.getLimitListItemById(props.gameId);
+    let limitLevelList: LimitLevelItem[] = limitItem ? limitItem.kqPrizeLimit : [];
+    let index = limitLevelList.findIndex((item) => item.level === level);
+    this.setState({
+      limitLevelList,
+      curLimitIndex: index,
+      level
+    });
+  }
   componentWillReceiveProps(nextProps: Props) {
-    let level = nextProps.store.game.getGameLimitLevelByGameId(nextProps.gameId) || 1;
-    let index = nextProps.limitLevelList.findIndex((item) => item.level === level);
-    this.setState({curLimitIndex: index});
+    this.init(nextProps);
   }
   onLimitChoiceHandler = (level: number, index: number) => {
     this.setState({curLimitIndex: index, level});
@@ -61,7 +73,7 @@ class LimitSetDialog extends Component<Props, object> {
           <header className="flex ai-c jc-c limit-set-header">限红设置{this.props.isShowLimitSetDialogClose && <Icon type="cross" onClick={this.onCloseHandler} />}</header>
           <div className="bg-white limit-set-content">
             <section className="flex jc-c limit-list">
-              {this.props.limitLevelList.map((item: LimitLevelItem, i: number) => (
+              {this.state.limitLevelList.map((item: LimitLevelItem, i: number) => (
                 <Button key={i} className={`flex jc-c ai-c btn-limit-amount ${this.state.curLimitIndex === i ? 'selected' : ''}`} onClick={()=>this.onLimitChoiceHandler(item.level, i)}>{item.minAmt}-{item.maxAmt}</Button>
               ))}
             </section>

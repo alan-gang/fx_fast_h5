@@ -234,6 +234,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
       })
     }
     this.init()
+    this.startIntervalResetOrder();
   }
   // 获取赔率数据
   getOdd = (type: any, rd: any) => {

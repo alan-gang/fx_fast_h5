@@ -575,7 +575,7 @@ class Game extends Component<Props, object> {
            
           </section>
         </GameCommonDataContext.Provider>
-        {this.state.isShowLimitSetDialog && 
+        {this.state.isShowLimitSetDialog && this.props.store.game.limitList && this.props.store.game.limitList.length > 0 &&
           <LimitSetDialog 
             isShow={this.state.isShowLimitSetDialog} 
             isShowLimitSetDialogClose={this.state.isShowLimitSetDialogClose} 

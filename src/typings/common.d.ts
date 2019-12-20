@@ -3,6 +3,8 @@
 interface BestLudanItem {
   codeStyle: string;
   methodId: number;
+  contCount: number;
+  unit: string;
   [prop: string]: any;
 }
 interface GameLimitLevel {
