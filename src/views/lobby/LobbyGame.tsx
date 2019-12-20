@@ -161,19 +161,25 @@ class LobbyGame extends Component<Props, object> {
   componentWillUnmount() {
     this.mysocket && this.mysocket.removeListen();
   }
-  render() {
+  renderBestLudanTxt() {
     let bestLudan = this.state.bestLudan;
+    if (!bestLudan) return <div></div>
+    return <React.Fragment>
+      <div>
+        <span className="mgr-20">{ bestLudan.pos }<span className="c-red">{ bestLudan.notifyVal }</span>路单</span>
+      </div>
+      <div>
+        <span>{[null, '长龙', '单跳', '单边跳', '一厅两房', '拍拍连'][bestLudan.notifyType] || '连出' }<span className="c-red">{ bestLudan.contCount }</span>{bestLudan.unit}</span>
+      </div>
+    </React.Fragment>
+  }
+  render() {
     return (
       <section className="lobby-game-view crs-p" onClick={this.gotoGame}>
         <LobbyGameHeader gameType={this.props.gameType} gameId={this.props.gameId} curIssue={this.state.curIssue} remainTime={this.state.remainTime} gameName={this.props.gameName} getNewestIssue={this.getCurIssue} />
         <div className="flex jc-sb best-dudan-name">
           {/* <div>{this.state.bestLudanName}</div> */}
-          <div>
-            <span className="mgr-20">{ bestLudan.pos }<span className="c-red">{ bestLudan.notifyVal }</span>路单</span>
-          </div>
-          <div>
-            <span>{[null, '长龙', '单跳', '单边跳', '一厅两房', '拍拍连'][bestLudan.notifyType] || '连出' }<span className="c-red">{ bestLudan.contCount }</span>{bestLudan.unit}</span>
-          </div>
+          {this.renderBestLudanTxt()}
         </div>
         <div className="ludan-wp">
           <Ludan 

@@ -278,3 +278,14 @@ export function getMethodByIds(ids: string[], gameType: string) {
 export function getMethodsConfigByType(gameType: string): GameMethodMenu[] {
   return methodsConfig[gameType];
 }
+
+/**
+ * 根据游戏类型和玩法ID获取当前玩法在当前游戏类型玩法菜单中的位置
+ * @param gameType 游戏类型
+ * @param methodId 玩法ID
+ */
+export function getMethodPosByGameTypeAndId(gameType: string, methodId: number): number {
+  return (methodsConfig[gameType] || []).findIndex((m: GameMethodMenu) => {
+    return m.ids.find((id: string) => parseInt(id.split(':')[0], 10) === methodId)
+  })
+}

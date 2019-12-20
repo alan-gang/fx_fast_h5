@@ -34,7 +34,7 @@ class Ludan extends Component<Props, object> {
     let tabs = getAllTabsByTypeAndName(this.props.gameType, this.props.methodMenuName);
     // ssc -> 整合 -> 万位大小
     let selectedMenu = this.props.defaultMenu || (tabs.length > 0 ? tabs[0].name : '');
-    let ludanList = getLuDanListByMethod(this.props.issueList.slice(0), this.props.gameType,  selectedMenu || '', this.props.maxRows, this.props.maxColumns) || []
+    let ludanList = getLuDanListByMethod(this.props.issueList.slice(0), this.props.gameType,  selectedMenu || '', this.props.maxRows, this.props.maxColumns - 1) || []
     this.state = {
       selectedMenu,
       ludanList,

@@ -417,7 +417,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
             maxRows={6} 
             isScroll={false}
             ludanList={
-              getLuDanListByMethod(rd.ludanList.slice(0).reverse(), getGameTypeByGameId(this.state.activeGameId), rd.codeStyle)
+              getLuDanListByMethod(rd.ludanList.slice(0).reverse(), getGameTypeByGameId(this.state.activeGameId), rd.codeStyle, 6, 19)
             } 
             /> : ''
         }
