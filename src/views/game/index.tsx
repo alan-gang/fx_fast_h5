@@ -89,7 +89,7 @@ class Game extends Component<Props, object> {
     let menus: GameMethodMenu[] = getMethodsConfigByType(this.gameType);
     let limitItem = props.store.game.getLimitListItemById(this.id);
     let bestLudan: BestLudanItem = limitItem && limitItem.bestLudan;
-    let curMenuIndex = getMethodPosByGameTypeAndId(this.gameType, bestLudan.methodId) || 0;
+    let curMenuIndex = bestLudan && getMethodPosByGameTypeAndId(this.gameType, bestLudan.methodId) || 0;
     let curMenuEname = (menus && menus[curMenuIndex]).ename;
     let ludanTab = getLudanTabByTypeAndName(this.gameType, curMenuEname, bestLudan && bestLudan.codeStyle);
     let ludanMenus = getTabsByType(this.gameType, curMenuEname);
@@ -187,16 +187,17 @@ class Game extends Component<Props, object> {
       let limitItem = this.props.store.game.getLimitListItemById(this.id);
       let bestLudan: BestLudanItem = limitItem && limitItem.bestLudan;
       let menus: GameMethodMenu[] = getMethodsConfigByType(this.gameType);
-      let curMenuEname = menus && menus[0].ename
+      let curMenuIndex = bestLudan && getMethodPosByGameTypeAndId(this.gameType, bestLudan.methodId) || 0;
+      let curMenuEname = menus && menus[curMenuIndex].ename
       let ludanTab = getLudanTabByTypeAndName(this.gameType, curMenuEname, bestLudan && bestLudan.codeStyle);
       let ludanMenus = getTabsByType(this.gameType, curMenuEname);
       let gameLimitLevel = this.props.store.game.getGameLimitLevelByGameId(this.id); // 设置的限红数据
       let limitListItem = this.props.store.game.getLimitListItemById(this.id); 
       this.setState({
-        curMenuIndex: 0,
+        curMenuIndex,
         curMenuEname,
-        curGameMethodItems: this.getMethodItemsByIds((menus && menus[0].ids) || []),
-        subMethods: (menus && menus[0].subMethods) || [],
+        curGameMethodItems: this.getMethodItemsByIds((menus && menus[curMenuIndex].ids) || []),
+        subMethods: (menus && menus[curMenuIndex].subMethods) || [],
         defaultMenu: (ludanTab && ludanTab.name) || '',
         isShowLudan: ludanMenus && ludanMenus.length > 0,
         isShowLimitSetDialog: !gameLimitLevel,
