@@ -33,6 +33,22 @@
     margin-left 5px
     display flex
   }
+  &.k3 {
+    dice() {
+      display inline-block
+      width 60px
+      height 60px
+      background-size 60px
+      margin-right 10px
+      border-radius 0
+    }
+    for num in 1 2 3 4 5 6 {
+      .n-{num} {
+        background url("../../assets/images/default/dice-" + num + "@2x.png") center no-repeat
+        dice()
+      }
+    }
+  }
   &.hc6 {
     .nums-wp {
       padding-top 6px

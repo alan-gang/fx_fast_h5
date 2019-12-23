@@ -87,11 +87,11 @@ class openIssueHistory extends Component<Props, object> {
     }
     // this.list()
   }
-  getNum = (x: any) => {
+  getNum = (n: any) => {
     if (LOTTERY_TYPES.K3 === this.state.gameType) {
       return '';
     } else {
-      return x;
+      return n;
     }
   }
   isHc6() {
@@ -110,8 +110,8 @@ class openIssueHistory extends Component<Props, object> {
   renderRow = (rd: any, sid: any, rid: any) => {
     return (
       <div key={rid} className="pdt-25 pdb-25 pdl-20 pdr-20 flex">
-        <div className="wp_30 va-m mgt-10 ">{ rd.issue }期</div>
-        <div className="wp_70 va-m flex">
+        <div className="wp_30 va-m flex ai-c ">{ rd.issue }期</div>
+        <div className="wp_70 va-m flex ai-c ">
           {
             rd.code.split(',').map((x: any, i: any) => (
               <React.Fragment  key={i}>{this.renderOpenNumbers(x, i)}</React.Fragment>

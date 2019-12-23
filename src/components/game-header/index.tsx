@@ -111,6 +111,13 @@ class GameHeader extends Component<Props, object> {
   isHc6() {
     return this.props.gameType === LOTTERY_TYPES.HC6;
   }
+  getNum = (n: any) => {
+    if (LOTTERY_TYPES.K3 === this.props.gameType) {
+      return '';
+    } else {
+      return n;
+    }
+  }
   renderOpenNumbers(num: string, i: number) {
     if (this.isHc6()) {
       if (i === 5) {
@@ -118,7 +125,7 @@ class GameHeader extends Component<Props, object> {
       }
       return (<div><div key={i} className={`open-num-item n-${String(num).padStart(2, '0')}`}>{String(num).padStart(2, '0')}</div><div className="animal">{getAnimalByNum(parseInt(num, 10))}</div></div>)
     } else {
-      return <div key={i} className="open-num-item">{num}</div> 
+      return <div key={i} className={`open-num-item n-${num}`}>{this.getNum(num)}</div> 
     }
   }
   render() {
