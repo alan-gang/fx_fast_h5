@@ -1,8 +1,12 @@
 import React from 'react'
+import { inject, observer } from 'mobx-react';
 import { PullToRefresh, ListView, Button } from 'antd-mobile'
 import * as ReactDOM from 'react-dom'
 import { orderList } from 'src/http/APIs'
+import { getAllGames, getGameTypeByGameId } from '../../game/games';
+import { LOTTERY_TYPES } from '../../utils/config';
 // import Colors from 'src/utils/colorConfig'
+import './test.styl'
 
 // 分页设置
 let page = 1
@@ -14,7 +18,7 @@ const dns = [
     render: (x) => x.issue.slice(-6) + '期'
   },
   {key: 'methodName', name: '玩法/内容', style: {width: '25%'},
-    render: (x: any) => <React.Fragment>{[<div key="1">{x.lotteryName}</div>, <div key="2">{ x.methodName } - { x.code }</div>]}</React.Fragment>
+    render: (x: any) => <React.Fragment>{[<div key="1">{x.lotteryName}</div>, <div key="2" className="order-content">{ x.methodName } - { x.code }</div>]}</React.Fragment>
     // render: (x: any) => <div><span className={`inlb txt-c code-bg ${ getStyle(x.code) }`}>{x.code}</span><span className="odd text-orange">{ (x.dyPointDec.split('-')[0] / 100).toFixed(2) }</span></div>
   },
   {key: 'totalPrice', name: '投注金额'},
@@ -43,7 +47,15 @@ const statusList = ['未开奖', '已中奖', '未中奖', '已撤单', '平局'
 //   return Colors.getStyle(data);
 // }
 
-class test extends React.Component {
+interface MatchParams {
+  id: string;
+}
+
+type Props = IProps & RouteComponentProps<MatchParams>;
+
+@inject("store")
+@observer
+class test extends React.Component<Props, {}> {
   constructor(props) {
     super(props)
     this.state = {
@@ -55,6 +67,8 @@ class test extends React.Component {
       height: document.documentElement.clientHeight,
       hasMore: true,
     }
+    data = [];
+    page = 1;
   }
   componentDidUpdate() {
   }
@@ -66,12 +80,15 @@ class test extends React.Component {
   }
   getOrderList = () => {
     this.setState({ refreshing: true, isLoading: true })
+    const gameType = getGameTypeByGameId(parseInt(this.props.match.params.id, 10));
+    const isfast = gameType === LOTTERY_TYPES.HC6 ? 0 : 1;
     orderList({
       beginDate: (new Date())._setHMS('0:0:0')._bf(-6)._toAllString(),
       endDate: (new Date())._setHMS('23:59:59')._toAllString(),
       page: page,
       pageSize: pageSize,
-      isfast: 1
+      // lotteryId: this.props.match.params.id,
+      isfast
     }).then(({success, recordList}) => {
       if (success === 1) {
         data = [...data, ...recordList]
@@ -81,6 +98,12 @@ class test extends React.Component {
           refreshing: false,
           isLoading: false,
           hasMore: recordList.length >= pageSize,
+        })
+      } else {
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows([]),
+          refreshing: false,
+          isLoading: false,
         })
       }
     })
