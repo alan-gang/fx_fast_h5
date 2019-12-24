@@ -77,7 +77,7 @@ class LobbyGameHeader extends Component<Props, object> {
           <div className="txt-r cur-issue-wp">
             <span className="fw-b">{this.props.gameName}</span><span>{this.props.curIssue}期</span>
           </div>
-          <div className={`time-wp ${parseInt(this.state.seconds, 10) <= 10 ? 'txt-c-r' : ''}`}>
+          <div className={`time-wp ${this.state.hours === '00' && this.state.minutes === '00' && parseInt(this.state.seconds, 10) <= 10 ? 'txt-c-r' : ''}`}>
             {/* <span className="hour time-item mg-r-3">{this.state.hours.split('')[0]}</span>
             <span className="hour time-item">{this.state.hours.split('')[1]}</span>
             <span className="colon">:</span> */}

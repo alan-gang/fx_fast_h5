@@ -37,6 +37,14 @@ interface State {
   bestLudan: BestLudanItem;
 }
 
+let bestLudanConfig: any = {
+  'ssc': {methodMenuName: 'zhenghe', defaultMenu: 'zh_dx', title: '总和大小'},
+  '11x5': {methodMenuName: 'zhenghe', defaultMenu: 'zh_dx', title: '总和大小'},
+  'pk10': {methodMenuName: 'zhenghe', defaultMenu: 'zh_dx', title: '冠亚和值大小'},
+  'k3': {methodMenuName: 'diansu', defaultMenu: 'zh_dx', title: '总和大小'},
+  'hc6':  {methodMenuName: '', defaultMenu: '', title: '总和大小'}
+};
+
 @inject("store")
 @observer
 class LobbyGame extends Component<Props, object> {
@@ -44,17 +52,10 @@ class LobbyGame extends Component<Props, object> {
   mysocket?: Socket;
   constructor(props: Props) {
     super(props);
-    let bestLudanConfig: any = {
-      'ssc': {methodMenuName: 'zhenghe', defaultMenu: 'zh_dx', title: '总和大小'},
-      '11x5': {methodMenuName: 'zhenghe', defaultMenu: 'zh_dx', title: '总和大小'},
-      'pk10': {methodMenuName: 'zhenghe', defaultMenu: 'zh_dx', title: '冠亚和值大小'},
-      'k3': {methodMenuName: 'diansu', defaultMenu: 'zh_dx', title: '总和大小'},
-      'hc6':  {methodMenuName: '', defaultMenu: '', title: '总和大小'}
-    };
     let gameType = getGameTypeByGameId(props.gameId);
     let limitItem = props.store.game.getLimitListItemById(props.gameId);
     let bestLudan: BestLudanItem = limitItem && limitItem.bestLudan;
-    console.log('bestLudan=', JSON.stringify(limitItem && limitItem.bestLudan));
+    // console.log('bestLudan=', JSON.stringify(limitItem && limitItem.bestLudan));
     // let ludanTab = getLunDanTabByName(gameType, bestLudan && bestLudan.codeStyle);
     let bestLudanName = (getLunDanFullTitleByName(gameType, bestLudan && bestLudan.codeStyle) || bestLudanConfig[gameType].title) + '路单';
     let methodMenuName = getMethodENameByLudanName(gameType, bestLudan && bestLudan.codeStyle) || bestLudanConfig[gameType].methodMenuName;
@@ -81,7 +82,7 @@ class LobbyGame extends Component<Props, object> {
   componentWillMount() {
     this.init();
   }
-  init() {
+  init = () => {
     this.getCurIssue(this.props.gameId);
     this.getHistoryIssue(this.props.gameId);
   }
@@ -91,7 +92,12 @@ class LobbyGame extends Component<Props, object> {
       name: 'lobbyGame' + this.props.gameId,
       receive: (data) => {
         if (data.type === 'openWinCode') {
-          this.openWinCode(parseInt(data.content[0].lottId, 10), data.content[0]);
+          if (data.content && data.content.length > 0 && parseInt(data.content[0].lottId, 10) === this.props.gameId) {
+            this.openWinCode(parseInt(data.content[0].lottId, 10), data.content[0]);
+            setTimeout(() => {
+              this.getLimitData(this.props.gameId);
+            }, 2000)
+          }
         }
       },
       open: () => {
@@ -172,6 +178,26 @@ class LobbyGame extends Component<Props, object> {
         <span>{[null, '长龙', '单跳', '单边跳', '一厅两房', '拍拍连'][bestLudan.notifyType] || '连出' }<span className="c-red">{ bestLudan.contCount }</span>{bestLudan.unit}</span>
       </div>
     </React.Fragment>
+  }
+  getLimitData(id: number) {
+    APIs.getBestLudan({lotteryId: id}).then((data: any) => {
+      if (data.success === 1) {
+        if (data.bestLudan) {
+          let bestLudan: BestLudanItem = data.bestLudan;
+          let bestLudanName = (getLunDanFullTitleByName(this.state.gameType, bestLudan && bestLudan.codeStyle) || bestLudanConfig[this.state.gameType].title) + '路单';
+          let methodMenuName = getMethodENameByLudanName(this.state.gameType, bestLudan && bestLudan.codeStyle) || bestLudanConfig[this.state.gameType].methodMenuName;
+          let ludanTab = getLudanTabByTypeAndName(this.state.gameType, methodMenuName, bestLudan && bestLudan.codeStyle);
+          let defaultMenu = (ludanTab && ludanTab.name) || bestLudanConfig[this.state.gameType].defaultMenu;
+          console.log('id=', id, 'methodMenuName=', methodMenuName, ' defaultMenu=', defaultMenu)
+          this.setState({
+            bestLudanName: bestLudanName,
+            methodMenuName,
+            defaultMenu,
+            bestLudan
+          });
+        }
+      }
+    });
   }
   render() {
     return (

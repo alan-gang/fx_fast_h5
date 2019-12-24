@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { orderList } from '../../http/APIs'
 import { numberWithCommas } from '../../utils/num'
-import { PullToRefresh } from 'antd-mobile'
-import { getAllGames } from '../../game/games'
+import { PullToRefresh } from 'antd-mobile';
+import { getAllGames, getGameTypeByGameId } from '../../game/games';
+import { LOTTERY_TYPES } from '../../utils/config';
 
 import Colors from '../../utils/colorConfig'
 
@@ -92,6 +93,8 @@ class BetRecords extends Component<Props, object> {
     this.getOrderList()
   }
   getOrderList = (params: object = {}) => {
+    const gameType = getGameTypeByGameId(parseInt(this.state.gameId, 10));
+    const isfast = gameType === LOTTERY_TYPES.HC6 ? 0 : 1;
     params = Object.assign({
       projectId: this.state.id,
       beginDate: this.state.stEt[0],
@@ -103,7 +106,7 @@ class BetRecords extends Component<Props, object> {
       // modes: this.mode !== '' ? this.mode + 1 : '',
       page: this.state.currentPage,
       pageSize: this.state.pageSize,
-      isfast: 1
+      isfast
     })
     orderList(params)
       .then((data: any) => {

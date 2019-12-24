@@ -52,14 +52,14 @@ class Ludan extends Component<Props, object> {
     });
   }
   componentWillReceiveProps(nextProps: Props) {
-      let tabs = getAllTabsByTypeAndName(this.props.gameType, this.props.methodMenuName);
-      let selectedMenu = nextProps.defaultMenu || (tabs.length > 0 ? tabs[0].name : '');
-      let ludanList = getLuDanListByMethod(nextProps.issueList.slice(0), nextProps.gameType,  this.state.selectedMenu || '', nextProps.maxRows, nextProps.maxColumns) || []
-      this.setState({
-        selectedMenu,
-        ludanList,
-        tabs
-      });
+    let tabs = getAllTabsByTypeAndName(nextProps.gameType, nextProps.methodMenuName);
+    let selectedMenu = nextProps.defaultMenu || (tabs.length > 0 ? tabs[0].name : '');
+    let ludanList = getLuDanListByMethod(nextProps.issueList.slice(0), nextProps.gameType,  this.state.selectedMenu || '', nextProps.maxRows, nextProps.maxColumns) || []
+    this.setState({
+      selectedMenu,
+      ludanList,
+      tabs
+    });
   }
   render() {
     return (
