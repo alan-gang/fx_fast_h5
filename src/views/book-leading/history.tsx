@@ -59,10 +59,21 @@ class BookLeadingHistory extends React.Component<Props, object> {
   }
   __pushBetRemind = (rd: any) => {
     if (data[0] && this.state.dataSource) {
+      // console.log('__pushBetRemind=', rd)
+      rd = rd.filter((item: any) => {
+        return !data.find((sitem: any) => {
+          return item.lotteryId === sitem.lotteryId && item.codeStyle === sitem.codeStyle && item.pos === sitem.pos && item.issue === sitem.issue && item.notifyType === sitem.notifyType
+        });
+      });
       data = data.concat(rd)
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(data),
-      }, this.filterData)
+      }, () => {
+        this.filterData()
+        rd.forEach((item: any , index: any) => {
+          this.getCurIssueData(item.lotteryId, index, item)
+        })
+      });
     }
   }
   componentWillReceiveProps (next: any) {
@@ -117,7 +128,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
           x.timming = -1
           x.timeout = 0
         })
-        data = [...data, ...rep.data]
+        data = [...rep.data]
         page++
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(data),
@@ -126,7 +137,10 @@ class BookLeadingHistory extends React.Component<Props, object> {
           hasMore: rep.data.length >= pageSize,
         }, this.filterData)
         let rd: any = data[0]
-        this.getHistoryIssue(rd.lotteryId, '0', rd)
+        this.getHistoryIssue(rd.lotteryId, '0', rd);
+        data.forEach((rd: any , index) => {
+          this.getCurIssueData(rd.lotteryId, index, rd)
+        })
       }
     })
   }
@@ -162,14 +176,16 @@ class BookLeadingHistory extends React.Component<Props, object> {
       .then((rep: any) => {
         if (rep.success === 1) {
           // 已经过期 或者 倒计时不足1000ms时 删除这个提醒项 
-          // rep.issue !== rd.issue || 
-          if ((rep.saleend - rep.current) < 1000) {
+          if ((rep.issue !== rd.issue || rep.saleend - rep.current) < 1000) {
             this.removeRd(rd, rid)
+            // console.log('delete id', gameid, rd, rep.issue, rd.issue, rd.lotteryName)
           } else {
             rd.issue = rep.issue
             rd.timming = rep.saleend - rep.current
+            if (rd.timeout) clearTimeout(rd.timeout)
             this.countDown(rd, rid)
           }
+          // console.log(rd.lotteryName, 'gameid=', gameid, 'rid=', rid, 'rd=', rd, ' rep.issue=', rep.issue)
         } else {
           if (this.props.init) Toast.fail(rep.msg)
           setTimeout(() => {
@@ -180,7 +196,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
   }
   countDown (rd: any, rid: any) {
     if (rd.timming >= 1000) {
-      // console.log(rd.lotteryName)
+      // console.log(rd.lotteryName, rd.timming)
       rd.timming -= 1000
       rd.timeout = setTimeout(() => this.countDown(rd, rid), 1000)
       this.setState({
@@ -189,7 +205,6 @@ class BookLeadingHistory extends React.Component<Props, object> {
     } else {
       clearTimeout(rd.timeout)
       this.removeRd(rd, rid)
-      
     }
     // 如果是第一个， 通知float显示这个
     if (rid === '0') {
@@ -197,7 +212,16 @@ class BookLeadingHistory extends React.Component<Props, object> {
     }
   }
   removeRd (rd: any, rid: any) {
-    data.splice(rid, 1)
+    let list = data.slice(0);
+    let pos: number = -1;
+    data.forEach(() => {
+      pos = list.findIndex((item: any, i) => (item.lotteryId === rd.lotteryId && item.codeStyle === rd.codeStyle && item.pos === rd.pos && item.issue === rd.issue && item.notifyType === rd.notifyType));
+      if (pos >= 0) {
+        list.splice(pos, 1);
+      }
+    });
+    data = list;
+    // data.splice(rid, 1)
     if (rid === this.state.activeIndex) {
       this.setState({
         activeIndex: -1
@@ -212,7 +236,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
       dataSource: this.state.dataSource.cloneWithRows(data),
     })
     // 如果删除第一个，重新
-    if (rid === '0') {
+    if (rid === '0' && data && data.length > 0) {
       let rd: any = data[0]
       this.getHistoryIssue(rd.lotteryId, '0', rd)
     }
@@ -336,7 +360,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
     if (xh) {
       return this.props.store.game.getKqLimitLevelItemById(gameId, xh.level)
     } else {
-      return limitListItem.kqPrizeLimit[0]
+      return limitListItem && limitListItem.kqPrizeLimit[0]
     }
   }
   onRefresh = () => {
@@ -390,6 +414,21 @@ class BookLeadingHistory extends React.Component<Props, object> {
       this.__kqbooking(rd)
     }
   }
+  updateBestLudan(bestLudan: BestLudanItem) {
+    if (bestLudan) {
+      this.setState({gamedata: bestLudan})
+    }
+  }
+
+  getBestLudan(id: number) {
+    APIs.getBestLudan({lotteryId: id}).then((data: any) => {
+      if (data.success === 1) {
+        if (data.bestLudan) {
+          this.updateBestLudan(data.bestLudan);
+        }
+      }
+    });
+  }
   renderRow = (rd: any, sid: any, rid: any) => {
     if (!rd) {
       return <div></div>
@@ -430,7 +469,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
             </div>
             <div className="mgb-20">
               {
-                rd.odds.map((x: any, i: number) => {
+                rd.odds && rd.odds.map((x: any, i: number) => {
                   return <div className="book-leading-item wp_50 inlb mgb-10" key={i} onClick={ (e) => this.defaultInputHandler(x, x.v = x.v ? '' : this.state.amount)}>
                     <span className={`${ x.v ? 'bgc-deeporange c-white' : 'bgc-white' } book-leading-ball r_5 inlb  minw-54 hlh-54 txt-c fw-b mgr-2 pdl-5 pdr-5`}>{x.n}</span>
                     <span className="book-leading-odd c-deeporange">{x.odd}</span>

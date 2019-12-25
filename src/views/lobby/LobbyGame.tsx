@@ -78,6 +78,7 @@ class LobbyGame extends Component<Props, object> {
       defaultMenu,
       bestLudan
     }
+    this.getLimitData(props.gameId);
   }
   componentWillMount() {
     this.init();
@@ -179,22 +180,24 @@ class LobbyGame extends Component<Props, object> {
       </div>
     </React.Fragment>
   }
+  updateBestLudan(bestLudan: BestLudanItem) {
+    let bestLudanName = (getLunDanFullTitleByName(this.state.gameType, bestLudan && bestLudan.codeStyle) || bestLudanConfig[this.state.gameType].title) + '路单';
+    let methodMenuName = getMethodENameByLudanName(this.state.gameType, bestLudan && bestLudan.codeStyle) || bestLudanConfig[this.state.gameType].methodMenuName;
+    let ludanTab = getLudanTabByTypeAndName(this.state.gameType, methodMenuName, bestLudan && bestLudan.codeStyle);
+    let defaultMenu = (ludanTab && ludanTab.name) || bestLudanConfig[this.state.gameType].defaultMenu;
+    // console.log('id=', id, 'methodMenuName=', methodMenuName, ' defaultMenu=', defaultMenu)
+    this.setState({
+      bestLudanName: bestLudanName,
+      methodMenuName,
+      defaultMenu,
+      bestLudan
+    });
+  }
   getLimitData(id: number) {
     APIs.getBestLudan({lotteryId: id}).then((data: any) => {
       if (data.success === 1) {
         if (data.bestLudan) {
-          let bestLudan: BestLudanItem = data.bestLudan;
-          let bestLudanName = (getLunDanFullTitleByName(this.state.gameType, bestLudan && bestLudan.codeStyle) || bestLudanConfig[this.state.gameType].title) + '路单';
-          let methodMenuName = getMethodENameByLudanName(this.state.gameType, bestLudan && bestLudan.codeStyle) || bestLudanConfig[this.state.gameType].methodMenuName;
-          let ludanTab = getLudanTabByTypeAndName(this.state.gameType, methodMenuName, bestLudan && bestLudan.codeStyle);
-          let defaultMenu = (ludanTab && ludanTab.name) || bestLudanConfig[this.state.gameType].defaultMenu;
-          console.log('id=', id, 'methodMenuName=', methodMenuName, ' defaultMenu=', defaultMenu)
-          this.setState({
-            bestLudanName: bestLudanName,
-            methodMenuName,
-            defaultMenu,
-            bestLudan
-          });
+          this.updateBestLudan(data.bestLudan);
         }
       }
     });
