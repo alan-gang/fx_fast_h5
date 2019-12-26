@@ -192,6 +192,7 @@ class LobbyGame extends Component<Props, object> {
       defaultMenu,
       bestLudan
     });
+    this.props.store.game.updateLimitListItemBestLudan(bestLudan);
   }
   getLimitData(id: number) {
     APIs.getBestLudan({lotteryId: id}).then((data: any) => {

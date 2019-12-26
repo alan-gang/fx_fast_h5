@@ -130,7 +130,7 @@ class Game extends Component<Props, object> {
     this.getCurIssue(this.id);
     this.getUserPoint(this.id);
     this.getHistoryIssue(this.id);
-    // this.getLimitData(this.id);
+    this.getBestLudanByGameId(this.id);
   }
   getLoginData() {
     let sessionData: any = sessionStorage.getItem('sessionData');
@@ -184,22 +184,22 @@ class Game extends Component<Props, object> {
     this.gameType = getGameTypeByGameId(this.id);
     Bus.emit('gameIdChanged', this.id);
     if (this.props.match.params.id !== nextProps.match.params.id) {
-      let limitItem = this.props.store.game.getLimitListItemById(this.id);
-      let bestLudan: BestLudanItem = limitItem && limitItem.bestLudan;
-      let menus: GameMethodMenu[] = getMethodsConfigByType(this.gameType);
-      let curMenuIndex = bestLudan && getMethodPosByGameTypeAndId(this.gameType, bestLudan.methodId) || 0;
-      let curMenuEname = menus && menus[curMenuIndex].ename
-      let ludanTab = getLudanTabByTypeAndName(this.gameType, curMenuEname, bestLudan && bestLudan.codeStyle);
-      let ludanMenus = getTabsByType(this.gameType, curMenuEname);
+      // let limitItem = this.props.store.game.getLimitListItemById(this.id);
+      // let bestLudan: BestLudanItem = limitItem && limitItem.bestLudan;
+      // let menus: GameMethodMenu[] = getMethodsConfigByType(this.gameType);
+      // let curMenuIndex = bestLudan && getMethodPosByGameTypeAndId(this.gameType, bestLudan.methodId) || 0;
+      // let curMenuEname = menus && menus[curMenuIndex].ename
+      // let ludanTab = getLudanTabByTypeAndName(this.gameType, curMenuEname, bestLudan && bestLudan.codeStyle);
+      // let ludanMenus = getTabsByType(this.gameType, curMenuEname);
       let gameLimitLevel = this.props.store.game.getGameLimitLevelByGameId(this.id); // 设置的限红数据
       let limitListItem = this.props.store.game.getLimitListItemById(this.id); 
       this.setState({
-        curMenuIndex,
-        curMenuEname,
-        curGameMethodItems: this.getMethodItemsByIds((menus && menus[curMenuIndex].ids) || []),
-        subMethods: (menus && menus[curMenuIndex].subMethods) || [],
-        defaultMenu: (ludanTab && ludanTab.name) || '',
-        isShowLudan: ludanMenus && ludanMenus.length > 0,
+        // curMenuIndex,
+        // curMenuEname,
+        // curGameMethodItems: this.getMethodItemsByIds((menus && menus[curMenuIndex].ids) || []),
+        // subMethods: (menus && menus[curMenuIndex].subMethods) || [],
+        // defaultMenu: (ludanTab && ludanTab.name) || '',
+        // isShowLudan: ludanMenus && ludanMenus.length > 0,
         isShowLimitSetDialog: !gameLimitLevel,
         limitLevelList: !gameLimitLevel ? (limitListItem ? limitListItem.kqPrizeLimit : []) : []
       });
@@ -514,6 +514,27 @@ class Game extends Component<Props, object> {
       return method;
     });
     return methodItems;
+  }
+  updateInfoWithBestLudan(bestLudan: BestLudanItem) {
+    let menus: GameMethodMenu[] = getMethodsConfigByType(this.gameType);
+    let curMenuIndex = bestLudan && getMethodPosByGameTypeAndId(this.gameType, bestLudan.methodId) || 0;
+    let curMenuEname = menus && menus[curMenuIndex] && menus[curMenuIndex].ename
+    let ludanTab = getLudanTabByTypeAndName(this.gameType, curMenuEname, bestLudan && bestLudan.codeStyle);
+    let ludanMenus = getTabsByType(this.gameType, curMenuEname);
+    this.setState({
+      curMenuIndex,
+      curMenuEname,
+      curGameMethodItems: this.getMethodItemsByIds((menus && menus[curMenuIndex] && menus[curMenuIndex].ids) || []),
+      subMethods: (menus && menus[curMenuIndex] && menus[curMenuIndex].subMethods) || [],
+      defaultMenu: (ludanTab && ludanTab.name) || '',
+      defaultSubMenu: (ludanTab && ludanTab.subM && ludanTab.subM.length > 0) ? bestLudan.codeStyle.split('_')[1] : '',
+      isShowLudan: ludanMenus && ludanMenus.length > 0
+    });
+  }
+  getBestLudanByGameId(id: number) {
+    APIs.getBestLudan({lotteryId: id}).then((data: any) => {
+      this.updateInfoWithBestLudan(data.bestLudan);
+    });
   }
   render() {
     return (

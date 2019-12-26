@@ -94,6 +94,20 @@ class MyGame {
     }
   }
 
+  /**
+   * 更新游戏的最优路单
+   * @param bestLudan 最优路单
+   */
+  @action
+  updateLimitListItemBestLudan(bestLudan: BestLudanItem) {
+    for (let i = 0; i < this.limitList.length; i++) {
+      if (bestLudan.id === this.limitList[i].id) {
+        this.limitList[i].bestLudan = bestLudan;
+        break;
+      }
+    }
+  }
+
   @action
   setLimitList(items: LimitListItem[]) {
     if (!items) return;
