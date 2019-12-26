@@ -69,10 +69,10 @@ class BookLeadingHistory extends React.Component<Props, object> {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(data),
       }, () => {
-        this.filterData()
+        this.filterData();
         rd.forEach((item: any , index: any) => {
-          this.getCurIssueData(item.lotteryId, index, item)
-        })
+          this.getCurIssueData(item.lotteryId, index, item);
+        });
       });
     }
   }
@@ -217,6 +217,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
     data.forEach(() => {
       pos = list.findIndex((item: any, i) => (item.lotteryId === rd.lotteryId && item.codeStyle === rd.codeStyle && item.pos === rd.pos && item.issue === rd.issue && item.notifyType === rd.notifyType));
       if (pos >= 0) {
+        clearTimeout(rd.timeout);
         list.splice(pos, 1);
       }
     });
@@ -406,8 +407,17 @@ class BookLeadingHistory extends React.Component<Props, object> {
   }
   updateFilteredData(availableGames: any) {
     let games = this.getFilterAvailableGames(availableGames);
-    data = data.filter((item: any) => games.includes(item.lotteryId));
-    this.setState({dataSource: this.state.dataSource.cloneWithRows(data)});
+    let fdata = data.filter((item: any) => games.includes(item.lotteryId));
+    // let found = null;
+    // // 停止计时
+    // data.forEach((d: any) => {
+    //   found = fdata.find((fd: any) => fd.lotteryId === d.lotteryId);
+    //   if (!found) {
+    //     clearTimeout(d.timeout);
+    //   }
+    // })
+    data = fdata;
+    this.setState({dataSource: this.state.dataSource.cloneWithRows(fdata)});
   }
   keyupHandler = (rd: any, event: KeyboardEvent<HTMLInputElement>) => {
     if (event.keyCode === KEY_ENTER) {

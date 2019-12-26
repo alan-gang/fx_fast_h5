@@ -20,7 +20,6 @@ interface Props {
 class SubMethodMenu extends Component<Props, object> {
   methodItems: any = methodItems;
   onSubMethodHandler = (subMethod: GameSubMethodMenu, index: number) => {
-    console.log(JSON.stringify(subMethod));
     this.props.updateSubMethods(subMethod);
     this.props.updateSubMethodMenuIndex(index);
   }
