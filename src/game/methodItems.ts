@@ -266,16 +266,16 @@ const methodItems: any = {
       ]
     }
   },
+  // '2054:1' () {
+  //   // 11x5 任选
+  //   return {
+  //     layout: 'row',
+  //      rows: [
+  //       getCommonRow({nonasv: true, noodd: true, col: 4, class: 'circle medium', vs:[{s: false, n: '01', col: 8},{s: false, n: '02', col: 8},{s: false, n: '03', col: 8},{s: false, n: '04', col: 8},{s: false, n: '05', col: 8},{s: false, n: '06', col: 8},{s: false, n: '07', col: 8},{s: false, n: '08', col: 8},{s: false, n: '09', col: 8},{s: false, n: '10', col: 8},{s: false, n: '11', col: 8}]}),
+  //     ]
+  //   }
+  // },
   '2054:1' () {
-    // 11x5 任选
-    return {
-      layout: 'row',
-       rows: [
-        getCommonRow({nonasv: true, noodd: true, col: 4, class: 'circle medium', vs:[{s: false, n: '01', col: 8},{s: false, n: '02', col: 8},{s: false, n: '03', col: 8},{s: false, n: '04', col: 8},{s: false, n: '05', col: 8},{s: false, n: '06', col: 8},{s: false, n: '07', col: 8},{s: false, n: '08', col: 8},{s: false, n: '09', col: 8},{s: false, n: '10', col: 8},{s: false, n: '11', col: 8}]}),
-      ]
-    }
-  },
-  '2054:1:1' () {
     // 11x5 任选 一中一
     return {
       methodTypeName: 'rx_nzn',
@@ -285,7 +285,7 @@ const methodItems: any = {
       ]
     }
   },
-  '2054:1:2' () {
+  '2077:1' () {
     // 11x5 任选 二中二
     return {
       methodTypeName: 'rx_nzn',
@@ -295,7 +295,7 @@ const methodItems: any = {
       ]
     }
   },
-  '2054:1:3' () {
+  '2078:1' () {
     // 11x5 任选 三中三
     return {
       methodTypeName: 'rx_nzn',
@@ -305,7 +305,7 @@ const methodItems: any = {
       ]
     }
   },
-  '2054:1:4' () {
+  '2079:1' () {
     // 11x5 任选 四中四
     return {
       methodTypeName: 'rx_nzn',
@@ -315,7 +315,7 @@ const methodItems: any = {
       ]
     }
   },
-  '2054:1:5' () {
+  '2080:1' () {
     // 11x5 任选 五中五
     return {
       methodTypeName: 'rx_nzn',
@@ -325,7 +325,7 @@ const methodItems: any = {
       ]
     }
   },
-  '2054:1:6' () {
+  '2081:1' () {
     // 11x5 任选 六中五
     return {
       methodTypeName: 'rx_nzn',
@@ -335,7 +335,7 @@ const methodItems: any = {
       ]
     }
   },
-  '2054:1:7' () {
+  '2082:1' () {
     // 11x5 任选 七中五
     return {
       methodTypeName: 'rx_nzn',
@@ -345,7 +345,7 @@ const methodItems: any = {
       ]
     }
   },
-  '2054:1:8' () {
+  '2083:1' () {
     // 11x5 任选 八中五
     return {
       methodTypeName: 'rx_nzn',

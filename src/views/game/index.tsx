@@ -154,7 +154,7 @@ class Game extends Component<Props, object> {
           this.openWinCode(parseInt(data.content[0].lottId, 10), data.content[0]);
         }
         if (data.type === 'betNotify') {
-          Bus.emit('__pushBetRemind', data.content)
+          // Bus.emit('__pushBetRemind', data.content)
         }
       },
       open: () => {

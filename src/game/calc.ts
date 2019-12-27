@@ -65,28 +65,28 @@ export default {
   '2053:2'({nsl}: Params) {
     return A(nsl)
   },
-  '2054:1:1'({nsl}: Params) {
+  '2054:1'({nsl}: Params) {
     return C(nsl && nsl[0], 1)
   },
-  '2054:1:2'({nsl}: Params) {
+  '2077:1'({nsl}: Params) {
     return C(nsl && nsl[0], 2)
   },
-  '2054:1:3'({nsl}: Params) {
+  '2078:1'({nsl}: Params) {
     return C(nsl && nsl[0], 3)
   },
-  '2054:1:4'({nsl}: Params) {
+  '2079:1'({nsl}: Params) {
     return C(nsl && nsl[0], 4)
   },
-  '2054:1:5'({nsl}: Params) {
+  '2080:1'({nsl}: Params) {
     return C(nsl && nsl[0], 5)
   },
-  '2054:1:6'({nsl}: Params) {
+  '2081:1'({nsl}: Params) {
     return C(nsl && nsl[0], 6)
   },
-  '2054:1:7'({nsl}: Params) {
+  '2082:1'({nsl}: Params) {
     return C(nsl && nsl[0], 7)
   },
-  '2054:1:8'({nsl}: Params) {
+  '2083:1'({nsl}: Params) {
     return C(nsl && nsl[0], 8)
   },
   '2055:1'({nsl}: Params) {
