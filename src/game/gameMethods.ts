@@ -93,14 +93,14 @@ export let methodsConfig: MethodsConfig = {
       recentType: [dx({min: 4})],
       ids: ['2054:1'],
       subMethods: [
-        {s: true, name: '一中一', v: '1z1', oddIndex: 7, class: '', mid: '2054', odd: '', ids: ['2054:1']},
-        {s: false, name: '二中二', v: '2z2', oddIndex: 6, class: '', mid: '2077', odd: '', ids: ['2077:1']},
-        {s: false, name: '三中三', v: '3z3', oddIndex: 4, class: '', mid: '2078', odd: '', ids: ['2078:1']},
-        {s: false, name: '四中四', v: '4z4', oddIndex: 2, class: '', mid: '2079', odd: '', ids: ['2079:1']},
+        {s: true, name: '一中一', v: '1z1', oddIndex: 0, class: '', mid: '2054', odd: '', ids: ['2054:1']},
+        {s: false, name: '二中二', v: '2z2', oddIndex: 0, class: '', mid: '2077', odd: '', ids: ['2077:1']},
+        {s: false, name: '三中三', v: '3z3', oddIndex: 0, class: '', mid: '2078', odd: '', ids: ['2078:1']},
+        {s: false, name: '四中四', v: '4z4', oddIndex: 0, class: '', mid: '2079', odd: '', ids: ['2079:1']},
         {s: false, name: '五中五', v: '5z5', oddIndex: 0, class: '', mid: '2080', odd: '', ids: ['2080:1']},
-        {s: false, name: '六中五', v: '6z5', oddIndex: 1, class: '', mid: '2081', odd: '', ids: ['2081:1']},
-        {s: false, name: '七中五', v: '7z5', oddIndex: 3, class: '', mid: '2082', odd: '', ids: ['2082:1']},
-        {s: false, name: '八中五', v: '8z5', oddIndex: 5, class: 'no-bd-r', mid: '2083', odd: '', ids: ['2083:1']}
+        {s: false, name: '六中五', v: '6z5', oddIndex: 0, class: '', mid: '2081', odd: '', ids: ['2081:1']},
+        {s: false, name: '七中五', v: '7z5', oddIndex: 0, class: '', mid: '2082', odd: '', ids: ['2082:1']},
+        {s: false, name: '八中五', v: '8z5', oddIndex: 0, class: 'no-bd-r', mid: '2083', odd: '', ids: ['2083:1']}
       ]
     },
     {
