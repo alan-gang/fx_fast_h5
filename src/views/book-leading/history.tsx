@@ -139,7 +139,9 @@ class BookLeadingHistory extends React.Component<Props, object> {
         let rd: any = data[0]
         this.getHistoryIssue(rd.lotteryId, '0', rd);
         data.forEach((rd: any , index) => {
-          this.getCurIssueData(rd.lotteryId, index, rd)
+          if (index > 0) {
+            this.getCurIssueData(rd.lotteryId, index, rd)
+          }
         })
       }
     })
