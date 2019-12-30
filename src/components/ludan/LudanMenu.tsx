@@ -9,6 +9,7 @@ interface Props {
   tabs: any[];
   selectedMenu?: string;
   selectedSubMenu?: string;
+  methodMenuName?: string;
   updateMenu(menuName: any): void;
 }
 
@@ -21,21 +22,21 @@ class LundanMenu extends Component<Props, object> {
     this.myScrollRef = React.createRef();
   }
   componentDidMount() {
-    Bus.emit('ludanSelectMenuChange', this.props.selectedMenu);
-    let selectedItem = document.querySelector('.ludan-menu-view .menu-item.selected');
-    selectedItem && this.myScrollRef.current.bscroll.scrollToElement('.menu-item.selected');
+    this.scrollToSelectedElement();
   }
   componentWillReceiveProps(nextProps: Props) {
-    if (this.props.selectedMenu !== nextProps.selectedMenu) {
-      Bus.emit('ludanSelectMenuChange', nextProps.selectedMenu)
-    }
     this.myScrollRef.current.refresh();
+    this.scrollToSelectedElement();
+  }
+  scrollToSelectedElement = () => {
     let selectedItem = document.querySelector('.ludan-menu-view .menu-item.selected');
-    this.myScrollRef.current.bscroll && selectedItem && this.myScrollRef.current.bscroll.scrollToElement(selectedItem, 150, true);
+    if (this.myScrollRef.current.bscroll && selectedItem && this.myScrollRef.current.bscroll) {
+      this.myScrollRef.current.bscroll.x += 1;
+      this.myScrollRef.current.bscroll.scrollToElement(selectedItem, 150, true);
+    }
   }
   changeMenu = (menu: any) => {
     this.props.updateMenu(menu);
-    // Bus.emit('ludanSelectMenuChange', menu.name);
   }
   render() {
     return (

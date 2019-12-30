@@ -64,7 +64,7 @@ class Ludan extends Component<Props, object> {
   render() {
     return (
       <section className="ludan-view">
-        {this.props.isShowLudanMenu !== false && <LudanMenu selectedMenu={this.state.selectedMenu} tabs={this.state.tabs} updateMenu={this.updateMenu} />}
+        {this.props.isShowLudanMenu !== false && <LudanMenu selectedMenu={this.state.selectedMenu} tabs={this.state.tabs} updateMenu={this.updateMenu} methodMenuName={this.props.methodMenuName} />}
         <LundanTable maxColumns={this.props.maxColumns} maxRows={this.props.maxRows} ludanList={this.state.ludanList} isScroll={this.props.isScroll} />
       </section>  
     )
