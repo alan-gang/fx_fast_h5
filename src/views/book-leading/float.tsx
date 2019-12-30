@@ -62,8 +62,8 @@ class BookLeadingFloat extends React.Component<Props, object> {
         })}
       >
         <Icon type={this.state.expand ? 'cross' : 'left'} className="clickable" size="md"  />
-        <div className="leading-book-item">
-          <div>
+        <div className="o_h leading-book-item">
+          <div className="o_h">
             <span className="mgr-20">{ this.state.rd.lotteryName }</span>
             <span className="mgr-20">{ this.state.rd.pos }{ this.state.rd.notifyVal }</span>
             <span className="mgr-20">
@@ -71,8 +71,8 @@ class BookLeadingFloat extends React.Component<Props, object> {
             </span>
           </div>  
           <div className="mgt-15">
-            <span className="c-deeporange mgr-20">{this.state.rd.timming > 0 ? timeFormat(this.state.rd.timming) : ''}</span>
-            <span className="bgc-deeporange pdl-10 pdr-10 pdt-5 pdb-5 " onClick={ (e: any) => this.setState({history: !this.state.history}) }>快速投注</span>
+            <span className="c-deeporange mgr-20 r-time">{this.state.rd.timming > 0 ? timeFormat(this.state.rd.timming) : ''}</span>
+            <span className="inlb bgc-deeporange pdl-10 pdr-10 pdt-5 pdb-5 " onClick={ (e: any) => this.setState({history: !this.state.history}) }>快速投注</span>
           </div>  
         </div>
         <Link to="/BookLeadingHistory/1">

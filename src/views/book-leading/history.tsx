@@ -27,7 +27,7 @@ let page = 1
 // get Max 200 count
 const pageSize = 200
 // 数据
-let data: object[] = []
+let data: any[] = []
 
 const KEY_ENTER = 13;
 @inject('store')
@@ -76,10 +76,16 @@ class BookLeadingHistory extends React.Component<Props, object> {
       });
     }
   }
+  componentWillMount() {
+    document.addEventListener('visibilitychange', this.visibilitychangeHandler);
+  }
   componentWillReceiveProps (next: any) {
     if (!this.props.init && next.init) {
       this.init()
     }
+  }
+  visibilitychangeHandler = () => {
+    this.init()
   }
   startIntervalResetOrder() {
     let now: any = dayjs().format('mm')
@@ -107,9 +113,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
     data.forEach((x: any) => {
       if (x.timeout) clearTimeout(x.timeout)
     })
-    this.setState({
-      activeIndex: -1,
-    })
+    this.setState({ activeIndex: '0' })
     page = 0
     data = []
     this.list()
@@ -135,70 +139,54 @@ class BookLeadingHistory extends React.Component<Props, object> {
           refreshing: false,
           isLoading: false,
           hasMore: rep.data.length >= pageSize,
-        }, this.filterData)
-        let rd: any = data[0]
-        this.getHistoryIssue(rd.lotteryId, '0', rd);
+        }, this.filterData);
         data.forEach((rd: any , index) => {
-          if (index > 0) {
-            this.getCurIssueData(rd.lotteryId, index, rd)
-          }
-        })
+          this.getCurIssueData(rd.lotteryId, String(index), rd);
+        });
       }
     })
+  }
+  expandHandler = (gameid: number, rid: any, rd: any) => {
+    if (this.state.activeIndex === rid) {
+      return this.setState({ activeIndex: -1});
+    }
+    this.setState({ activeIndex: rid, activeGameId: gameid });
   }
   getHistoryIssue(gameid: number, rid: any, rd: any) {
-    // 如果目前展开了 、 切换前关闭当前的倒计时
-    if (this.state.activeIndex > -1) {
-      let preRd: any = data[rid]
-      clearTimeout(preRd.timeout)
-    }
-    if (this.state.activeIndex === rid) {
-      return this.setState({
-        activeIndex: -1
-      })
-    }
-    this.setState({
-      activeIndex: rid,
-      activeGameId: gameid,
-    })
     historyIssue({gameid}).then((rep: any) => {
       if (rep.success === 1) {
-        if (rep.items.length > 0) {
-          rd.ludanList = rep.items
-          this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(data),
-          })
+        if (rep.items && rep.items.length > 0) {
+          rd.ludanList = rep.items;
+          this.setState({ dataSource: this.state.dataSource.cloneWithRows(data) });
         }
       }
     })
-    this.getCurIssueData(gameid, rid, rd)
   }
   getCurIssueData = (gameid: any, rid: any, rd: any) => {
-    APIs.curIssue({gameid: gameid})
-      .then((rep: any) => {
-        if (rep.success === 1) {
-          // 已经过期 或者 倒计时不足1000ms时 删除这个提醒项 
-          if ((rep.issue !== rd.issue || rep.saleend - rep.current) < 1000) {
-            this.removeRd(rd, rid)
-            // console.log('delete id', gameid, rd, rep.issue, rd.issue, rd.lotteryName)
-          } else {
-            rd.issue = rep.issue
-            rd.timming = rep.saleend - rep.current
-            if (rd.timeout) clearTimeout(rd.timeout)
-            this.countDown(rd, rid)
-          }
-          // console.log(rd.lotteryName, 'gameid=', gameid, 'rid=', rid, 'rd=', rd, ' rep.issue=', rep.issue)
+    APIs.curIssue({gameid}).then((rep: any) => {
+      if (rep.success === 1) {
+        // 过虑：已经过期 或者 倒计时不足1000ms时 删除这个提醒项 
+        if ((rep.issue !== rd.issue || rep.saleend - rep.current) < 1000) {
+          this.removeRd(rd, rid);
         } else {
-          if (this.props.init) Toast.fail(rep.msg)
-          setTimeout(() => {
-            this.removeRd(rd, rid)
-          }, 3000)
+          // 奖期，时间，路单
+          rd.issue = rep.issue;
+          rd.timming = rep.saleend - rep.current;
+          if (rd.timeout) clearTimeout(rd.timeout);
+          this.countDown(rd, rid);
+          this.getHistoryIssue(gameid, rid, rd);
+          if (rid === '0') {
+            this.setState({ activeIndex: rid, activeGameId: gameid });
+          }
         }
-      })
+      } else {
+        this.removeRd(rd, rid);
+      }
+    })
   }
   countDown (rd: any, rid: any) {
+    // console.log('rid=', rid, rd)
     if (rd.timming >= 1000) {
-      // console.log(rd.lotteryName, rd.timming)
       rd.timming -= 1000
       rd.timeout = setTimeout(() => this.countDown(rd, rid), 1000)
       this.setState({
@@ -208,9 +196,8 @@ class BookLeadingHistory extends React.Component<Props, object> {
       clearTimeout(rd.timeout)
       this.removeRd(rd, rid)
     }
-    // 如果是第一个， 通知float显示这个
-    if (rid === '0') {
-      Bus.emit('BookLeadingCurrent', rd)
+    if ('0' === rid) {
+      Bus.emit('BookLeadingCurrent', rd);
     }
   }
   removeRd (rd: any, rid: any) {
@@ -241,7 +228,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
     // 如果删除第一个，重新
     if (rid === '0' && data && data.length > 0) {
       let rd: any = data[0]
-      this.getHistoryIssue(rd.lotteryId, '0', rd)
+      this.getCurIssueData(rd.lotteryId, '0', rd);
     }
   }
   coinChoosed = (value: string) => {
@@ -406,6 +393,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
   componentWillUnmount() {
     Bus.off('BookLeadingRefresh', this.init);
     Bus.off('__pushBetRemind', this.__pushBetRemind);
+    document.removeEventListener('visibilitychange', this.visibilitychangeHandler);
   }
   updateFilteredData(availableGames: any) {
     let games = this.getFilterAvailableGames(availableGames);
@@ -448,7 +436,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
     return (
       <div key={rd.lotteryName + rd.issue + rd.codeRange + rd.pos + rd.notifyVal} className="pdt-25 pdb-25 pdl-20 pdr-20 bgc-247" title={rd.lotteryName + rd.issue + rd.codeRange + rd.pos + rd.notifyVal}>
         <div className="flex jc-sb mgb-15">
-          <div className="fg-1 flex jc-sb clickable" onClick={() => this.getHistoryIssue(rd.lotteryId, rid, rd)}>
+          <div className="fg-1 flex jc-sb clickable" onClick={() => this.expandHandler(rd.lotteryId, rid, rd)}>
             <span className="c-0 fw-b">{ rd.lotteryName }</span>
             <span>
               <span className="mgr-20">{ rd.pos }<span className="c-red">{ rd.notifyVal }</span></span>
@@ -521,6 +509,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
           onEndReached={this.onEndReached}
           pageSize={pageSize}
           initialListSize={15}
+          scrollRenderAheadDistance={500}
           renderSeparator={(sid, rid) => <div key={rid} className="h-10"></div>}
         />
     </div>
