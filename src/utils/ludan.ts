@@ -348,9 +348,7 @@ function getDxDs(codeStyleMethod: any, methodName: string): string {
     return codeStyleMethod.value[0][p];
   } else {
     if (codeStyleMethod.data && typeof codeStyleMethod.data[0] === 'object') {
-      if (codeStyleMethod.data[0].pos === p) {
-        return codeStyleMethod.data[0].val;
-      }
+      return (codeStyleMethod.data.find((item: any) => item.pos === p ) || {}).val || '';
     }
     return '';
   }
