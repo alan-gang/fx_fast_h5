@@ -342,6 +342,20 @@ export function getMethodDataByName(name: string): LudanMethod | undefined {
   return methods.get(name);
 }
 
+function getDxDs(codeStyleMethod: any, methodName: string): string {
+  const p = methodName.split('_')[1];
+  if (codeStyleMethod.value && typeof codeStyleMethod.value[0] === 'object') {
+    return codeStyleMethod.value[0][p];
+  } else {
+    if (codeStyleMethod.data && typeof codeStyleMethod.data[0] === 'object') {
+      if (codeStyleMethod.data[0].pos === p) {
+        return codeStyleMethod.data[0].val;
+      }
+    }
+    return '';
+  }
+}
+
 export const MAX_ROWS: number = 6;
 export const MAX_COLUMNS: number = 30;
 
@@ -389,7 +403,8 @@ export function getLuDanListByMethod(issueList: any[], type: string, name: strin
           case 'zlm_dx':
           case 'zlm_ds':
           case 'seibo_hll':
-            item = cs.value[0][mObj.method.split('_')[1]];
+            // item = cs.value[0][mObj.method.split('_')[1]];
+            item = getDxDs(cs, mObj.method);
             break;
           case 'wg_lhh':
             item = cs.value[0];
