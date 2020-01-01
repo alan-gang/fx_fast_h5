@@ -110,36 +110,36 @@ export const methodTabs: any = {
   },
   hc6: {
     tema: [
-      {title: '特码大小', name: 'tm_dx', subM: []},
-      {title: '特码单双', name: 'tm_ds', subM: []}
+      {title: '特码大小', name: 'tm_tmdx', subM: []},
+      {title: '特码单双', name: 'tm_tmds', subM: []}
     ],
     texiao: [],
     sebo: [
-      {title: '色波路单', name: 'seibo_hll', subM: []},
+      {title: '色波路单', name: 'seibo_sb', subM: []},
     ],
     zhengyima: [
-      {title: '正一码大小', name: 'zym_dx', subM: []},
-      {title: '正一码单双', name: 'zym_ds', subM: []}
+      {title: '正一码大小', name: 'zym_z1dx', subM: []},
+      {title: '正一码单双', name: 'zym_z1ds', subM: []}
     ],
     zhengerma: [
-      {title: '正二码大小', name: 'zem_dx', subM: []},
-      {title: '正二码单双', name: 'zem_ds', subM: []}
+      {title: '正二码大小', name: 'zem_z2dx', subM: []},
+      {title: '正二码单双', name: 'zem_z2ds', subM: []}
     ],
     zhengshanma: [
-      {title: '正三码大小', name: 'zsanm_dx', subM: []},
-      {title: '正三码单双', name: 'zsanm_ds', subM: []}
+      {title: '正三码大小', name: 'zsanm_z3dx', subM: []},
+      {title: '正三码单双', name: 'zsanm_z3ds', subM: []}
     ],
     zhengshima: [
-      {title: '正四码大小', name: 'zsim_dx', subM: []},
-      {title: '正四码单双', name: 'zsim_ds', subM: []}
+      {title: '正四码大小', name: 'zsim_z4dx', subM: []},
+      {title: '正四码单双', name: 'zsim_z4ds', subM: []}
     ],
     zhengwuma: [
-      {title: '正五码大小', name: 'zwm_dx', subM: []},
-      {title: '正五码单双', name: 'zwm_ds', subM: []}
+      {title: '正五码大小', name: 'zwm_z5dx', subM: []},
+      {title: '正五码单双', name: 'zwm_z5ds', subM: []}
     ],
     zhengliuma: [
-      {title: '正六码大小', name: 'zlm_dx', subM: []},
-      {title: '正六码单双', name: 'zlm_ds', subM: []}
+      {title: '正六码大小', name: 'zlm_z6dx', subM: []},
+      {title: '正六码单双', name: 'zlm_z6ds', subM: []}
     ]
   }
 }
@@ -386,21 +386,21 @@ export function getLuDanListByMethod(issueList: any[], type: string, name: strin
           case 'zh_ds':
           case 'zhw_wsdx':
           case 'zhw_wsds':
-          case 'tm_dx':
-          case 'tm_ds':
-          case 'zym_dx':
-          case 'zym_ds':
-          case 'zem_dx':
-          case 'zem_ds':
-          case 'zsanm_dx':
-          case 'zsanm_ds':
-          case 'zsim_dx':
-          case 'zsim_ds':
-          case 'zwm_dx':
-          case 'zwm_ds':
-          case 'zlm_dx':
-          case 'zlm_ds':
-          case 'seibo_hll':
+          case 'tm_tmdx':
+          case 'tm_tmds':
+          case 'zym_z1dx':
+          case 'zym_z1ds':
+          case 'zem_z2dx':
+          case 'zem_z2ds':
+          case 'zsanm_z3dx':
+          case 'zsanm_z3ds':
+          case 'zsim_z4dx':
+          case 'zsim_z4ds':
+          case 'zwm_z5dx':
+          case 'zwm_z5ds':
+          case 'zlm_z6dx':
+          case 'zlm_z6ds':
+          case 'seibo_sb':
             // item = cs.value[0][mObj.method.split('_')[1]];
             item = getDxDs(cs, mObj.method);
             break;
