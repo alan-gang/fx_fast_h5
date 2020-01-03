@@ -26,6 +26,7 @@ function getStyle(d: string): string {
     case '30':
     case '11':
     case '绿':
+    case '豹':  
       return 'bgc-g';
     default:
       if (/\d/.test(d)) return 'bgc-y';
