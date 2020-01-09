@@ -70,7 +70,7 @@ class BookLeadingFloat extends React.Component<Props, object> {
               { [null, '长龙', '单跳', '单边跳', '一厅两房', '拍拍连'][this.state.rd.notifyType] || '连出' }{ this.state.rd.contCount }{this.state.rd.unit}
             </span>
           </div>  
-          <div className="mgt-15">
+          <div className="mgt-10">
             <span className="c-deeporange mgr-20 r-time">{this.state.rd.timming > 0 ? timeFormat(this.state.rd.timming) : ''}</span>
             <span className="inlb bgc-deeporange pdl-10 pdr-10 pdt-5 pdb-5 " onClick={ (e: any) => this.setState({history: !this.state.history}) }>快速投注</span>
           </div>  

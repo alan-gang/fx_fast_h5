@@ -54,6 +54,8 @@ class Lobby extends Component<Props, object> {
     if (this.props.store.game.availableGames.length <= 0) return [];
     let tempGames: Game[] = [];
     games.forEach((game: Game) => {
+      // 六合彩没有最优路单，大厅先过虑六合彩
+      if (game.id === 28) return;
       if (this.props.store.game.hasAvailableGame(game.id)) {
         tempGames.push(game);
       }

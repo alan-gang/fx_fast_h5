@@ -573,7 +573,7 @@ const methodItems: any = {
       class: 'weishaiquanshai',
       rows: [
         getCommonRow({nonasv: true, n: '围骰', class: 'weishai', oddIndex: 0, col: 4, vs: cpArr(vs)}),
-        getCommonRow({nonasv: true, n: '全骰', class: 'quanshai', oddIndex: 1, col: 4, vs: [{s: false, n: '全骰', col: 10}]})
+        getCommonRow({nonasv: true, n: '全骰', class: 'quanshai', col: 4, vs: [{s: false, n: '全骰', oddIndex: 1, col: 10}]})
       ]
     }
   },
