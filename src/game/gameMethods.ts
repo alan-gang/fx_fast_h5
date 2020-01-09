@@ -87,42 +87,42 @@ export let methodsConfig: MethodsConfig = {
       recentType: [lh({name: '一位VS二位', range: {start: 0, end: 2}})],
       ids: ['2053:1']
     },
-    {
-      name: '任选',
-      ename: 'rx',
-      recentType: [dx({min: 4})],
-      ids: ['2054:1'],
-      subMethods: [
-        {s: true, name: '一中一', v: '1z1', oddIndex: 0, class: '', mid: '2054', odd: '', ids: ['2054:1']},
-        {s: false, name: '二中二', v: '2z2', oddIndex: 0, class: '', mid: '2077', odd: '', ids: ['2077:1']},
-        {s: false, name: '三中三', v: '3z3', oddIndex: 0, class: '', mid: '2078', odd: '', ids: ['2078:1']},
-        {s: false, name: '四中四', v: '4z4', oddIndex: 0, class: '', mid: '2079', odd: '', ids: ['2079:1']},
-        {s: false, name: '五中五', v: '5z5', oddIndex: 0, class: '', mid: '2080', odd: '', ids: ['2080:1']},
-        {s: false, name: '六中五', v: '6z5', oddIndex: 0, class: '', mid: '2081', odd: '', ids: ['2081:1']},
-        {s: false, name: '七中五', v: '7z5', oddIndex: 0, class: '', mid: '2082', odd: '', ids: ['2082:1']},
-        {s: false, name: '八中五', v: '8z5', oddIndex: 0, class: 'no-bd-r', mid: '2083', odd: '', ids: ['2083:1']}
-      ]
-    },
-    {
-      name: '组选',
-      ename: 'zux',
-      ids: ['2055:1', '2056:1'],
-      recentChild: true,
-      // subMethods: [
-      //   {s: true, name: '前二组选', recentType: [hz({title: '前二和值', nForm: true, range: {start: 0, end: 2}})], oddIndex: 0, class: 'layout-lr w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2055', odd: '', ids: ['2055:1']},
-      //   {s: false, name: '前三组选', recentType: [hz({title: '前三和值', nForm: true,range: {start: 0, end: 3}})], oddIndex: 0, class: 'layout-lr  w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2056', odd: '', ids: ['2056:1']}
-      // ]
-    },
-    {
-      name: '直选',
-      ename: 'zx',
-      ids: ['2057:1', '2058:1'],
-      recentChild: true,
-      // subMethods: [
-      //   {s: true, name: '前二直选', recentType: [hz({title: '前二和值', nForm: true, range: {start: 0, end: 2}})], oddIndex: 0, class: 'layout-lr w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2057', odd: '', ids: ['2057:1']},
-      //   {s: false, name: '前三直选', recentType: [hz({title: '前三和值', nForm: true, range: {start: 0, end: 3}})], oddIndex: 0, class: 'layout-lr  w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2058', odd: '', ids: ['2058:1']}
-      // ]
-    }
+    // {
+    //   name: '任选',
+    //   ename: 'rx',
+    //   recentType: [dx({min: 4})],
+    //   ids: ['2054:1'],
+    //   subMethods: [
+    //     {s: true, name: '一中一', v: '1z1', oddIndex: 0, class: '', mid: '2054', odd: '', ids: ['2054:1']},
+    //     {s: false, name: '二中二', v: '2z2', oddIndex: 0, class: '', mid: '2077', odd: '', ids: ['2077:1']},
+    //     {s: false, name: '三中三', v: '3z3', oddIndex: 0, class: '', mid: '2078', odd: '', ids: ['2078:1']},
+    //     {s: false, name: '四中四', v: '4z4', oddIndex: 0, class: '', mid: '2079', odd: '', ids: ['2079:1']},
+    //     {s: false, name: '五中五', v: '5z5', oddIndex: 0, class: '', mid: '2080', odd: '', ids: ['2080:1']},
+    //     {s: false, name: '六中五', v: '6z5', oddIndex: 0, class: '', mid: '2081', odd: '', ids: ['2081:1']},
+    //     {s: false, name: '七中五', v: '7z5', oddIndex: 0, class: '', mid: '2082', odd: '', ids: ['2082:1']},
+    //     {s: false, name: '八中五', v: '8z5', oddIndex: 0, class: 'no-bd-r', mid: '2083', odd: '', ids: ['2083:1']}
+    //   ]
+    // },
+    // {
+    //   name: '组选',
+    //   ename: 'zux',
+    //   ids: ['2055:1', '2056:1'],
+    //   recentChild: true,
+    //   // subMethods: [
+    //   //   {s: true, name: '前二组选', recentType: [hz({title: '前二和值', nForm: true, range: {start: 0, end: 2}})], oddIndex: 0, class: 'layout-lr w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2055', odd: '', ids: ['2055:1']},
+    //   //   {s: false, name: '前三组选', recentType: [hz({title: '前三和值', nForm: true,range: {start: 0, end: 3}})], oddIndex: 0, class: 'layout-lr  w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2056', odd: '', ids: ['2056:1']}
+    //   // ]
+    // },
+    // {
+    //   name: '直选',
+    //   ename: 'zx',
+    //   ids: ['2057:1', '2058:1'],
+    //   recentChild: true,
+    //   // subMethods: [
+    //   //   {s: true, name: '前二直选', recentType: [hz({title: '前二和值', nForm: true, range: {start: 0, end: 2}})], oddIndex: 0, class: 'layout-lr w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2057', odd: '', ids: ['2057:1']},
+    //   //   {s: false, name: '前三直选', recentType: [hz({title: '前三和值', nForm: true, range: {start: 0, end: 3}})], oddIndex: 0, class: 'layout-lr  w180 h40 flex ai-c jc-c odd-pd-l-5', mid: '2058', odd: '', ids: ['2058:1']}
+    //   // ]
+    // }
   ],
   [LOTTERY_TYPES.PK10]: [
     {
