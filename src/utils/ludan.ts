@@ -405,7 +405,9 @@ export function getLuDanListByMethod(issueList: any[], type: string, name: strin
             item = getDxDs(cs, mObj.method);
             break;
           case 'wg_lhh':
-            item = cs.value[0];
+            // item = cs.value[0];
+            let d = (toString.call(cs.data) === '[object Array]' && cs.data.length > 0) ? cs.data : cs.value;
+            item = d[0];
             break;
           case 'ww_dx':
           case 'ww_ds':
@@ -437,7 +439,9 @@ export function getLuDanListByMethod(issueList: any[], type: string, name: strin
           case '9_ds':  
           case '10_dx':  
           case '10_ds':  
-            item = cs.value[mObj.pos][mObj.method.split('_')[1]];
+            // item = cs.value[mObj.pos][mObj.method.split('_')[1]];
+            let data = (toString.call(cs.data) === '[object Array]' && cs.data.length > 0) ? cs.data : cs.value;
+            item = data[mObj.pos][mObj.method.split('_')[1]];
             break;
           case '1v2':
           case '1v3':
