@@ -407,7 +407,7 @@ export function getLuDanListByMethod(issueList: any[], type: string, name: strin
           case 'wg_lhh':
             // item = cs.value[0];
             let d = (toString.call(cs.data) === '[object Array]' && cs.data.length > 0) ? cs.data : cs.value;
-            item = d[0];
+            item = d[0] && d[0].val;
             break;
           case 'ww_dx':
           case 'ww_ds':
