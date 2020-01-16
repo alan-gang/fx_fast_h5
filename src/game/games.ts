@@ -54,7 +54,7 @@ let games: GameCategory[] = [
       {id: 39, mid: '105', name: '幸运飞艇', checked: false},
       {id: 13, mid: '18', name: '北京PK10', checked: false},
       {id: 170, mid: '109', name: '幸运赛车', checked: false},
-      {id: 151, mid: '74', name: '腾讯赛车', checked: false},
+      // {id: 151, mid: '74', name: '腾讯赛车', checked: false}, // by brian 20200115  后端没有做封锁暂时去掉
       {id: 162, mid: '123', name: '阿里云赛车', checked: false}
     ]
   },

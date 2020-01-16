@@ -12,9 +12,10 @@ interface Props extends RouteComponentProps {
 }
 
 const popoverInner: any[] = [
-  {name: '官方玩法', out: true, url: '/?from=KQ'},
-  {name: '基诺玩法', out: true, url: '/keno/?from=KQ'},
-  {name: '彩种大厅', link: '/'},
+  {id: 1, name: '官方玩法', out: true, url: '/?from=KQ'},
+  {id: 2, name: '快钱玩法', out: true, url: '/?from=KQ'},
+  {id: 3, name: '基诺玩法', out: true, url: '/keno/?from=KQ'},
+  {id: 4, name: '彩种大厅', link: '/'},
   {name: '投注记录', link: '/betRecords', gameId: true},
   {name: '历史开奖', link: '/openIssueHistory', gameId: true},
   {name: '玩法说明', link: '/playMethodRule', gameId: true},

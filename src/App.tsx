@@ -19,6 +19,7 @@ import BookLeadingFloat from './views/book-leading/float';
 
 @observer
 class App extends Component<Props, object> {
+  mysocket?: Socket;
   constructor(props: Props) {
     super(props);
     this.init();
@@ -31,7 +32,7 @@ class App extends Component<Props, object> {
       agentCode,
       param
     };
-    if (!agentCode && !param && sessionData) {
+    if (!agentCode || !param && sessionData) {
       data = JSON.parse(sessionData);
     }
     this.autoLogin(data);
@@ -50,20 +51,30 @@ class App extends Component<Props, object> {
         this.getUserPrefence();
         this.updateBalance();
         store.game.updateAvailableGames();
-        // this.initSocket();
+        this.initSocket();
       } else {
         Toast.fail('请登录！');
       }
     });
   }
   initSocket() {
-    let mysocket = new Socket({
+    this.mysocket = new Socket({
       url: store.common.broadcaseWSUrl,
       name: 'appIndex',
       receive: (data: any) => {
+        if (data.type === 'prizeNotice') {
+          this.updateBalance();
+        }
       },
       open: () => {
-        mysocket.send(JSON.stringify(Object.assign({action: 'noauth'}, {})));
+        // mysocket.send(JSON.stringify(Object.assign({action: 'noauth'}, {})));
+        this.mysocket && this.mysocket.send(JSON.stringify({
+          parameter: {
+            userId: store.user.userId,
+            app: 'web'
+          },
+          action: 'auth'
+        }));
       }
     }, true);
   }

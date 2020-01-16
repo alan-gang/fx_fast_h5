@@ -142,6 +142,35 @@ export function getBestLudan(params: object = {}) {
   return http.get('/userpoint.do?method=getOptimalLudan', { params });
 }
 
+/*
+ * 批量获取历史奖期数据
+ * @param params {
+   gameid
+   pageNum
+   size
+   v: 1  基诺专用
+  }
+ */
+export function getBatchRecentCodesByGameIds(params: object = {}) {
+  params = Object.assign({
+    pageNum: 1,
+    size: 60,
+    v: 1
+  }, params);
+  return http.get('/issue.do?method=recentlyNewCode', { params });
+}
+
+
+/**
+ * 批量获取最优路单
+ * @param params 
+ * lotteryId
+ */
+export function getBatchBestLudanByGameIds(params: object = {}) {
+  return http.get('/userpoint.do?method=getNewOptimalLudan', { params });
+}
+
+
 export default {
   curIssue,
   getIssuesByGameIds,
@@ -160,5 +189,7 @@ export default {
   lottSets,
   getLotterys,
   getBetRemind,
-  getBestLudan
+  getBestLudan,
+  getBatchRecentCodesByGameIds,
+  getBatchBestLudanByGameIds
 };

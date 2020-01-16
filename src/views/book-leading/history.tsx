@@ -139,7 +139,10 @@ class BookLeadingHistory extends React.Component<Props, object> {
           refreshing: false,
           isLoading: false,
           hasMore: rep.data.length >= pageSize,
-        }, this.filterData);
+        }, () => {
+          this.filterData();
+          this.getData(data);
+        });
         data.forEach((rd: any , index) => {
           this.getCurIssueData(rd.lotteryId, String(index), rd);
         });
@@ -429,6 +432,43 @@ class BookLeadingHistory extends React.Component<Props, object> {
       }
     });
   }
+
+  // 批量获取奖期列表，历史开奖列表
+  getData(list?: any[]) {
+    let ids = this.getGameIdsFromList(list || this.state.list, 'lotteryId');
+    const joinIds = ids.join(',');
+    this.getIssuesByGameIds(joinIds);
+    this.getBatchRecentCodesByGameIds(joinIds);
+  }
+
+  /**
+   * 从任何一个列表提取给定属性组成的列表，已去重
+   * @param list 
+   * @param prop 想要提取的属性
+   */
+  getGameIdsFromList(list: any[] = [], prop: string = 'lotteryid') {
+    let ids = list.map((item) => item[prop]);
+    return [...new Set(ids)];
+  }
+
+  // 批量获取期号
+  getIssuesByGameIds(ids: string) {
+    APIs.getIssuesByGameIds({gameid: ids}).then((data: any) => {
+      if (data.success > 0) {
+        this.setState({issueList: data.items, curServerTime: data.current});
+      }
+    });
+  }
+
+  // 批量获取历史开奖
+  getBatchRecentCodesByGameIds(ids: string) {
+    APIs.getBatchRecentCodesByGameIds({gameid: ids}).then((data: any) => {
+      if (data.success > 0) {
+        this.setState({recentCodeList: data.data});
+      }
+    });
+  }
+
   renderRow = (rd: any, sid: any, rid: any) => {
     if (!rd) {
       return <div></div>

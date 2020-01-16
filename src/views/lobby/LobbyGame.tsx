@@ -17,6 +17,10 @@ interface Props {
   gameId: number;
   gameName: string;
   goto(path: string): void;
+  issueList: any[];
+  bestLudanList: any[];
+  recentCodeList: any[];
+  curServerTime: number;
 }
 
 interface State {
@@ -78,14 +82,26 @@ class LobbyGame extends Component<Props, object> {
       defaultMenu,
       bestLudan
     }
-    this.getLimitData(props.gameId);
   }
   componentWillMount() {
-    this.init();
+    // this.init();
+    this.initDataFromProps();
+  }
+  componentWillReceiveProps(nextProps: Props) {
+    // console.log('LobbyGame=', nextProps.store.game.getLimitListItemById(nextProps.gameId))
+    // console.log('nextProps=', nextProps)
+    this.getCurIssueFromProps(this.props.gameId, nextProps.issueList);
+    this.getBestLudanFromPropsByGameId(this.props.gameId, nextProps.bestLudanList);
+    this.getHistoryIssueFromProps(this.props.gameId, nextProps.recentCodeList);
   }
   init = () => {
     this.getCurIssue(this.props.gameId);
     this.getHistoryIssue(this.props.gameId);
+  }
+  initDataFromProps() {
+    this.getCurIssueFromProps(this.props.gameId);
+    this.getBestLudanFromPropsByGameId(this.props.gameId);
+    this.getHistoryIssueFromProps(this.props.gameId);
   }
   initSocket() {
     this.mysocket = new Socket({
@@ -101,9 +117,9 @@ class LobbyGame extends Component<Props, object> {
           }
         }
       },
-      open: () => {
-        this.mysocket && this.mysocket.send(JSON.stringify(Object.assign({action: 'noauth'}, {})));
-      }
+      // open: () => {
+      //   this.mysocket && this.mysocket.send(JSON.stringify(Object.assign({action: 'noauth'}, {})));
+      // }
     }, true);
   }
   openWinCode(id: number, openHistoryItem: any) {
@@ -134,6 +150,20 @@ class LobbyGame extends Component<Props, object> {
       }
     });
   }
+  getCurIssueFromProps(gameid: number, issueList: any[] = [], curServerTime?: number) {
+    issueList = issueList.length > 0 ? issueList : this.props.issueList;
+    curServerTime = curServerTime || this.props.curServerTime;
+    if (issueList && issueList.length > 0) {
+      let data = issueList.find((issue) => issue.lotteryid === gameid);
+      if (data) {
+        this.setState({
+          curIssue: data.issue,
+          curTime: curServerTime,
+          remainTime: Math.floor((data.saleend - curServerTime) / 1000) || (this.state.remainTime + 0.05)
+        })
+      }
+    }
+  }
   getHistoryIssue(gameid: number) {
     APIs.historyIssue({gameid}).then((data: any) => {
       if (data.success === 1) {
@@ -146,6 +176,20 @@ class LobbyGame extends Component<Props, object> {
         }
       }
     });
+  }
+  getHistoryIssueFromProps(gameid: number, recentCodeList: any[] = []) {
+    recentCodeList = recentCodeList.length > 0 ? recentCodeList : this.props.recentCodeList;
+    if (recentCodeList && recentCodeList.length > 0) {
+      let data = recentCodeList.find((item) => item[gameid] && item[gameid].length > 0);
+      data = data && data[gameid];
+      if (data) {
+        this.setState({
+          lastIssue: data[0].issue,
+          openNumbers: data[0].code.split(','),
+          issueList: data
+        });
+      }
+    }
   }
   gotoGame = () => {
     this.props.goto(`/game/${this.props.gameId}`);
@@ -202,6 +246,15 @@ class LobbyGame extends Component<Props, object> {
         }
       }
     });
+  }
+  getBestLudanFromPropsByGameId(id: number, bestLudanList: any[] = []) {
+    bestLudanList = bestLudanList.length > 0 ? bestLudanList : this.props.bestLudanList;
+    if (bestLudanList && bestLudanList.length > 0) {
+      let besetLudan = this.props.bestLudanList.find((ludan) => ludan.lotteryId === id)
+      if (besetLudan) {
+        this.updateBestLudan(besetLudan);
+      }
+    }
   }
   render() {
     return (
