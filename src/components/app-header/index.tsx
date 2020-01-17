@@ -6,15 +6,16 @@ import './index.styl';
 import { Route, withRouter, RouteComponentProps } from 'react-router-dom'
 import { getGameById } from 'src/game/games'
 import Bus from 'src/utils/eventBus'
+import { getUrlParams } from '../../utils/common'
 
 interface Props extends RouteComponentProps {
   store?: any
 }
 
-const popoverInner: any[] = [
-  {id: 1, name: '官方玩法', out: true, url: '/?from=KQ'},
+let popoverInner: any[] = [
+  // {id: 1, name: '官方玩法', out: true, url: '/?from=KQ'},
   {id: 2, name: '快钱玩法', out: true, url: '/?from=KQ'},
-  {id: 3, name: '基诺玩法', out: true, url: '/keno/?from=KQ'},
+  // {id: 3, name: '基诺玩法', out: true, url: '/keno/?from=KQ'},
   {id: 4, name: '彩种大厅', link: '/'},
   {name: '投注记录', link: '/betRecords', gameId: true},
   {name: '历史开奖', link: '/openIssueHistory', gameId: true},
@@ -39,10 +40,22 @@ class AppHeader extends Component<Props, object> {
   activeGame = (id: any) => {
     this.setState({gameName: (getGameById(id) || {}).name, gameId: id})
   }
+
   popoverInnerClick = (node: any, index: number = 0): void => {
-    const menu = popoverInner[index];
+    const menu = this.getNavs()[index]
     if (menu.out) {
-      window.location.href = menu.url;
+      if (menu.id !== 2) {
+        let params = this.getParams();
+        let paramsUrl = this.objToUrl(params);
+        let from: string = getUrlParams('from');
+        let decodeUrl = '';
+        if (from) {
+          decodeUrl = decodeURIComponent(from);
+        }
+        let url = `/keno/?from=${from}#/?${paramsUrl}`
+        if (menu.id === 1) url = decodeUrl || `/?from=${from}#/?out=1&${paramsUrl}`;
+        window.location.href = url;
+      }
     } else if (menu.link) {
       this.props.history.push(menu.link + (menu.gameId ? `/${this.state.gameId}` : ''));
     } else {
@@ -56,7 +69,49 @@ class AppHeader extends Component<Props, object> {
   setHandler = () => {
     Bus.emit('onSetLimit')
   }
+  getParams() {
+    const sessionData: any = sessionStorage.getItem('sessionData');
+    let hash = window.location.hash;
+    hash = hash.substring(hash.indexOf('?'));
+    const agentCode = getUrlParams('agentCode',  hash);
+    const param = getUrlParams('param',  hash);
+    const gameid = getUrlParams('gameid');
+    let data: any = {
+      agentCode,
+      param
+    };
+    if (!agentCode || !param && sessionData) {
+      data = JSON.parse(sessionData);
+    }
+    if (gameid) {
+      data.gameid = gameid;
+    }
+    return data;
+  }
+  objToUrl(params: any) {
+    let ps = [];
+    for (let p in params) {
+      ps.push(`${p}=${params[p]}`);
+    }
+    return ps.join('&');
+  }
+  getNavs() {
+    let { playTypes } = this.props.store.user
+    let navs = [ ...popoverInner ]
+    if (playTypes.includes(1)) {
+      navs.unshift({id: 1, name: '官方玩法', out: true, url: '/?from=KQ'})
+    }
+    if (playTypes.includes(3)) {
+      if (playTypes.includes(1)) {
+        navs.splice(2, 0, {id: 3, name: '基诺玩法', out: true, url: '/keno/?from=KQ'})
+      } else {
+        navs.splice(1, 0, {id: 3, name: '基诺玩法', out: true, url: '/keno/?from=KQ'})
+      }
+    }
+    return navs
+  }
   getHeaderInner () {
+    let navs = this.getNavs()
     return (<React.Fragment>{[
       // 大厅
       <Route key="1" path="/" exact>
@@ -82,7 +137,7 @@ class AppHeader extends Component<Props, object> {
             <Popover
               visible={this.state.popoverVisible}
               onSelect={ this.popoverInnerClick }
-              overlay={popoverInner.map((x, i) => <Popover.Item key={i} >{x.name}</Popover.Item>)}
+              overlay={navs.map((x, i) => <Popover.Item key={i} >{x.name}</Popover.Item>)}
             >
               <span className="inlb clickable mgl-20 more"></span>
             </Popover>

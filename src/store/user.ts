@@ -10,6 +10,7 @@ class User {
   @observable userId?: number;
   @observable userLevel?: number;
   @observable login: boolean = false;
+  @observable playTypes: any[] = [];
 
   @action
   setLogin(login: boolean) {
@@ -29,6 +30,11 @@ class User {
   @action
   setBalance(balance: string) {
     this.balance = balance;
+  }
+
+  @action
+  setPlayTypes(playTypes: any[]) {
+    this.playTypes = playTypes
   }
 
   @action
