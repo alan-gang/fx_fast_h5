@@ -117,9 +117,21 @@ class LobbyGame extends Component<Props, object> {
           }
         }
       },
-      // open: () => {
-      //   this.mysocket && this.mysocket.send(JSON.stringify(Object.assign({action: 'noauth'}, {})));
-      // }
+      open: () => {
+        if (this.mysocket) {
+          let params: any = {action: 'noauth'};
+          if (this.props.store.user.login) {
+            params = {
+              parameter: {
+                userId: this.props.store.user.userId,
+                app: 'web'
+              },
+              action: 'auth'
+            };
+          }
+          this.mysocket.send(JSON.stringify(params));
+        }
+      }
     }, true);
   }
   openWinCode(id: number, openHistoryItem: any) {
