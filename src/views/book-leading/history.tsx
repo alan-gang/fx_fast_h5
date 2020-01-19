@@ -170,7 +170,6 @@ class BookLeadingHistory extends React.Component<Props, object> {
       if (rep.success === 1) {
         // 过虑：已经过期 或者 倒计时不足1000ms时 删除这个提醒项 
         if (rep.issue !== rd.issue || (rep.saleend - rep.current) < 1000) {
-          console.log('removeRd 1')
           this.removeRd(rd, rid);
         } else {
           // 奖期，时间，路单
@@ -199,7 +198,6 @@ class BookLeadingHistory extends React.Component<Props, object> {
       })
     } else {
       clearTimeout(rd.timeout)
-      console.log('removeRd 3')
       this.removeRd(rd, rid)
     }
     if ('0' === rid) {
@@ -209,7 +207,6 @@ class BookLeadingHistory extends React.Component<Props, object> {
   removeRd (rd: any, rid: any) {
     let list = data.slice(0);
     let pos: number = -1;
-    console.log('list=', list);
     data.forEach(() => {
       pos = list.findIndex((item: any, i) => (item.lotteryId === rd.lotteryId && item.codeStyle === rd.codeStyle && item.pos === rd.pos && item.issue === rd.issue && item.notifyType === rd.notifyType));
       if (pos >= 0) {
@@ -218,8 +215,6 @@ class BookLeadingHistory extends React.Component<Props, object> {
       }
     });
     data = list;
-    console.log('list 1=', list);
-    // data.splice(rid, 1)
     if (rid === this.state.activeIndex) {
       this.setState({
         activeIndex: -1
@@ -454,6 +449,11 @@ class BookLeadingHistory extends React.Component<Props, object> {
     return [...new Set(ids)];
   }
 
+  /**
+   * 从任何一个列表提取给定属性组成的列表字符串，已去重
+   * @param list 
+   * @param prop 想要提取的属性
+   */
   getJoinedGameIdsFromList(list: any[] = [], prop: string = 'lotteryid') {
     let ids = this.getGameIdsFromList(list, prop);
     const joinIds = ids.join(',');
@@ -468,10 +468,9 @@ class BookLeadingHistory extends React.Component<Props, object> {
         let rep: any;
         betRemindData.forEach((rd: any, rid: any) => {
           rid = rid === 0 ? '0' : rid;
-          rep = data.items.find(() => rd.issue);
+          rep = data.items.find((item: any) => (rd.lotteryId === item.lotteryid && rd.issue === item.issue));
           // 过虑：已经过期 或者 倒计时不足1000ms时 删除这个提醒项 
-          if (rep.issue !== rd.issue || (rd.saleend - data.current) < 1000) {
-            console.log('removeRd 4')
+          if (!rep || rep.issue !== rd.issue || (rep.saleend - data.current) < 1000) {
             this.removeRd(rd, rid);
           } else {
             // 奖期，时间，路单
@@ -502,13 +501,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
           data = data && data[rd.lotteryId];
           rd.ludanList = data;
         });
-        this.setState({ dataSource: this.state.dataSource.cloneWithRows(betRemindData)}, () => {
-          // setTimeout(() => {
-          //   if (betRemindData.length > 0) {
-          //     this.setState({ activeIndex: '0', activeGameId: betRemindData[0].lotteryId });
-          //   }
-          // }, 500)
-        });
+        this.setState({ dataSource: this.state.dataSource.cloneWithRows(betRemindData)});
       }
     });
   }
