@@ -1,9 +1,9 @@
 /*
 @desc 获取URL上的参数
 */
-export function getUrlParams(name: string): string {
+export function getUrlParams(name: string, url?: string): string {
   let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-  let rs = window.location.search.substr(1).match(reg);
+  let rs = (url || window.location.search).substr(1).match(reg);
   return rs ? decodeURI(rs[2]) : '';
 }
 

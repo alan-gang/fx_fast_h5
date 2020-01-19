@@ -48,6 +48,7 @@ class App extends Component<Props, object> {
         store.user.setName(data.userName);
         store.user.setUserId(data.userId);
         store.user.setLogin(true);
+        store.user.setPlayTypes(data.playTypes)
         this.getUserPrefence();
         this.updateBalance();
         store.game.updateAvailableGames();
