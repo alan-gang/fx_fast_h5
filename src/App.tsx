@@ -55,6 +55,7 @@ class App extends Component<Props, object> {
         this.initSocket();
       } else {
         Toast.fail('请登录！');
+        this.getCfgInfo();
       }
     });
   }
@@ -68,24 +69,27 @@ class App extends Component<Props, object> {
         }
       },
       open: () => {
-        // mysocket.send(JSON.stringify(Object.assign({action: 'noauth'}, {})));
-        this.mysocket && this.mysocket.send(JSON.stringify({
-          parameter: {
-            userId: store.user.userId,
-            app: 'web'
-          },
-          action: 'auth'
-        }));
+        if (this.mysocket) {
+          let params: any = {action: 'noauth'};
+          if (store.user.login) {
+            params = {
+              parameter: {
+                userId: store.user.userId,
+                app: 'web'
+              },
+              action: 'auth'
+            };
+          }
+          this.mysocket.send(JSON.stringify(params));
+        }
       }
     }, true);
   }
   getCfgInfo() {
-    // APIs.getCfgInfo({}).then(({broadcaseWSUrl}: any) => {
-      // if (!Socket.sockets.user) {
-      //   Socket.connect(broadcaseWSUrl, 'user', this.connected);
-      // }
-      // Socket.notify.messages.push(this.message);
-    // });
+    APIs.getCfgInfo({}).then(({broadcaseWSUrl}: any) => {
+      store.common.setBroadcaseWSUrl(broadcaseWSUrl);
+      this.initSocket();
+    });
   }
   updateBalance() {
     store.user.updateBalance();

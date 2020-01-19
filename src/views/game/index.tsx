@@ -159,14 +159,19 @@ class Game extends Component<Props, object> {
         }
       },
       open: () => {
-        // this.mysocket && this.mysocket.send(JSON.stringify(Object.assign({action: 'noauth'}, {})));
-        this.mysocket && this.mysocket.send(JSON.stringify({
-          parameter: {
-            userId: this.props.store.user.userId,
-            app: 'web'
-          },
-          action: 'auth'
-        }));
+        if (this.mysocket) {
+          let params: any = {action: 'noauth'};
+          if (this.props.store.user.login) {
+            params = {
+              parameter: {
+                userId: this.props.store.user.userId,
+                app: 'web'
+              },
+              action: 'auth'
+            };
+          }
+          this.mysocket.send(JSON.stringify(params));
+        }
       }
     }, true);
   }
@@ -334,6 +339,11 @@ class Game extends Component<Props, object> {
         return row;
       });
       return methodItem;
+    });
+    // 过滤没有奖级的玩法
+    curGameMethodItems = curGameMethodItems.filter(item => {
+      let methodId = item.id.split(':')[0];
+      return odds[methodId];
     });
     this.setState({curGameMethodItems});
   }
