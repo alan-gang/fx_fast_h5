@@ -583,7 +583,7 @@ class Game extends Component<Props, object> {
             />
           }
           <section className="game-main">
-            <MethodMenu gameType={this.gameType} curMenuIndex={this.state.curMenuIndex} methodMenuChangedCB={this.methodMenuChangedCB} updateMethodMenuIndex={this.updateMethodMenuIndex}/>
+            <MethodMenu gameType={this.gameType} curMenuIndex={this.state.curMenuIndex} methodMenuChangedCB={this.methodMenuChangedCB} updateMethodMenuIndex={this.updateMethodMenuIndex} odds={this.state.odds} />
             {this.state.subMethods.length > 0 && 
               <SubMethodMenu 
                 gameType={this.gameType} 

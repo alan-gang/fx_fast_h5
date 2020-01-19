@@ -170,6 +170,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
       if (rep.success === 1) {
         // 过虑：已经过期 或者 倒计时不足1000ms时 删除这个提醒项 
         if (rep.issue !== rd.issue || (rep.saleend - rep.current) < 1000) {
+          console.log('removeRd 1')
           this.removeRd(rd, rid);
         } else {
           // 奖期，时间，路单
@@ -183,6 +184,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
           }
         }
       } else {
+        console.log('removeRd 2')
         this.removeRd(rd, rid);
       }
     })
@@ -197,6 +199,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
       })
     } else {
       clearTimeout(rd.timeout)
+      console.log('removeRd 3')
       this.removeRd(rd, rid)
     }
     if ('0' === rid) {
@@ -206,6 +209,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
   removeRd (rd: any, rid: any) {
     let list = data.slice(0);
     let pos: number = -1;
+    console.log('list=', list);
     data.forEach(() => {
       pos = list.findIndex((item: any, i) => (item.lotteryId === rd.lotteryId && item.codeStyle === rd.codeStyle && item.pos === rd.pos && item.issue === rd.issue && item.notifyType === rd.notifyType));
       if (pos >= 0) {
@@ -214,6 +218,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
       }
     });
     data = list;
+    console.log('list 1=', list);
     // data.splice(rid, 1)
     if (rid === this.state.activeIndex) {
       this.setState({
@@ -435,8 +440,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
 
   // 批量获取奖期列表，历史开奖列表
   getData(list?: any[]) {
-    let ids = this.getGameIdsFromList(list || this.state.list, 'lotteryId');
-    const joinIds = ids.join(',');
+    const joinIds = this.getJoinedGameIdsFromList(list || this.state.list, 'lotteryId');
     this.getIssuesByGameIds(joinIds);
   }
 
@@ -450,10 +454,15 @@ class BookLeadingHistory extends React.Component<Props, object> {
     return [...new Set(ids)];
   }
 
+  getJoinedGameIdsFromList(list: any[] = [], prop: string = 'lotteryid') {
+    let ids = this.getGameIdsFromList(list, prop);
+    const joinIds = ids.join(',');
+    return joinIds;
+  }
+
   // 批量获取期号
   getIssuesByGameIds(ids: string) {
     let betRemindData = data;
-    console.log(betRemindData)
     APIs.getIssuesByGameIds({gameid: ids}).then((data: any) => {
       if (data.success > 0) {
         let rep: any;
@@ -462,6 +471,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
           rep = data.items.find(() => rd.issue);
           // 过虑：已经过期 或者 倒计时不足1000ms时 删除这个提醒项 
           if (rep.issue !== rd.issue || (rd.saleend - data.current) < 1000) {
+            console.log('removeRd 4')
             this.removeRd(rd, rid);
           } else {
             // 奖期，时间，路单
@@ -470,12 +480,12 @@ class BookLeadingHistory extends React.Component<Props, object> {
             if (rd.timeout) clearTimeout(rd.timeout);
             this.countDown(rd, rid);
             // this.getHistoryIssue(gameid, rid, rd);
-            if (rid === 0) {
+            if (rid === '0') {
               this.setState({ activeIndex: rid, activeGameId: rd.lotteryId });
             }
           }
         });
-        console.log('1', data, betRemindData)
+        const ids = this.getJoinedGameIdsFromList(betRemindData, 'lotteryId');
         this.getBatchRecentCodesByGameIds(ids);
       }
     });
@@ -484,23 +494,20 @@ class BookLeadingHistory extends React.Component<Props, object> {
   // 批量获取历史开奖
   getBatchRecentCodesByGameIds(ids: string) {
     let betRemindData = data;
-    console.log(betRemindData)
     APIs.getBatchRecentCodesByGameIds({gameid: ids}).then((data: any) => {
       if (data.success > 0) {
-        console.log(betRemindData)
         let recentCodeList = data.data || [];
         betRemindData.forEach((rd: any, rid) => {
           data = recentCodeList.find((item: any) => item[rd.lotteryId] && item[rd.lotteryId].length > 0);
           data = data && data[rd.lotteryId];
           rd.ludanList = data;
         });
-        console.log(betRemindData)
         this.setState({ dataSource: this.state.dataSource.cloneWithRows(betRemindData)}, () => {
-          setTimeout(() => {
-            if (betRemindData.length > 0) {
-              this.setState({ activeIndex: '0', activeGameId: betRemindData[0].lotteryId });
-            }
-          }, 500)
+          // setTimeout(() => {
+          //   if (betRemindData.length > 0) {
+          //     this.setState({ activeIndex: '0', activeGameId: betRemindData[0].lotteryId });
+          //   }
+          // }, 500)
         });
       }
     });
