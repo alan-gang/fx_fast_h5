@@ -89,8 +89,8 @@ class Game extends Component<Props, object> {
     let menus: GameMethodMenu[] = getMethodsConfigByType(this.gameType);
     let limitItem = props.store.game.getLimitListItemById(this.id);
     let bestLudan: BestLudanItem = limitItem && limitItem.bestLudan;
-    let curMenuIndex = bestLudan && getMethodPosByGameTypeAndId(this.gameType, bestLudan.methodId) || 0;
-    let curMenuEname = (menus && menus[curMenuIndex]).ename;
+    let curMenuIndex = (bestLudan && getMethodPosByGameTypeAndId(this.gameType, bestLudan.methodId)) || 0;
+    let curMenuEname = menus && menus[curMenuIndex] && menus[curMenuIndex].ename;
     let ludanTab = getLudanTabByTypeAndName(this.gameType, curMenuEname, bestLudan && bestLudan.codeStyle);
     let ludanMenus = getTabsByType(this.gameType, curMenuEname);
     let gameLimitLevel = this.props.store.game.getGameLimitLevelByGameId(this.id); // 设置的限红数据

@@ -183,7 +183,6 @@ class BookLeadingHistory extends React.Component<Props, object> {
           }
         }
       } else {
-        console.log('removeRd 2')
         this.removeRd(rd, rid);
       }
     })
@@ -215,23 +214,37 @@ class BookLeadingHistory extends React.Component<Props, object> {
       }
     });
     data = list;
-    if (rid === this.state.activeIndex) {
-      this.setState({
-        activeIndex: -1
-      })
-    }
-    if (rid * 1 < this.state.activeIndex * 1) {
-      this.setState({
-        activeIndex: (this.state.activeIndex * 1 - 1) + ''
-      })
-    }
+    // if (rid === this.state.activeIndex) {
+    //   this.setState({
+    //     activeIndex: -1
+    //   })
+    // }
+    // if (rid * 1 < this.state.activeIndex * 1) {
+        // this.setState({
+        //   activeIndex: (this.state.activeIndex * 1 - 1) + ''
+        // })
+    // }
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(data),
     })
     // 如果删除第一个，重新
-    if (rid === '0' && data && data.length > 0) {
-      let rd: any = data[0]
-      this.getCurIssueData(rd.lotteryId, '0', rd);
+    // if (rid === '0' && data && data.length > 0) {
+    //   let rd: any = data[0]
+    //   this.getCurIssueData(rd.lotteryId, '0', rd);
+    // }
+    // 更新当前激活项
+    if (rid * 1 <= this.state.activeIndex * 1) {
+      let activeIndex = this.state.activeIndex * 1 - 1;
+      activeIndex = (activeIndex === -1 && data.length > 0 ) ? 0 : activeIndex; // data里有数据activeIndex就不能为-1
+      let lotteryId = data && data[activeIndex] && data[activeIndex].lotteryId;
+      this.setState({
+        activeIndex: activeIndex + '',
+        activeGameId: lotteryId
+      });
+    }
+    // 数据为空重新拉取
+    if (data.length === 0) {
+      setTimeout(() => { this.init() }, 1000)
     }
   }
   coinChoosed = (value: string) => {
@@ -466,13 +479,15 @@ class BookLeadingHistory extends React.Component<Props, object> {
     APIs.getIssuesByGameIds({gameid: ids}).then((data: any) => {
       if (data.success > 0) {
         let rep: any;
+        let count: number = 0;
         betRemindData.forEach((rd: any, rid: any) => {
-          rid = rid === 0 ? '0' : rid;
           rep = data.items.find((item: any) => (rd.lotteryId === item.lotteryid && rd.issue === item.issue));
           // 过虑：已经过期 或者 倒计时不足1000ms时 删除这个提醒项 
           if (!rep || rep.issue !== rd.issue || (rep.saleend - data.current) < 1000) {
             this.removeRd(rd, rid);
           } else {
+            rid = count === 0 ? '0' : rid;
+            count++;
             // 奖期，时间，路单
             rd.issue = rep.issue;
             rd.timming = rep.saleend - data.current;
@@ -533,7 +548,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
             maxRows={6} 
             isScroll={false}
             ludanList={
-              getLuDanListByMethod(rd.ludanList.slice(0).reverse(), getGameTypeByGameId(this.state.activeGameId), rd.codeStyle, 6, 19)
+              getLuDanListByMethod(rd.ludanList.slice(0).reverse(), getGameTypeByGameId(rd.lotteryId), rd.codeStyle, 6, 19)
             } 
             /> : ''
         }
