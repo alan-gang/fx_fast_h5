@@ -108,7 +108,7 @@ class Game extends Component<Props, object> {
       curSubMenuIndex,
       subMethods: [],
       curSubMethod: undefined,
-      curGameMethodItems: this.getMethodItemsByIds((menus && menus[curMenuIndex].ids) || []),
+      curGameMethodItems: this.getMethodItemsByIds((menus && menus[curMenuIndex] && menus[curMenuIndex].ids) || []),
       odds: {},
       issueList: [],
       defaultInitMethodItemAmount: 0, //this.props.store.game.defaultInitBetAmount,
