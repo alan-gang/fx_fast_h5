@@ -54,7 +54,7 @@ class OrderBar extends Component<Props, object> {
     this.orderBarContainer.className = ORDER_BAR_CONTAINER_CLASS;
   }
   coinChoosed = (value: string) => {
-    const amount: number = value === 'all' ? parseInt(this.props.store.user.balance, 10): parseInt(value, 10);
+    const amount: number = value === 'all' ? parseInt(this.props.store.user.balance, 10) : parseInt(value, 10);
     this.setState({amount});
     this.props.updateDefaultInitMethodItemAmount(amount);
   }

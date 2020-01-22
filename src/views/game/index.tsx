@@ -89,8 +89,9 @@ class Game extends Component<Props, object> {
     let menus: GameMethodMenu[] = getMethodsConfigByType(this.gameType);
     let limitItem = props.store.game.getLimitListItemById(this.id);
     let bestLudan: BestLudanItem = limitItem && limitItem.bestLudan;
-    let curMenuIndex = bestLudan && getMethodPosByGameTypeAndId(this.gameType, bestLudan.methodId) || 0;
-    let curMenuEname = (menus && menus[curMenuIndex]).ename;
+    let curMenuIndex = (bestLudan && getMethodPosByGameTypeAndId(this.gameType, bestLudan.methodId));
+    curMenuIndex = curMenuIndex === -1 ? 0 : curMenuIndex;
+    let curMenuEname = menus && menus[curMenuIndex] && menus[curMenuIndex].ename;
     let ludanTab = getLudanTabByTypeAndName(this.gameType, curMenuEname, bestLudan && bestLudan.codeStyle);
     let ludanMenus = getTabsByType(this.gameType, curMenuEname);
     let gameLimitLevel = this.props.store.game.getGameLimitLevelByGameId(this.id); // 设置的限红数据
@@ -107,7 +108,7 @@ class Game extends Component<Props, object> {
       curSubMenuIndex,
       subMethods: [],
       curSubMethod: undefined,
-      curGameMethodItems: this.getMethodItemsByIds((menus && menus[curMenuIndex].ids) || []),
+      curGameMethodItems: this.getMethodItemsByIds((menus && menus[curMenuIndex] && menus[curMenuIndex].ids) || []),
       odds: {},
       issueList: [],
       defaultInitMethodItemAmount: 0, //this.props.store.game.defaultInitBetAmount,
@@ -583,7 +584,7 @@ class Game extends Component<Props, object> {
             />
           }
           <section className="game-main">
-            <MethodMenu gameType={this.gameType} curMenuIndex={this.state.curMenuIndex} methodMenuChangedCB={this.methodMenuChangedCB} updateMethodMenuIndex={this.updateMethodMenuIndex}/>
+            <MethodMenu gameType={this.gameType} curMenuIndex={this.state.curMenuIndex} methodMenuChangedCB={this.methodMenuChangedCB} updateMethodMenuIndex={this.updateMethodMenuIndex} odds={this.state.odds} />
             {this.state.subMethods.length > 0 && 
               <SubMethodMenu 
                 gameType={this.gameType} 

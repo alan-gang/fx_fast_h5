@@ -214,24 +214,37 @@ class BookLeadingHistory extends React.Component<Props, object> {
       }
     });
     data = list;
-    // data.splice(rid, 1)
-    if (rid === this.state.activeIndex) {
-      this.setState({
-        activeIndex: -1
-      })
-    }
-    if (rid * 1 < this.state.activeIndex * 1) {
-      this.setState({
-        activeIndex: (this.state.activeIndex * 1 - 1) + ''
-      })
-    }
+    // if (rid === this.state.activeIndex) {
+    //   this.setState({
+    //     activeIndex: -1
+    //   })
+    // }
+    // if (rid * 1 < this.state.activeIndex * 1) {
+        // this.setState({
+        //   activeIndex: (this.state.activeIndex * 1 - 1) + ''
+        // })
+    // }
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(data),
     })
     // 如果删除第一个，重新
-    if (rid === '0' && data && data.length > 0) {
-      let rd: any = data[0]
-      this.getCurIssueData(rd.lotteryId, '0', rd);
+    // if (rid === '0' && data && data.length > 0) {
+    //   let rd: any = data[0]
+    //   this.getCurIssueData(rd.lotteryId, '0', rd);
+    // }
+    // 更新当前激活项
+    if (rid * 1 <= this.state.activeIndex * 1) {
+      let activeIndex = this.state.activeIndex * 1 - 1;
+      activeIndex = (activeIndex === -1 && data.length > 0 ) ? 0 : activeIndex; // data里有数据activeIndex就不能为-1
+      let lotteryId = data && data[activeIndex] && data[activeIndex].lotteryId;
+      this.setState({
+        activeIndex: activeIndex + '',
+        activeGameId: lotteryId
+      });
+    }
+    // 数据为空重新拉取
+    if (data.length === 0) {
+      setTimeout(() => { this.init() }, 1000)
     }
   }
   coinChoosed = (value: string) => {
@@ -435,8 +448,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
 
   // 批量获取奖期列表，历史开奖列表
   getData(list?: any[]) {
-    let ids = this.getGameIdsFromList(list || this.state.list, 'lotteryId');
-    const joinIds = ids.join(',');
+    const joinIds = this.getJoinedGameIdsFromList(list || this.state.list, 'lotteryId');
     this.getIssuesByGameIds(joinIds);
   }
 
@@ -450,32 +462,44 @@ class BookLeadingHistory extends React.Component<Props, object> {
     return [...new Set(ids)];
   }
 
+  /**
+   * 从任何一个列表提取给定属性组成的列表字符串，已去重
+   * @param list 
+   * @param prop 想要提取的属性
+   */
+  getJoinedGameIdsFromList(list: any[] = [], prop: string = 'lotteryid') {
+    let ids = this.getGameIdsFromList(list, prop);
+    const joinIds = ids.join(',');
+    return joinIds;
+  }
+
   // 批量获取期号
   getIssuesByGameIds(ids: string) {
     let betRemindData = data;
-    console.log(betRemindData)
     APIs.getIssuesByGameIds({gameid: ids}).then((data: any) => {
       if (data.success > 0) {
         let rep: any;
+        let count: number = 0;
         betRemindData.forEach((rd: any, rid: any) => {
-          rid = rid === 0 ? '0' : rid;
-          rep = data.items.find(() => rd.issue);
+          rep = data.items.find((item: any) => (rd.lotteryId === item.lotteryid && rd.issue === item.issue));
           // 过虑：已经过期 或者 倒计时不足1000ms时 删除这个提醒项 
-          if (rep.issue !== rd.issue || (rd.saleend - data.current) < 1000) {
+          if (!rep || rep.issue !== rd.issue || (rep.saleend - data.current) < 1000) {
             this.removeRd(rd, rid);
           } else {
+            rid = count === 0 ? '0' : rid;
+            count++;
             // 奖期，时间，路单
             rd.issue = rep.issue;
             rd.timming = rep.saleend - data.current;
             if (rd.timeout) clearTimeout(rd.timeout);
             this.countDown(rd, rid);
             // this.getHistoryIssue(gameid, rid, rd);
-            if (rid === 0) {
+            if (rid === '0') {
               this.setState({ activeIndex: rid, activeGameId: rd.lotteryId });
             }
           }
         });
-        console.log('1', data, betRemindData)
+        const ids = this.getJoinedGameIdsFromList(betRemindData, 'lotteryId');
         this.getBatchRecentCodesByGameIds(ids);
       }
     });
@@ -484,24 +508,15 @@ class BookLeadingHistory extends React.Component<Props, object> {
   // 批量获取历史开奖
   getBatchRecentCodesByGameIds(ids: string) {
     let betRemindData = data;
-    console.log(betRemindData)
     APIs.getBatchRecentCodesByGameIds({gameid: ids}).then((data: any) => {
       if (data.success > 0) {
-        console.log(betRemindData)
         let recentCodeList = data.data || [];
         betRemindData.forEach((rd: any, rid) => {
           data = recentCodeList.find((item: any) => item[rd.lotteryId] && item[rd.lotteryId].length > 0);
           data = data && data[rd.lotteryId];
           rd.ludanList = data;
         });
-        console.log(betRemindData)
-        this.setState({ dataSource: this.state.dataSource.cloneWithRows(betRemindData)}, () => {
-          setTimeout(() => {
-            if (betRemindData.length > 0) {
-              this.setState({ activeIndex: '0', activeGameId: betRemindData[0].lotteryId });
-            }
-          }, 500)
-        });
+        this.setState({ dataSource: this.state.dataSource.cloneWithRows(betRemindData)});
       }
     });
   }
@@ -533,7 +548,7 @@ class BookLeadingHistory extends React.Component<Props, object> {
             maxRows={6} 
             isScroll={false}
             ludanList={
-              getLuDanListByMethod(rd.ludanList.slice(0).reverse(), getGameTypeByGameId(this.state.activeGameId), rd.codeStyle, 6, 19)
+              getLuDanListByMethod(rd.ludanList.slice(0).reverse(), getGameTypeByGameId(rd.lotteryId), rd.codeStyle, 6, 19)
             } 
             /> : ''
         }

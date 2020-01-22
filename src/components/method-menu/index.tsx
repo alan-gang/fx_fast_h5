@@ -12,6 +12,7 @@ interface Props {
   curMenuIndex: number;
   updateMethodMenuIndex(index: number): void;
   methodMenuChangedCB(methodIds: GameMethodMenu): void;
+  odds: any[];
 }
 
 interface State {
@@ -44,6 +45,12 @@ class MethodMenu extends Component<Props, object> {
   }
   render() {
     let menus: GameMethodMenu[] = getMethodsConfigByType(this.props.gameType);
+    menus = menus.filter(item => {
+      return item.ids.some((id: any) => {
+        let methodId = id.split(':')[0]
+        if (this.props.odds[methodId]) return true
+      })
+    });
     return (
       <section className="method-menu-view">
         <section className="menu-wp">
