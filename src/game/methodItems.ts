@@ -651,7 +651,7 @@ const methodItems: any = {
       methodTypeName: 'texiao',
       calcMode: 'row',
       rows: [
-        getCommonRow({s: false, n: '鼠', pv: 1, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('鼠'))}),
+        getCommonRow({s: false, n: '鼠', pv: 1, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 1, vs: formatToVsItem(AtoN('鼠'))}),
         getCommonRow({s: false, n: '牛', pv: 2, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('牛'))}),
         getCommonRow({s: false, n: '虎', pv: 3, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('虎'))}),
         getCommonRow({s: false, n: '兔', pv: 4, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('兔'))}),
@@ -662,7 +662,7 @@ const methodItems: any = {
         getCommonRow({s: false, n: '猴', pv: 9, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('猴'))}),
         getCommonRow({s: false, n: '鸡', pv: 10, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('鸡'))}),
         getCommonRow({s: false, n: '狗', pv: 11, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('狗'))}),
-        getCommonRow({s: false, n: '猪', pv: 12, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 1, vs: formatToVsItem(AtoN('猪'))})
+        getCommonRow({s: false, n: '猪', pv: 12, posOdd: true, noodd: true, class: 'ncircle xsmall no-m-item-bg', oddIndex: 0, vs: formatToVsItem(AtoN('猪'))})
       ]
     }
   },
