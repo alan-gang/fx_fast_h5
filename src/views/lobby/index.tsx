@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from "react-router-dom";
-// import LobbyMenu from './LobbyMenu';
+import { PullToRefresh, ListView } from 'antd-mobile';
 import LobbyGame from './LobbyGame';
 import { getGamesByType, getAllGames } from '../../game/games';
 import { Game } from '../../typings/games';
@@ -20,10 +20,12 @@ type Props = IProps & RouteComponentProps;
 interface State {
   curGameType: string;
   curGames: Game[];
+  gamesDataSource: ListView;
   issueList: any[];
   bestLudanList: any[];
   recentCodeList: any[];
   curServerTime: number;
+  isLoading: boolean;
 }
 
 @inject("store")
@@ -31,16 +33,19 @@ interface State {
 class Lobby extends Component<Props, object> {
   DEFAULT_GAME_TYPE: string = 'hot';
   state: State;
+  reflv: any;
   constructor(props: Props) {
     super(props);
     let curGames = this.filterAvailableGames(getAllGames()); 
     this.state = {
       curGameType: this.DEFAULT_GAME_TYPE,
       curGames,
+      gamesDataSource: new ListView.DataSource({}),
       issueList: [],
       bestLudanList: [],
       recentCodeList: [],
-      curServerTime: 0
+      curServerTime: 0,
+      isLoading: false
     }
   }
   init = () => {
@@ -116,14 +121,38 @@ class Lobby extends Component<Props, object> {
       }
     });
   }
+  renderItem(game: Game) {
+    return <LobbyGame key={game.id} gameType={this.state.curGameType} gameId={game.id} gameName={game.name} goto={this.goto} issueList={this.state.issueList} bestLudanList={this.state.bestLudanList} recentCodeList={this.state.recentCodeList} curServerTime={this.state.curServerTime} />
+  }
+  onEndReached() {
+
+  }
   render() {
     return (
       <article className="lobby-view">
-        {/* <LobbyMenu onMenuChanged={this.onMenuChanged} /> */}
         <section className="flex lobby-game-ls">
-          {this.state.curGames.map((game: Game) => (
+          {/* {this.state.curGames.map((game: Game) => (
             <LobbyGame key={game.id} gameType={this.state.curGameType} gameId={game.id} gameName={game.name} goto={this.goto} issueList={this.state.issueList} bestLudanList={this.state.bestLudanList} recentCodeList={this.state.recentCodeList} curServerTime={this.state.curServerTime} />
-          ))}
+          ))} */}
+          {
+             <ListView
+             ref={el => this.reflv = el}
+             dataSource={this.state.gamesDataSource}
+             renderHeader={() => <span>header</span>}
+             renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
+               {this.state.isLoading ? 'Loading...' : 'Loaded'}
+             </div>)}
+             renderSectionHeader={sectionData => (
+               <div>{`Task ${sectionData.split(' ')[1]}`}</div>
+             )}
+             renderRow={this.renderItem}
+             pageSize={4}
+             onScroll={() => { console.log('scroll'); }}
+             scrollRenderAheadDistance={500}
+             onEndReached={this.onEndReached}
+             onEndReachedThreshold={10}
+           />
+          }
         </section>
       </article>
     )

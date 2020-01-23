@@ -54,7 +54,12 @@ class OrderBar extends Component<Props, object> {
     this.orderBarContainer.className = ORDER_BAR_CONTAINER_CLASS;
   }
   coinChoosed = (value: string) => {
-    const amount: number = value === 'all' ? parseInt(this.props.store.user.balance, 10) : parseInt(value, 10);
+    let curGameLimitLevel = this.props.store.game.getGameLimitLevelByGameId(this.props.gameId);
+    let limit: any;
+    if (curGameLimitLevel) {
+      limit = this.props.store.game.getLimitLevelData(this.props.gameId, curGameLimitLevel.level);
+    }  
+    const amount: number = value === 'all' ? parseInt((limit && limit.maxAmt) || this.props.store.user.balance, 10) : parseInt(value, 10);
     this.setState({amount});
     this.props.updateDefaultInitMethodItemAmount(amount);
   }
