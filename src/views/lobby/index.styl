@@ -1,7 +1,13 @@
 .lobby-view {
-  padding 24px
+  // padding 24px
+  box-sizing border-box
+  height calc(100vh - 88px)
   .lobby-game-ls {
     flex-wrap wrap
     justify-content center
+    height 100%
+    &>div {
+      width 100%
+    }
   }
 }

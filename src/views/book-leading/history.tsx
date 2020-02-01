@@ -13,6 +13,7 @@ import { timeFormat } from '../../utils/date'
 import Bus from 'src/utils/eventBus'
 import CoinSet from 'comp/coin-set'
 import dayjs from 'dayjs'
+import inject_unmount from '../../decorator/inject_unmount';
 
 interface Props {
   withAction?: boolean,
@@ -32,6 +33,7 @@ let data: any[] = []
 const KEY_ENTER = 13;
 @inject('store')
 @observer
+@inject_unmount
 class BookLeadingHistory extends React.Component<Props, object> {
   state: any
   scrollNode?: any

@@ -8,7 +8,7 @@ import APIs from '../../http/APIs';
 import { getGameTypeByGameId } from '../../game/games';
 import { getLunDanTabByName, getLunDanFullTitleByName, getMethodENameByLudanName, getLudanTabByTypeAndName } from '../../utils/ludan';
 import Socket from '../../socket';
-
+import inject_unmount from '../../decorator/inject_unmount';
 import './lobbyGame.styl';
 
 interface Props {
@@ -51,6 +51,7 @@ let bestLudanConfig: any = {
 
 @inject("store")
 @observer
+@inject_unmount
 class LobbyGame extends Component<Props, object> {
   state: State;
   mysocket?: Socket;
