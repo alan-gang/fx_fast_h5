@@ -89,7 +89,7 @@ class LobbyGame extends Component<Props, object> {
     this.initDataFromProps();
   }
   componentWillReceiveProps(nextProps: Props) {
-    // console.log('LobbyGame=', nextProps.store.game.getLimitListItemById(nextProps.gameId))
+    // console.log('LobbyGame=', nextProps.store.game.getLimitListItemById(nextProps.gameId), nextProps.recentCodeList, this.props.gameId)
     // console.log('nextProps=', nextProps)
     this.getCurIssueFromProps(this.props.gameId, nextProps.issueList);
     this.getBestLudanFromPropsByGameId(this.props.gameId, nextProps.bestLudanList);

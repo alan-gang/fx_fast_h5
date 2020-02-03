@@ -29,7 +29,7 @@ interface State {
   gameIds: string[];
 }
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 5;
 let curPageNo = 1;
 let totalPage = 1;
 @inject("store")
@@ -136,7 +136,7 @@ class Lobby extends Component<Props, object> {
    * @param ids 游戏ID列表字符串
    */
   getBatchRecentCodesByGameIds(ids: string) {
-    APIs.getBatchRecentCodesByGameIds({gameid: ids}).then((data: any) => {
+    return APIs.getBatchRecentCodesByGameIds({gameid: ids}).then((data: any) => {
       if (data.success > 0) {
         this.updateRecentCodes(data.data);
       }
@@ -203,12 +203,14 @@ class Lobby extends Component<Props, object> {
    */
   loadData = () => {
     if (curPageNo > totalPage) return;
+    this.setState({isLoading: true});
     const gameIds = this.state.gameIds.slice((curPageNo - 1) * PAGE_SIZE, curPageNo * PAGE_SIZE).join(',');
     const curGames = this.state.curGames.slice(0, curPageNo * PAGE_SIZE);
     this.getIssuesByGameIds(gameIds);
     this.getBatchBestLudanByGameIds(gameIds);
-    this.getBatchRecentCodesByGameIds(gameIds);
-    this.setState({gamesDataSource: this.state.gamesDataSource.cloneWithRows(curGames)});
+    this.getBatchRecentCodesByGameIds(gameIds).then(() => {
+      this.setState({isLoading: false, gamesDataSource: this.state.gamesDataSource.cloneWithRows(curGames)});
+    });
   }
   renderItem = (game: Game) => {
     return <LobbyGame key={game.id} gameType={this.state.curGameType} gameId={game.id} gameName={game.name} goto={this.goto} issueList={this.state.issueList} bestLudanList={this.state.bestLudanList} recentCodeList={this.state.recentCodeList} curServerTime={this.state.curServerTime} />
@@ -227,7 +229,7 @@ class Lobby extends Component<Props, object> {
             <ListView
               ref={el => this.reflv = el}
               dataSource={this.state.gamesDataSource}
-              renderFooter={() => (<div style={{ padding: 20, textAlign: 'center' }}>{this.state.isLoading ? '加载中...' : '已显示所有'}</div>)}
+              renderFooter={() => (<div style={{ padding: 20, textAlign: 'center' }}>{this.state.isLoading ? '加载中...' : (curPageNo >= totalPage ? '已显示所有' : '上拉加载更多') }</div>)}
               renderRow={this.renderItem}
               pageSize={PAGE_SIZE}
               onEndReached={this.onEndReached}
