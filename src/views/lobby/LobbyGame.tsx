@@ -8,7 +8,7 @@ import APIs from '../../http/APIs';
 import { getGameTypeByGameId } from '../../game/games';
 import { getLunDanTabByName, getLunDanFullTitleByName, getMethodENameByLudanName, getLudanTabByTypeAndName } from '../../utils/ludan';
 import Socket from '../../socket';
-
+import inject_unmount from '../../decorator/inject_unmount';
 import './lobbyGame.styl';
 
 interface Props {
@@ -51,6 +51,7 @@ let bestLudanConfig: any = {
 
 @inject("store")
 @observer
+@inject_unmount
 class LobbyGame extends Component<Props, object> {
   state: State;
   mysocket?: Socket;
@@ -88,7 +89,7 @@ class LobbyGame extends Component<Props, object> {
     this.initDataFromProps();
   }
   componentWillReceiveProps(nextProps: Props) {
-    // console.log('LobbyGame=', nextProps.store.game.getLimitListItemById(nextProps.gameId))
+    // console.log('LobbyGame=', nextProps.store.game.getLimitListItemById(nextProps.gameId), nextProps.recentCodeList, this.props.gameId)
     // console.log('nextProps=', nextProps)
     this.getCurIssueFromProps(this.props.gameId, nextProps.issueList);
     this.getBestLudanFromPropsByGameId(this.props.gameId, nextProps.bestLudanList);

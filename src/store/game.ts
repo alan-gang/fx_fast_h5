@@ -42,7 +42,7 @@ class MyGame {
     local.set(Types.SET_WAP_FAVOURITE_GAMES, this.favourites);
   }
 
-  // 根据ID获取限红数据
+  // 根据游戏ID获取限红数据
   @action
   getLimitListItemById(id: number): LimitListItem | undefined {
     return this.limitList.find((item: LimitListItem) => id === item.id );
