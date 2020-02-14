@@ -17,11 +17,19 @@ import { Drawer, List, Toast } from 'antd-mobile';
 import Panel from './views/panel';
 import BookLeadingFloat from './views/book-leading/float';
 
+
+interface State {
+  invokedLogin: boolean;
+}
 @observer
 class App extends Component<Props, object> {
   mysocket?: Socket;
+  state: State;
   constructor(props: Props) {
     super(props);
+    this.state = {
+      invokedLogin: false
+    }
     this.init();
   }
   init() {
@@ -36,13 +44,15 @@ class App extends Component<Props, object> {
       data = JSON.parse(sessionData);
     }
     this.autoLogin(data);
-    this.getLimitData(getAllGameIds());
+    
   }
   componentWillMount() {
     // this.getCfgInfo();
   }
   autoLogin(params: object) {
     APIs.signIn(params).then((data: any) => {
+      this.setState({invokedLogin: true});
+      this.getLimitData(getAllGameIds());
       if (data.success > 0) {
         store.common.setBroadcaseWSUrl(data.broadcaseWSUrl);
         store.user.setName(data.userName);
@@ -117,16 +127,20 @@ class App extends Component<Props, object> {
     return (
       <Provider store={store}>
         <Router>
-          <Panel />
-          <Route path="/game/:id">
-            { store.local.bookLeading ?  <BookLeadingFloat/> : '' }
-          </Route>
-          <article className="pg-c">
-            <AppHeader />
-            <article className="page-view">
-              <RouterConfig />
-            </article>
-          </article>
+          { this.state.invokedLogin && 
+            <>
+              <Panel />
+              <Route path="/game/:id">
+                { store.local.bookLeading ?  <BookLeadingFloat/> : '' }
+              </Route>
+              <article className="pg-c">
+                <AppHeader />
+                <article className="page-view">
+                  <RouterConfig />
+                </article>
+              </article>
+            </>
+          }
         </Router>
       </Provider>
     );
