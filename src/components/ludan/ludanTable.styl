@@ -1,0 +1,45 @@
+.ludan-table-view {
+  // padding 16px
+  .tb-wp {
+    border-top solid 1px $ludan-tb-cell-bd-color
+    border-left solid 1px $ludan-tb-cell-bd-color
+    > .col {
+      width 37px
+      // flex 1
+    }
+  }
+  .tb-cell {
+    width 37px
+    height 37px
+    border-right solid 1px $ludan-tb-cell-bd-color
+    border-bottom solid 1px $ludan-tb-cell-bd-color
+    box-sizing border-box
+    color $ludan-tb-cell-color
+    background-color $ludan-tb-cell-bg-color
+  }
+  .ld-item {
+    width 36px
+    height 36px
+    line-height 36px
+    border-radius 50%
+    &.txt-r {
+      background-color $ludan-open-item-bg-color-red
+    }
+    &.txt-g {
+      background-color $ludan-open-item-bg-color-green
+    }
+    &.txt-b {
+      background-color $ludan-open-item-bg-color-blue
+    }
+    &.txt-y {
+      background-color $ludan-open-item-bg-color-yellow
+      color #fff
+    }
+    &.icon-cur {
+      bg($ludan-open-item-icon-cur)
+    }
+    &.icon-qs {
+      bg($ludan-open-item-icon-qs)
+    }
+  }
+}

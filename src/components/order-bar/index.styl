@@ -1,0 +1,63 @@
+.order-bar-view {
+  clear both
+  background-color $theme-bg-color
+  width 100%
+  position fixed
+  left 0 
+  bottom 0
+  z-index 101
+  .order-sec {
+    padding 8px 20px
+  }
+  .fast-amount-wp {
+    width 240px
+    height 60px
+    border-radius 10px
+    background $order-bar-fast-amount-bg-color url("../../assets/images/default/bot-amount@2x.png") left center no-repeat
+    padding-left 54px
+    background-size 27px 28px
+    background-position 16px
+  }
+  .fast-amount {
+    width 166px
+    border none
+    height 100%
+    background-color $order-bar-fast-amount-bg-color
+  }
+  .btns-wp {
+  }
+  .btn-order {
+    margin-left 0.1rem
+  }
+  .txt-red {
+    color $theme-txt-color-7
+  }
+  .btn-reset {
+    &.ant-btn-primary {
+      background-color $order-bar-btn-reset-bg-color
+      border-color $order-bar-btn-reset-bg-color
+    }
+  }
+  .flex {
+    display flex
+  }
+  .am-button {
+    height 72px
+    line-height 72px
+  }
+  .am-button-primary {
+    font-size 27px
+    border none !important
+  }
+  .am-button-primary::before {
+    border none !important
+  }
+  .btn-reset {
+    width 114px
+    background $order-bar-btn-reset-bg-color
+  }
+  .btn-order {
+    width 280px
+    background $order-bar-btn-order-bg-color
+  }
+}

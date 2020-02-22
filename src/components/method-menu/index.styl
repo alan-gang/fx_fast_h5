@@ -1,0 +1,33 @@
+.method-menu-view {
+  background $theme-bg-color
+  .menu-wp {
+    height 60px
+    padding 0 22px
+    &>nav {
+      height 100%
+    }
+    .menu-item-ls {
+      padding 9px 0 
+      &::after {
+        content ''
+        clear both
+        display block
+      }
+    }
+    .menu-item {
+      min-width 100px
+      height 44px
+      line-height 44px
+      padding 0 20px
+      word-break keep-all
+      float left
+      text-align center
+      box-sizing border-box
+      &.selected {
+        background-color $method-menu-item-selected-bg-color
+        color $method-menu-item-selected-txt-color
+        border-radius 20px
+      }
+    }
+  }
+}

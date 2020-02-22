@@ -1,0 +1,311 @@
+@import "./reset.styl" 
+@import "./variables.styl"
+@import "./loading.styl"
+@import "./animation.styl"
+@import "./message.styl"
+@import "./gameicon.styl"
+@import "./border-1px.styl"
+
+body {
+  color $colors.gray
+}
+
+for k, v in $colors
+  .c-{k}
+    color v
+  .bgc-{k}
+    background-color v
+    
+
+for x in 12 13 14 15 16 18 20 22 24 25 26 28 30 32 35 36 38 40 42 45 46 48 50
+  .fs-{x}
+    font-size (x)px
+
+for x in -100 -80 -50  -44 -40 -30 -20 -10 -5 -3 -2 0 1 2 3 5 8 10 15 20 22 25 30 33 34 40 44 45 48 50 54 60 70 72 75 80 88 90 100 120 130 140 180
+  .pd-{x}
+    padding x px
+  .mg-{x}
+    margin x px
+
+  .mgt-{x}
+    margin-top x px
+  .mgb-{x}
+    margin-bottom x px
+  .mgl-{x}
+    margin-left x px
+  .mgr-{x}
+    margin-right x px
+
+  .pd-{x}
+    padding x px
+  .pdt-{x}
+    padding-top x px
+  .pdb-{x}
+    padding-bottom x px
+  .pdl-{x}
+    padding-left x px
+  .pdr-{x}
+    padding-right x px
+  
+  .pol-{x}
+    left x px
+    
+  .por-{x}
+    right x px
+  
+  .pot-{x}
+    top x px
+    
+  .pob-{x}
+    bottom x px
+  
+  .h-{x}
+    height x px
+  
+  .w-{x}
+    width x px
+
+  .minw-{x}
+    min-width x px
+
+  .lh-{x}
+    line-height x px
+    
+  .hlh-{x}
+    height x px
+    line-height x px
+
+
+.fw-b {
+  font-weight bold
+}
+
+.flex {
+  display flex
+}
+.fdr-r {
+  flex-direction row
+}
+.fdr-c {
+  flex-direction column
+}
+.fw-w {
+  flex-wrap wrap
+}
+.jc-c {
+  justify-content center
+}
+.jc-s {
+  justify-content start
+}
+.jc-e {
+  justify-content flex-end
+}
+.jc-sb {
+  justify-content space-between
+}
+.ai-c {
+  align-items center
+}
+.hide {
+  display none
+}
+.flt-r {
+  float right
+}
+.flt-l {
+  float left
+}
+.fg-1 {
+  flex-grow 1
+}
+.inlb {
+  display inline-block
+}  
+.va-m {
+  vertical-align middle
+}
+.va-t {
+  vertical-align top
+}
+.pos-r {
+  position relative
+}
+.pos-a {
+  position absolute
+}
+.txt-c {
+  text-align center
+}
+.txt-l {
+  text-align left
+}
+.txt-r {
+  text-align right
+}
+
+.w100 {
+  width 100%
+}
+
+cntEl() {
+  content ' '
+  position absolute
+  top 0
+  width 200%
+  height 200%
+  transform scale(0.5)
+  background-clip padding-box
+  box-sizing border-box
+}
+.l-cir {
+  position relative
+  leftCircle()
+  &::before {
+    leftCircle()
+    cntEl()
+    transform-origin left top
+    left 0
+  }
+}
+.r-cir {
+  rightCircle()
+  position relative
+  &::before {
+    rightCircle()
+    cntEl()
+    transform-origin right top
+    right 0
+  }
+}
+.pos-center
+  position absolute
+  top 50%
+  left 50%
+  transform translate3d(-50%, -50%, 0)
+
+.crs-p {
+  cursor pointer
+}
+
+.code-bg {
+  &.bgc-r {
+    background $ludan-open-item-bg-color-red
+  }
+  &.bgc-g {
+    background $ludan-open-item-bg-color-green
+  }
+  &.bgc-b {
+    background $ludan-open-item-bg-color-blue
+  }
+  &.bgc-y {
+    background $ludan-open-item-bg-color-yellow
+    color $colors['black']
+  }
+}
+
+.no-data {
+  color $no-data-txt-color
+}
+.icon-triangle {
+  width 20px
+  height 20px
+  display inline-block
+  align-items center
+  justify-content center
+  iconTran() {
+    display inline-block
+    content ''
+    border-left solid 12px transparent
+    border-right solid 12px transparent
+  }
+  &.up::after {
+    iconTran()
+    border-bottom solid 12px currentColor
+  }
+  &.down::after {
+    iconTran()
+    border-top solid 12px currentColor
+  }
+}
+
+.clear {
+  &::after {
+    content ''
+    clear both
+    display block
+  }
+}
+
+// ==================== joey =======================
+// radius
+for x in 0 2 5 8 10 15
+  .r_{x}
+    border-radius x * 1px
+.rp_50
+  border-radius 50%
+
+// rotateZ
+for x in 90 -90 180 -180
+  .rz_{x}
+    transform rotateZ(x * 1deg)
+
+// z-index
+for x in 1 2 9 10 99 101 500 501 999 1001 1002 5001 8998 8999 9000 9500 9501 9502 9503 9504 9999 9998 9997
+  .z_{x}
+    z-index x
+
+// width %
+for x in 0 10 15 16 17 18 19 20 25 30 33 35 40 45 50 55 60 65 70 80 90 100 120 150
+  .wp_{x}
+    width x + '%'
+  .hp_{x}
+    height x + '%'
+  .o_{x}
+    opacity x * 0.01
+  .wvw_{x}
+    width x * 1vh
+  .hvh_{x}
+    height x * 1vh
+  .mvh_{x}
+    max-height x * 1vh
+  
+  .minvh_{x}
+    min-height x * 1vh
+    
+  .mwp_{x}
+    max-width x + '%'
+.clickable
+  cursor pointer
+  &:hover
+    opacity .6
+  &:active
+    opacity .8
+  
+  &.effect-gray
+    opacity 1
+    &:hover
+    &:active
+      background-color $colors.c
+  
+  &:hover
+  &:active
+    .refresh
+      animation Spin 0.3s 1
+
+.o_h
+  overflow hidden
+.o_a
+  overflow auto
+
+.fixed
+  position fixed
+
+.break-all
+  word-break break-all
+    
+// ==================== joey =======================
+
+.am-drawer.am-drawer-open {
+  z-index 105
+}

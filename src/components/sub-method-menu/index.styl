@@ -1,0 +1,52 @@
+.sub-method-menu-view {
+  padding 20px
+  .sub-method-item-ls {
+    background-color $sub-method-menu-item-bg-color
+    border solid 2px $theme-bd-color-3
+    justify-content space-between
+  }
+  .sub-method-item {
+    width 170px
+    height 80px
+    background-color $theme-bg-color
+    border-right solid 1px $theme-bd-color-3
+    display flex
+    flex-direction column
+    align-items center
+    justify-content center
+    border-radius 10px
+    cursor pointer
+    margin-bottom 10px
+    &.selected {
+      background-color $sub-method-menu-item-selected-bg-color
+      color $theme-txt-color4
+      .method-name {
+        color $theme-txt-color-4
+      }
+      .odd {
+        color $theme-txt-color4
+      }
+    }
+  }
+  .odd-pd-l-5 .odd {
+    padding-left 0.05rem
+  }
+  .method-name {
+    color $theme-txt-color-5
+  }
+  .odd {
+    color $theme-txt-color1
+  }
+  .layout-lr {
+    display flex
+  }
+  &.hc6 {
+    padding-bottom 0
+    .sub-method-item-ls {
+      .sub-method-item {
+        width 348px
+        height 58px
+      }
+    }
+  }
+}

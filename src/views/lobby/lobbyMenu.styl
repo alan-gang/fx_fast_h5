@@ -1,0 +1,28 @@
+.lobby-menu-view {
+  .lobby-menu-wp {
+    height 0.5rem
+  }
+  .lobby-menu-item {
+    min-width 0.7rem
+    padding-left 0.32rem
+    height 100%;
+    font-weight bold
+    // color $theme-txt-color-4
+    cursor pointer
+    margin-right 0.2rem
+    // for type in hot ssc '11x5' pk10 k3 {
+    //   &.icon-{type} {
+    //     background url('../../assets/images/default/icon-'+type+'.png') no-repeat left center;
+    //     background-size 0.26rem 0.26rem
+    //   }
+    // }
+    &.selected {
+      // color $lobby-menu-selected-color
+      // border-bottom solid 0.04rem $lobby-menu-selected-bd-color
+      box-sizing border-box
+    }
+    &:hover {
+      opacity 0.85
+    }
+  }
+}

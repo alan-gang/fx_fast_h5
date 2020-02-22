@@ -1,0 +1,90 @@
+.game-header-view {
+  color $theme-txt-color
+  background $theme-bg-color
+  font-size 28px
+  .nums-wp {
+    display flex
+  }
+  .open-num-item {
+    width 44px
+    height 44px
+    line-height 44px
+    border-radius 50%
+    background-color $game-header-open-num-item-bg-color
+    display inline-block
+    text-align center
+    color $theme-txt-color4
+    margin-right 6px
+  }
+  .last-issue-sec {
+    height 74px
+    padding-left 22px
+  }
+  .cur-issue-sec {
+    height 50px
+    padding 0 40px 0 22px
+    border-bottom solid 1px $theme-bd-color
+  }
+  .time-wp {
+    padding-left 20px
+    color $theme-txt-color3
+  }
+  .icon-triangle {
+    margin-left 5px
+    display flex
+  }
+  &.k3 {
+    dice() {
+      display inline-block
+      width 60px
+      height 60px
+      background-size 60px
+      margin-right 10px
+      border-radius 0
+    }
+    for num in 1 2 3 4 5 6 {
+      .n-{num} {
+        background url("../../assets/images/default/dice-" + num + "@2x.png") center no-repeat
+        dice()
+      }
+    }
+  }
+  &.hc6 {
+    .nums-wp {
+      padding-top 6px
+    }
+    .animal {
+      font-size 20px
+      color $game-header-animal-txt-color
+      text-align center
+      padding-right 6px
+      padding-top 4px
+    }
+    .icon-plus {
+      font-size 40px
+      color $game-header-icon-plus-color
+      padding 0 15px 0 0
+    }
+    .open-num-item {
+      background-color $game-header-hc6-open-num-item-bg-color
+      border-width 2px
+      border-style solid
+      margin-right 14px 
+    }
+    openNum($num, $color) {
+      .open-num-item.n-{$num} {
+        border-color $color 
+        color $color
+      }  
+    }
+    for num in '01' '02' '07' '08' '12' '13' '18' '19' '23' '24' '29' '30' '34' '35' '40' '45' '46' {
+      openNum(num, $play-method-name-bd-color-red)
+    }
+    for num in '03' '04' '09' '10' '14' '15' '20' '25' '26' '31' '36' '37' '41' '42' '47' '48' {
+      openNum(num, $play-method-name-bd-color-blue)
+    }
+    for num in '05' '06' '11' '16' '17' '21' '22' '27' '28' '32' '33' '38' '39' '43' '44' '49' {
+      openNum(num, $play-method-name-bd-color-green)
+    }
+  }
+}

@@ -1,0 +1,47 @@
+.lobby-game-header-view {
+  height 88px
+  padding 0 20px
+  display flex
+  align-items center
+  &>div {
+    height 100%
+    border-bottom dashed 2px $lobby-game-header-bd-b-color
+  }
+  .flex1 {
+    flex 1
+  }
+  .cur-issue-wp {
+    >span:first-child {
+      margin-right 10px
+      font-size 34px
+    }
+    >span:last-child {
+      color $theme-txt-color2
+    }
+  }
+  .time-wp {
+    font-size 42px
+    padding-right 20px
+    .hour-wp,
+    .minute-wp,
+    .second-wp {
+      font-weight bold
+    }
+    .colon {
+      width 20px
+      text-align center
+    }
+    .time-item {
+      width 20px
+      line-height 26px
+      text-align center
+      border-radius 4px
+    }
+    .mg-r-3 {
+      margin-right 3px
+    }
+  }
+  .txt-c-r {
+    color $theme-txt-color3
+  }
+}
