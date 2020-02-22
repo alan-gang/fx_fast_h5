@@ -1,11 +1,11 @@
-import { Drawer, List, NavBar, Icon } from 'antd-mobile';
-import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
-import store from '../../store';
+import { Drawer, List, NavBar, Icon } from 'antd-mobile'
+import React, { Component } from 'react'
+import { inject, observer } from 'mobx-react'
+import store from '../../store'
 import './index.styl'
-import GameMenu from './GameMenu' 
+import GameMenu from './GameMenu'
 
-@inject("store")
+@inject('store')
 @observer
 class Panel extends React.Component<Props, object> {
   constructor(props: Props) {
@@ -15,14 +15,17 @@ class Panel extends React.Component<Props, object> {
     store.common.togglePanel()
   }
   render() {
-    return (<Drawer
+    return (
+      <Drawer
         style={{ minHeight: document.documentElement.clientHeight }}
-        sidebar={ <GameMenu></GameMenu> }
-        sidebarStyle={{backgroundColor: '#fff', width: '70vw'}}
+        sidebar={<GameMenu></GameMenu>}
+        sidebarStyle={{ backgroundColor: '#fff', width: '70vw' }}
         open={this.props.store.common.panel}
         onOpenChange={this.onOpenChange}
-     >ok
-     </Drawer>);
+      >
+        ok
+      </Drawer>
+    )
   }
 }
 export default Panel

@@ -9,9 +9,9 @@ const fs = require('fs');
 
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 // const host = process.env.HOST || '0.0.0.0';
-const host = 'www.game.com';
+const host = '127.0.0.1';
 
-module.exports = function(proxy, allowedHost) {
+module.exports = function (proxy, allowedHost) {
   return {
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
     // websites from potentially accessing local content through DNS rebinding:
@@ -88,7 +88,7 @@ module.exports = function(proxy, allowedHost) {
         pathRewrite: {
           '^/xy49': '',
         },
-        target: 'http://192.168.169.49:9901/',
+        target: 'https://wbtest.xy-test.net/dscagamesclient/',
         // target: 'http://192.168.169.71:8080/', // johson
         ws: true,
         changeOrigin: true
@@ -102,7 +102,7 @@ module.exports = function(proxy, allowedHost) {
         changeOrigin: true
       }
     },
-    before(app, server) {
+    before (app, server) {
       if (fs.existsSync(paths.proxySetup)) {
         // This registers user provided middleware for proxy reasons
         require(paths.proxySetup)(app);

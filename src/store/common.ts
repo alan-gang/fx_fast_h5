@@ -1,17 +1,16 @@
-
-import { observable, action } from "mobx";
+import { observable, action } from 'mobx'
 
 class Common {
-  @observable broadcaseWSUrl: string = '';
-  @observable panel: boolean = false;
+  @observable broadcaseWSUrl: string = ''
+  @observable panel: boolean = false
 
   @action
   setBroadcaseWSUrl(broadcaseWSUrl: string) {
-    this.broadcaseWSUrl = broadcaseWSUrl;
+    this.broadcaseWSUrl = broadcaseWSUrl
   }
-  @action togglePanel () {
+  @action togglePanel() {
     this.panel = !this.panel
   }
 }
 
-export default new Common();
+export default new Common()

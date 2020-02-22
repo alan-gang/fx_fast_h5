@@ -116,14 +116,14 @@ class AppHeader extends Component<Props, object> {
       // 大厅
       <Route key="1" path="/" exact>
         <Flex.Item className="txt-c clickable" onClick={ store.user.updateBalance }>
-          <div className="mgb-1">游戏大厅</div>
-          <div className="fs-24">余额: ￥{ this.props.store.user.balance || '0.00' }<span className="mgl-10 refresh inlb va-b pos-r pot-2"></span></div>
+          <div className="mgb-9 fs-32">游戏大厅</div>
+          <div className="fs-24">余额: ￥{ this.props.store.user.balance || '0.00' }<span className="mgl-10 refresh inlb va-b pos-r pot-4"></span></div>
         </Flex.Item>
       </Route>,
       // 游戏中
       <Route key="2" path="/game/:id">
         <React.Fragment>{[
-          <Flex.Item key="0">
+          <Flex.Item key="0" >
             <span className="pdl-22 pdr-22 clickable" onClick={ this.togglePanel }>彩种选择
               <span className="icon-triangle up rz_90 mgl-20 pos-r pot-5"></span>
             </span>

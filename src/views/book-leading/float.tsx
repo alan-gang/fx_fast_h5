@@ -56,7 +56,7 @@ class BookLeadingFloat extends React.Component<Props, object> {
   }
   render () {
     return (
-      <div className={`${this.state.history ? 'history' : ''} flex ai-c fs-24 pdl-15 pdr-15 leading-book-float pos-a z_1002 por-0 pot-90 c-white ${this.state.expand ? 'expand' : ''}`}
+      <div className={`${this.state.history ? 'history' : ''}  flex ai-c fs-24 pdl-15 pdr-15 leading-book-float pos-a z_1002 por-0 pot-90 c-white ${this.state.expand ? 'expand' : ''}`}
         onClick={(e: any) => this.setState({
           expand: !this.state.expand
         })}
