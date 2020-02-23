@@ -13,7 +13,23 @@
     border-bottom: solid 1px #0d3c61;
     box-sizing: border-box;
     color: $ludan-tb-cell-color;
+    position: relative;
     background-color: #06203a;
+    &:before, &:nth-last-child(1):after {
+      position: absolute;
+      content: '';
+      width: 2px;
+      height: 2px;
+      left: -2px;
+      top: -2px;
+      background-color: #336d96;
+    }
+    &:nth-last-child(1) {
+      &:after {
+        top: auto;
+        bottom: 0px;
+      }
+    }
   }
   .ld-item {
     width: 30px;
