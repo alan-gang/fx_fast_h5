@@ -1,47 +1,60 @@
+@font-face {
+  font-family: 'fx-led';
+  src: url('~src/assets/font/fx-led.ttf');
+}
 .lobby-game-header-view {
-  height 88px
-  padding 0 20px
-  display flex
-  align-items center
+  height: 88px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
   &>div {
-    height 100%
-    border-bottom dashed 2px $lobby-game-header-bd-b-color
+    height: 100%;
   }
   .flex1 {
-    flex 1
+    flex: 1;
   }
   .cur-issue-wp {
     >span:first-child {
-      margin-right 10px
-      font-size 34px
+      margin-right: 10px;
+      font-size: 34px;
+      color: $theme-txt-color4;
     }
     >span:last-child {
-      color $theme-txt-color2
+      color: #8e9ba9;
     }
   }
   .time-wp {
-    font-size 42px
-    padding-right 20px
-    .hour-wp,
-    .minute-wp,
-    .second-wp {
-      font-weight bold
+    font-size: 42px;
+    .hour-wp, .minute-wp, .second-wp {
+      font-weight: bold;
     }
     .colon {
-      width 20px
-      text-align center
+      width: 20px;
+      text-align: center;
+      color: #50fff9;
+      margin: 0 4px;
+      display: inline-block;
     }
     .time-item {
-      width 20px
-      line-height 26px
-      text-align center
-      border-radius 4px
+      font-family: fx-led;
+      box-shadow: 0px 1px 21px 0px #054c88;
+      width: 34px;
+      display: inline-block;
+      height: 47px;
+      // background-color #2bdbc3
+      background-color: rgba(43, 219, 195, 0.32);
+      font-size: 52px;
+      color: #50fff9;
+      border-radius: 2px;
+      line-height: 47px;
+      text-align: center;
+      border-radius: 4px;
     }
     .mg-r-3 {
-      margin-right 3px
+      margin-right: 8px;
     }
   }
   .txt-c-r {
-    color $theme-txt-color3
+    color: $theme-txt-color3;
   }
 }
