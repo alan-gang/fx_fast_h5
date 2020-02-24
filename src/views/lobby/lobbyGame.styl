@@ -1,15 +1,36 @@
-.lobby-game-view {
-  background $theme-bg-color
-  border-radius 8px
-  margin-bottom 15px
-  cursor pointer
-  position relative
-  .ludan-wp {
-    padding 5px 20px 20px 20px
-  }
-  .best-dudan-name {
-    height 46px
-    line-height 46px
-    padding 0 20px
+.am-list-view-scrollview-content {
+  top: 19px;
+  left: 22px;
+  right: 22px;
+  min-width: 50% !important;
+  .am-list-body {
+    &:before {
+      display: none !important;
+    }
+    .list-view-section-body {
+      background-color: $theme-bg-color;
+      .lobby-game-view {
+        background-image: url('~src/assets/images/home/con_bg@2x.png');
+        background-size: 100% 100%;
+        background-position: center;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        position: relative;
+        .ludan-wp {
+          padding: 8px 11px  20px;
+        }
+        .best-dudan-name {
+          height: 46px;
+          line-height: 46px;
+          padding: 4px 20px;
+          >div {
+            >span {
+              color #9ccaf0
+            }
+          }
+        }
+      }
+    }
   }
 }

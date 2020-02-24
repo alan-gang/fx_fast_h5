@@ -130,9 +130,9 @@ class GameHeader extends Component<Props, object> {
   }
   render() {
     return (
-      <section className={`game-header-view ${this.props.gameType}`}>
+      <section className={`game-header-view mgt-10 ${this.props.gameType}`}>
         <section className="flex ai-c last-issue-sec">
-          <div>第{this.props.lastIssue}期：</div>
+          <div className="c-textc">第{this.props.lastIssue}期：</div>
           <div className="nums-wp">
             {this.props.openNumbers.map((num: string, i: number) => (
               <React.Fragment  key={i}>{this.renderOpenNumbers(num, i)}</React.Fragment>
@@ -141,7 +141,7 @@ class GameHeader extends Component<Props, object> {
         </section>
         <section className="flex ai-c jc-sb cur-issue-sec">
           <div className="flex ai-c">
-            <div className="txt-r cur-issue-wp">距{this.props.curIssue}期截止:</div>
+            <div className="txt-r mgr-18 c-textc cur-issue-wp">距{this.props.curIssue}期截止 :</div>
             <div className="time-wp flex ai-c jc-c">
               <span className="hour-wp">{this.state.hours}</span>
               <span className="colon">:</span>
@@ -150,7 +150,7 @@ class GameHeader extends Component<Props, object> {
               <span className="second-wp">{this.state.seconds}</span>
             </div>
           </div>
-          <div className="flex ai-c" onClick={this.onLudanHandler}>路单走势<span className={`icon-triangle ${this.props.isExpandLudan ? 'up' : 'down'}`}></span></div>
+          <div className="flex ai-c c-textc-2" onClick={this.onLudanHandler}>路单走势<span className={`icon-triangle c-yellow mgl-6 ${this.props.isExpandLudan ? 'up' : 'down'}`}></span></div>
         </section>
       </section>
     );

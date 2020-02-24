@@ -55,9 +55,9 @@ class MethodMenu extends Component<Props, object> {
       <section className="method-menu-view">
         <section className="menu-wp">
           <MyScroll ref={this.myScrollRef}>
-            <nav className="menu-item-ls">
+            <nav className="menu-item-ls flex jc-sb">
               {menus.map((menu, i) => (
-                <div key={i} className={`menu-item ${i === this.props.curMenuIndex ? 'selected' : ''}`} onClick={() => {this.onMenuHandler(menu, i)}}><span>{menu.name}</span></div>
+                <div key={i} className={`menu-item  c-textc-1 ${i === this.props.curMenuIndex ? 'selected' : ''}`} onClick={() => {this.onMenuHandler(menu, i)}}><span>{menu.name}</span></div>
               ))}
             </nav>
           </MyScroll>

@@ -411,7 +411,7 @@ class OrderBar extends Component<Props, object> {
       <section className="order-bar-view">
         {this.state.showCoinSet && <section>{<CoinSet coinChoosed={this.coinChoosed} value={this.state.amount} />}</section>}
         <section className="flex ai-c jc-sb order-sec">
-          <div>
+          <div className="bgc-darkblue r_8">
             <div className="flex ai-c fast-amount-wp">
               <input className="fast-amount" type="tel" value={this.state.amount <= 0 ? '': this.state.amount} onChange={this.onAmountChanged} onBlur={this.onBlurHandler} onFocus={this.onFocusHandler} maxLength={9} placeholder="请输入快捷金额" />
             </div>  
@@ -421,7 +421,7 @@ class OrderBar extends Component<Props, object> {
           </div> */}
           <div className="flex ai-c jc-e btns-wp">
             <Button type="primary" className="btn-reset" disabled={this.props.betCount <= 0} onClick={this.onResetHandler}>重置</Button>
-            <Button type="primary" className="btn-order" disabled={this.props.betCount <= 0} onClick={this.onOrderHandler}>一键下单</Button>
+            <Button type="primary" className="btn-order" disabled={this.props.betCount <= 0} onClick={this.onOrderHandler}>确认</Button>
           </div>
         </section>
       </section>

@@ -1,23 +1,35 @@
 .app-header-view {
-  height 88px
-  background $app-header-bg-color
-  .more
-  .setting
-  .refresh {
-    width 44px
-    height 44px
-    background-image url('~src/assets/images/default/nav-more@2x.png')
-    background-repeat no-repeat
-    background-position center
-    background-size 44px
+  height: 128px;
+  display: flex;
+  align-items: center;
+  background-image: url('~src/assets/images/home/nav_bg@2x.png');
+  .more, .setting, .refresh {
+    width: 23px;
+    height: 28px;
+    background-image: url('~src/assets/images/home/nav_refresh@2x.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
   }
   .setting {
-    background-image url('~src/assets/images/default/nav-set@2x.png')
+    width: 42px;
+    background-size: 42px 46px;
+    height: 46px;
+    background-image: url('~src/assets/images/default/nav-set@2x.png');
   }
-  .refresh {
-    width 24px
-    height 24px
-    background-image url('~src/assets/images/default/nav-ref@2x.png')
-    background-size 24px
+  .more {
+    background-image: url('~src/assets/images/default/nav-more@2x.png');
+    width: 36px;
+    height: 28px;
+  }
+  .go-back {
+    width: 81px;
+    height: 64px;
+    display: inline-block;
+    background-image: url('~src/assets/images/lotteryCenter/nav_back@2x.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+    background-position: center;
   }
 }

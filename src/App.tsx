@@ -127,11 +127,11 @@ class App extends Component<Props, object> {
     return (
       <Provider store={store}>
         <Router>
-          { this.state.invokedLogin && 
+          {this.state.invokedLogin && (
             <>
               <Panel />
               <Route path="/game/:id">
-                { store.local.bookLeading ?  <BookLeadingFloat/> : '' }
+                {store.local.bookLeading ? <BookLeadingFloat /> : ''}
               </Route>
               <article className="pg-c">
                 <AppHeader />
@@ -140,10 +140,10 @@ class App extends Component<Props, object> {
                 </article>
               </article>
             </>
-          }
+          )}
         </Router>
       </Provider>
-    );
+    )
   }
 }
 

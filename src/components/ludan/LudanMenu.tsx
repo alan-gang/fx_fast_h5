@@ -44,7 +44,7 @@ class LundanMenu extends Component<Props, object> {
         <MyScroll ref={this.myScrollRef}>
           <nav className="menu">
             {this.props.tabs && this.props.tabs.length > 0 && this.props.tabs.map((menu: any, i: number) => (
-              <div key={i} className={`menu-item ${this.props.selectedMenu === menu.name ? 'selected' : ''}`} onClick={() => this.changeMenu(menu)}>{menu.title}</div>
+              <div key={i} className={`menu-item c-textc ${this.props.selectedMenu === menu.name ? 'selected' : ''}`} onClick={() => this.changeMenu(menu)}>{menu.title}</div>
             ))}
           </nav>
         </MyScroll>

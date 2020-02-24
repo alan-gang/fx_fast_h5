@@ -45,15 +45,15 @@ class GameMenu extends React.Component<Props, object> {
   render() {
     return (<div className="game-menu wp_100 hp_100 fs-30 o_h">
       <div className="lh-88 app-header-view c-white" onClick={this.togglePanel}>
-        <Icon type="left" size="lg" className="va-m" />
+        <i className="go-back"></i>
         <span>返回首页</span>
       </div>
-      <div className="pos-a pot-88 pob-0 pol-0 left lh-100 wp_30 bgc-page txt-c o_a">
-      { games.map((x, i) => <div key={i} className={ (x.type === this.state.type ? 'active c-deeporange' : 'c-9') + ' left-item clickable' } onClick={(e) => this.activeType(x)}>{x.name}</div>) }
+      <div className="pos-a pot-128 pob-0 pol-0 left lh-100 wp_30  txt-c nav-list-bg o_a">
+      { games.map((x, i) => <div key={i} className={ (x.type === this.state.type ? 'active' : '') + ' left-item' } onClick={(e) => this.activeType(x)}>{x.name}</div>) }
       </div>
 
-      <div className="pos-a pot-88 pob-0 por-0 right wp_70 fs-24 o_a" onClick={this.togglePanel}>
-        { this.state.games.map((x, i) => <Link to={'/game/' + x.id} key={i}  className={ (x.id === this.state.id ? 'active c-deeporange' : '') + ' right-item clickable effect-gray inlb wp_50 pdt-130 pdb-20 txt-c _gid' + x.id }>{x.name}</Link>) }
+      <div className="pos-a pot-128 pob-0 por-0 right list-wrapper wp_70 fs-24 o_a" onClick={this.togglePanel}>
+        { this.state.games.map((x, i) => <Link to={'/game/' + x.id} key={i}  className={ (x.id === this.state.id ? 'active c-white' : '') + ' right-item clickable effect-gray inlb wp_50 pdt-130 pdb-20 txt-c _gid' + x.id }>{x.name}</Link>) }
       </div>
 
     </div>)

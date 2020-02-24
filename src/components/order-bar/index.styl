@@ -1,63 +1,74 @@
 .order-bar-view {
-  clear both
-  background-color $theme-bg-color
-  width 100%
-  position fixed
-  left 0 
-  bottom 0
-  z-index 101
+  clear: both;
+  background-image: url('../../assets/images/lotteryCenter/bottom_bg@2x.png');
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 101;
   .order-sec {
-    padding 8px 20px
+    padding: 8px 20px;
   }
   .fast-amount-wp {
-    width 240px
-    height 60px
-    border-radius 10px
-    background $order-bar-fast-amount-bg-color url("../../assets/images/default/bot-amount@2x.png") left center no-repeat
-    padding-left 54px
-    background-size 27px 28px
-    background-position 16px
+    width: 240px;
+    height: 60px;
+    border-radius: 10px;
+    background: url('../../assets/images/default/bot-amount@2x.png') left center no-repeat;
+    padding-left: 54px;
+    background-size: 27px 28px;
+    background-position: 16px;
   }
   .fast-amount {
-    width 166px
-    border none
-    height 100%
-    background-color $order-bar-fast-amount-bg-color
+    width: 166px;
+    border: none;
+    height: 100%;
+    background-color: #0b1c2e;
+    color: #84b7e3;
+    &::placeholder {
+      color: #84b7e3;
+    }
   }
   .btns-wp {
   }
   .btn-order {
-    margin-left 0.1rem
+    margin-left: 0.1rem;
   }
   .txt-red {
-    color $theme-txt-color-7
+    color: $theme-txt-color-7;
   }
   .btn-reset {
     &.ant-btn-primary {
-      background-color $order-bar-btn-reset-bg-color
-      border-color $order-bar-btn-reset-bg-color
+      background-color: $order-bar-btn-reset-bg-color;
+      border-color: $order-bar-btn-reset-bg-color;
     }
   }
   .flex {
-    display flex
+    display: flex;
   }
   .am-button {
-    height 72px
-    line-height 72px
+    height: 72px;
+    line-height: 72px;
   }
   .am-button-primary {
-    font-size 27px
-    border none !important
+    font-size: 27px;
+    border: none !important;
+    background-color: transparent;
   }
   .am-button-primary::before {
-    border none !important
+    border: none !important;
   }
   .btn-reset {
-    width 114px
-    background $order-bar-btn-reset-bg-color
+    width: 200px;
+    height 73px
+    background-position  center
+    background-size: 100% 100%;
+    background-image: url('../../assets/images/lotteryCenter/button_cancle@2x.png');
   }
   .btn-order {
-    width 280px
-    background $order-bar-btn-order-bg-color
+    width: 219px;
+    height 71px
+    background-position: center;
+    background-size: 100% 100%;
+    background-image: url('../../assets/images/lotteryCenter/button_play@2x.png');
   }
 }

@@ -1,114 +1,128 @@
 .play-view {
-  padding 10px 10px 0 10px
+  padding: 10px 10px 0 10px;
+  background: $theme-bg-color;
   .pos-label {
-    text-align center
-    height 70px
-    box-sizing border-box
-    flex-direction column
-    font-size 28px
-    align-items center
-    justify-content center
+    text-align: center;
+    height: 70px;
+    box-sizing: border-box;
+    flex-direction: column;
+    font-size: 28px;
+    align-items: center;
+    justify-content: center;
     &.hide {
-      display none
+      display: none;
     }
     .sub-pn {
-      color $theme-txt-color2
-      font-size 24px
+      color: $theme-txt-color2;
+      font-size: 24px;
     }
   }
   .pos-label-row {
     .pos-label {
-      flex-direction row
+      flex-direction: row;
     }
   }
   .pos-label-fz24 .pos-label {
-     font-size 24px
+    font-size: 24px;
   }
   .method {
     &.col {
-      display flex
+      display: flex;
     }
     .ds-row {
-      margin-bottom 12px
-      display block
-      box-sizing border-box
+      margin-bottom: 12px;
+      display: block;
+      box-sizing: border-box;
       .ds-col {
-        float left
+        float: left;
       }
     }
     .method-item-col {
-      padding 0 10px 0 0
-    }
-    .method-item {
-      display flex
-      height 70px
-      align-items center
-      box-sizing border-box
-      background-color $theme-txt-color4
-      justify-content center
-      border-radius 10px
-      flex-direction column
-      &.selected {
-        color $play-method-item-selected-txt-color
-        background-color $play-method-item-selected-bg-color
-        .odd {
-          color $play-method-item-selected-txt-color
+      padding: 0 10px 0 0;
+      &.col-4 {
+        .method-item {
+          background-image: url('~src/assets/images/lotteryCenter/ball_03@2x.png');
+          &.selected {
+            background-image: url('~src/assets/images/lotteryCenter/ball_02_on@2x.png');
+          }
         }
       }
+    }
+    .method-item {
+      display: flex;
+      align-items: center;
+      height: 72px;
+      box-sizing: border-box;
+      background-size: 100% 100%;
+      background-position: center;
+      color: #ffffff;
+      background-image: url('~src/assets/images/lotteryCenter/ball_02@2x.png');
+      justify-content: center;
+      border-radius: 10px;
+      flex-direction: column;
+      &.one {
+         background-image: url('~src/assets/images/lotteryCenter/ball_01@2x.png');
+         &.selected {
+        background-image: url('~src/assets/images/lotteryCenter/ball_02_on@2x.png');
+      }
+      }
+      &.selected {
+        background-image: url('~src/assets/images/lotteryCenter/ball_02_on@2x.png');
+      }
       &.icon {
-        flex-direction row
+        flex-direction: row;
       }
     }
     methodItemcircleStyle($width, $height) {
-      border-radius 50%
-      width $width
-      height $height
+      border-radius: 50%;
+      width: $width;
+      height: $height;
     }
-    // 玩法项圆圈样式  
+    // 玩法项圆圈样式
     .method-item-col.circle {
       &.large .method-item {
-        margin 0 0 10px 20px
-        methodItemcircleStyle(90px, 90px)
+        margin: 0 0 10px 20px;
+        methodItemcircleStyle(90px, 90px);
       }
       &.medium .method-item {
-         margin 0 0 10px 8px
-        methodItemcircleStyle(80px, 80px)
+        margin: 0 0 10px 8px;
+        methodItemcircleStyle(80px, 80px);
       }
       &.small .method-item {
-        margin 0 0 10px 2px
-        methodItemcircleStyle(78px, 78px)
+        margin: 0 0 10px 2px;
+        methodItemcircleStyle(78px, 78px);
       }
     }
-    // 名字圆圈样式 
+    // 名字圆圈样式
     .method-item-col.ncircle {
       .method-item {
-        flex-direction row
+        flex-direction: row;
       }
       .odd {
-        padding-left 8px
+        padding-left: 8px;
       }
       &.xsmall .method-item-name {
-        display inline-block
-        width 50px
-        height 50px
-        line-height 50px
-        text-align center
-        border-radius 50%
-        box-sizing border-box
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        border-radius: 50%;
+        box-sizing: border-box;
       }
     }
     .icon {
-      height 60px
+      height: 60px;
       .method-item-name {
-        height 60px
-        background-color transparent
-        border-radius 0
-        border none
+        height: 60px;
+        background-color: transparent;
+        border-radius: 0;
+        border: none;
       }
     }
     &.no-bd-b-pos-label {
       .pos-label {
-        border-bottom none
+        border-bottom: none;
       }
     }
   }
@@ -118,151 +132,152 @@
   }
   .layout-col-float {
     .ds-row {
-      display block
-      clear left
+      display: block;
+      clear: left;
       .pos-label {
-        height 160px
+        height: 160px;
       }
     }
     .ds-col {
-      float left
+      float: left;
     }
   }
   .odd {
-    min-width 50px
-    color $theme-txt-color1
-    padding 0 4px
+    min-width: 50px;
+    color: $theme-txt-color1;
+    padding: 0 4px;
   }
   .row-odd {
-    min-width 100px
-    color $theme-txt-color1
+    min-width: 100px;
+    color: $theme-txt-color1;
   }
   .method-item-name {
-    min-width 25px
-    height 25px
-    line-height 25px
-    border-radius 50%
-    cursor pointer
-    display flex
-    align-items center
-    justify-content center
+    min-width: 25px;
+    height: 25px;
+    line-height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .method-item.icon.selected {
     .method-item-name {
-      background-color transparent
-      border-color transparent
+      background-color: transparent;
+      border-color: transparent;
     }
   }
   .pd-l-12 {
-    padding-left 12px
+    padding-left: 12px;
   }
   .pd-b-12 {
     .ds-col {
-      padding-bottom 12px
+      padding-bottom: 12px;
     }
   }
   .no-m-item-bg {
     .method-item.selected {
-      background-color transparent
-      border-color transparent
+      background-color: transparent;
+      border-color: transparent;
     }
   }
   .row-bar {
-    padding 0 10px
+    padding: 0 10px;
     .ds-row {
-      background-color $theme-txt-color4
-      border-radius 10px
+      background-color: $theme-txt-color4;
+      border-radius: 10px;
     }
     .ds-row.selected {
-      background-color $play-method-item-selected-bg-color
+      background-color: $play-method-item-selected-bg-color;
     }
   }
   .row-bg-white {
     .ds-row {
-      background-color $theme-txt-color4
+      background-color: $theme-txt-color4;
     }
   }
   posLabelHeight($height) {
     .pos-label {
-      height $height
+      height: $height;
     }
   }
   &.pk10 {
     .gyhz-dw {
       .ds-col {
-        margin-bottom 14px
+        margin-bottom: 14px;
       }
     }
   }
   &.k3 {
     .method-item {
-      height 110px
+      height: 110px;
     }
     .ds-col {
-      margin-bottom 12px
+      margin-bottom: 12px;
     }
     .ds-row {
-      margin-bottom 0
+      margin-bottom: 0;
     }
     .weishaiquanshai {
       .method-item.icon {
         .icon-item {
-          margin-right 2px
+          margin-right: 2px;
         }
       }
-      posLabelHeight(360px)
+      posLabelHeight(360px);
       .ds-row:nth-child(2) {
-        posLabelHeight(110px)
+        posLabelHeight(110px);
         .method-item {
-          flex-direction row
+          flex-direction: row;
           .odd {
-            padding-left 10px
+            padding-left: 10px;
           }
         }
       }
     }
     .dianshu {
-      posLabelHeight(460px)
+      posLabelHeight(460px);
     }
     .changpai {
       .method-item.icon {
         .icon-item {
-          margin-right 2px
+          margin-right: 2px;
         }
       }
-      posLabelHeight(600px)
+      posLabelHeight(600px);
     }
     .pos-label-h-3 {
-      posLabelHeight(360px)
+      posLabelHeight(360px);
     }
     .pos-label-h-2 {
-      posLabelHeight(230px)
+      posLabelHeight(230px);
     }
     dice() {
-      display inline-block
-      width 60px
-      height 60px
-      background-size 60px
-      margin-right 10px
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      background-size: 60px;
+      margin-right: 10px;
     }
     for num in 1 2 3 4 5 6 {
       .icon .method-item-name .icon-item-{num} {
-        background url("../../assets/images/default/dice-" + num + "@2x.png") center no-repeat
-        dice()
+        background: url('../../assets/images/default/dice-' + num + '@2x.png') center no-repeat;
+        dice();
       }
     }
   }
   &.hc6 {
     .row-odd {
-      padding-left 20px
+      padding-left: 20px;
     }
     .method-item {
       &.selected {
-        background-color $theme-bg-color
-        border solid 2px $theme-bd-color1
-        color $theme-txt-color
+        background-color: $theme-bg-color;
+        border: solid 2px $theme-bd-color1;
+        color: $theme-txt-color;
         .odd {
-          color $theme-txt-color1
+          color: $theme-txt-color1;
         }
       }
     }
@@ -270,73 +285,72 @@
       .method-item {
         &.selected {
           .method-item-name {
-            border-color $theme-bd-color3
+            border-color: $theme-bd-color3;
             // color $theme-txt-color4
-          }    
+          }
         }
       }
       .method-item-name {
-        border-style solid
-        border-width 2px
+        border-style: solid;
+        border-width: 2px;
       }
       methodItemName($num, $color) {
         .method-item-name[n=\"{$num}\"] {
-          border-color $color !important
-          color $color !important
-        }  
+          border-color: $color !important;
+          color: $color !important;
+        }
       }
       for num in '01' '02' '07' '08' '12' '13' '18' '19' '23' '24' '29' '30' '34' '35' '40' '45' '46' {
-        methodItemName(num, $play-method-name-bd-color-red)
+        methodItemName(num, $play-method-name-bd-color-red);
       }
       for num in '03' '04' '09' '10' '14' '15' '20' '25' '26' '31' '36' '37' '41' '42' '47' '48' {
-        methodItemName(num, $play-method-name-bd-color-blue)
+        methodItemName(num, $play-method-name-bd-color-blue);
       }
       for num in '05' '06' '11' '16' '17' '21' '22' '27' '28' '32' '33' '38' '39' '43' '44' '49' {
-        methodItemName(num, $play-method-name-bd-color-green)
+        methodItemName(num, $play-method-name-bd-color-green);
       }
     }
   }
-
   .row-bar {
     .ds-row {
       &.selected {
-        background-color $theme-bg-color
-        border solid 2px $theme-bd-color1
+        background-color: $theme-bg-color;
+        border: solid 2px $theme-bd-color1;
       }
     }
     .method-item {
       &.selected {
-        border-color $theme-bd-color3
+        border-color: $theme-bd-color3;
       }
     }
     &.texiao {
       .pos-label {
-        padding 0 60px 0 80px
+        padding: 0 60px 0 80px;
       }
       .ncircle.xsmall {
-        padding-right 30px
+        padding-right: 30px;
       }
     }
     &.sebo {
       .ds-row {
-        padding 30px 0 0 0
-        box-sizing border-box
+        padding: 30px 0 0 0;
+        box-sizing: border-box;
         &:nth-child(1) .pos-label {
-          color $play-method-name-bd-color-red
+          color: $play-method-name-bd-color-red;
         }
         &:nth-child(2) .pos-label {
-          color $play-method-name-bd-color-blue
+          color: $play-method-name-bd-color-blue;
         }
         &:nth-child(3) .pos-label {
-          color $play-method-name-bd-color-green
+          color: $play-method-name-bd-color-green;
         }
       }
-      posLabelHeight(240px)
+      posLabelHeight(240px);
       .pos-label {
-        padding 0 60px 0 30px
+        padding: 0 60px 0 30px;
       }
       .ncircle.xsmall {
-        padding-right 30px
+        padding-right: 30px;
       }
     }
   }

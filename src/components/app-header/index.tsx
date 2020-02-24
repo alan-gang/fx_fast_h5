@@ -130,9 +130,9 @@ class AppHeader extends Component<Props, object> {
           </Flex.Item>,
           <Flex.Item className="txt-c clickable" key="1" onClick={ store.user.updateBalance }>
             <div className="mgb-5">{ this.state.gameName }</div>
-            <div className="fs-24">余额: ￥{ this.props.store.user.balance || '0.00' }<span className="mgl-10 refresh inlb va-b pos-r pot-2"></span></div>
+            <div className="fs-24 c-textc">余额: ￥{ this.props.store.user.balance || '0.00' }<span className="mgl-10 refresh inlb va-b pos-r  pot-4"></span></div>
           </Flex.Item>,
-          <Flex.Item className="txt-r pdr-22" key="2">
+          <Flex.Item className="txt-r pdr-22 flex ai-c jc-e" key="2">
             <span className="inlb clickable mgl-20 setting" onClick={this.setHandler}></span>
             <Popover
               visible={this.state.popoverVisible}
@@ -191,7 +191,7 @@ class AppHeader extends Component<Props, object> {
   }
   render() {
     return (<header className="app-header-view pos-r">
-      <Flex className="hp_100 fs-30 flex-auto c-white">
+      <Flex className="hp_100 fs-30 flex-auto w100 c-white">
         { this.getHeaderInner() }
       </Flex>
     </header>);
