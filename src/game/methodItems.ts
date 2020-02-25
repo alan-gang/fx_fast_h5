@@ -528,7 +528,12 @@ const methodItems: any = {
   },
   '5050:1' () {
     // K3 大小单双
-    let vs = [{s: false, n: '大', col: 10, rcol: 12}, {s: false, n: '小', col: 10, rcol: 12}, {s: false, n: '单', col: 10, rcol: 12}, {s: false, n: '双', col: 10, rcol: 12}];
+    let vs = [
+      { s: false, n: '大', col: 5, rcol: 12 },
+      { s: false, n: '小', col: 5, rcol: 12 },
+      { s: false, n: '单', col: 5, rcol: 12 },
+      { s: false, n: '双', col: 5, rcol: 12 }
+    ]
     return {
       layout: 'row layout-col-float',
       class: 'zhonghe',
@@ -626,7 +631,7 @@ const methodItems: any = {
   '7001:1' () {
     let vs = [];
     for (let i = 1; i <= 49; i++) {
-      vs.push({s: false, n: String(i).padStart(2, '0'), col: 6, pv: i});
+      vs.push({s: false, n: String(i).padStart(2, '0'), col: 4, pv: i});
     }
     return {
       class: 'pd-b-12',
@@ -808,5 +813,3 @@ const methodItems: any = {
 };
 
 export default methodItems;
-
-

@@ -123,7 +123,7 @@ class GameHeader extends Component<Props, object> {
       if (i === 5) {
         return (<div key={i} className={`icon-plus`}>+</div>)
       }
-      return (<div><div key={i} className={`open-num-item n-${String(num).padStart(2, '0')}`}>{String(num).padStart(2, '0')}</div><div className="animal">{getAnimalByNum(parseInt(num, 10))}</div></div>)
+      return (<div className={`flex fdr-c ai-c jc-c bg-${i >= 3 ? (i % 3 + 1) : i + 1}`}><div key={i} className={`open-num-item n-${String(num).padStart(2, '0')}`}>{String(num).padStart(2, '0')}</div><div className="animal">{getAnimalByNum(parseInt(num, 10))}</div></div>)
     } else {
       return <div key={i} className={`open-num-item n-${num}`}>{this.getNum(num)}</div> 
     }

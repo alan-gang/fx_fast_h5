@@ -13,14 +13,14 @@ interface Props {
   curGameMethodItems: any[],
   curMenuIndex: number,
   defaultInitMethodItemAmount: number
-  updateMethodItem(
+  updateMethodItem (
     i: number,
     j: number,
     k: number,
     selected?: boolean | undefined,
     value?: string | undefined
   ): void
-  updateMethodRow(i: number, j: number, selected?: boolean | undefined): void
+  updateMethodRow (i: number, j: number, selected?: boolean | undefined): void
   curSubMethod?: GameSubMethodMenu
 }
 
@@ -54,81 +54,44 @@ class Play extends PureComponent<Props, object> {
       this.props.updateMethodRow(i, j, !selected)
     }
   }
-  componentWillReceiveProps(nextProps: Props) {
+  componentWillReceiveProps (nextProps: Props) {
     this.forceUpdate()
   }
-  render() {
+  render () {
     let curGameMethodItems = this.props.curGameMethodItems
     let curMenuIndex = this.props.curMenuIndex
     return (
       <article className={`play-view c-textc-1 ${this.props.gameType}`}>
         {curGameMethodItems.map((methodItem: any, i: number) => (
-          <div
-            className={`method ${methodItem.layout} ${methodItem.class ||
-              ''} clear`}
-            key={i}
-          >
+
+          <div className={`method ${methodItem.layout} ${methodItem.class || ''} clear`} key={i}>
+
             {methodItem.rows.map((row: any, j: number) => (
-              <Row
-                key={j}
-                className={`clear ${row.s ? 'selected' : ''}`}
-                onClick={() => this.onRowClickHandler(i, j, row.s)}
-              >
-                <Col
-                  span={row.col}
-                  className={`flex pos-label ${row.hidePos ? 'hide' : ''}`}
-                >
-                  <div className="pos-name">
+              <Row key={j} className={`clear ${row.s ? 'selected' : ''}`} onClick={() => this.onRowClickHandler(i, j, row.s)} >
+                <Col span={row.col} className={`flex pos-label ${row.hidePos ? 'hide' : ''}`}>
+                  <div className={`pos-name ${this.props.gameType !== 'ssc' ? 'c-white' : ''}`}>
                     <span>{row.n}</span>
-                    {curMenuIndex === 1 && (
-                      <span className="odd fs-20 mgt-6">{row.vs[0].odd}</span>
-                    )}
+                    {curMenuIndex === 1 && row.posOdd !== true && (<span className="odd fs-20 mgt-6">{row.vs[0].odd}</span>)}
                   </div>
                   {row.subpn && <div className="sub-pn">{row.subpn}</div>}
-                  {row.posOdd === true && (
-                    <div className="row-odd">{row.odd}</div>
-                  )}
+                  {row.posOdd === true && (<div className="row-odd">{row.odd}</div>)}
                 </Col>
                 {row.vs.map((vsItem: any, k: number) => (
-                  <Col
-                    span={vsItem.col}
-                    key={k}
-                    className={`method-item-col ${row.class || ''}`}
-                  >
-                    <div
-                      className={ `method-item ${vsItem.class || ''} ${ vsItem.s ? 'selected' : ''} ${curMenuIndex === 1 ?'one' :''}` }
-                      onClick={(e: MouseEvent<HTMLElement>) =>
-                        this.onMethodItemHandler(
-                          i,
-                          j,
-                          k,
-                          vsItem.s,
-                          methodItem.methodTypeName,
-                          e
-                        )
-                      }
-                    >
+                  <Col span={vsItem.col} key={k} className={`method-item-col ${row.class || ''}`}  >
+                    <div className={`method-item ${vsItem.class || ''} ${vsItem.s ? 'selected' : ''} ${curMenuIndex === 1 ? 'one' : ''}`}   onClick={(e: MouseEvent<HTMLElement>) => this.onMethodItemHandler(i, j, k, vsItem.s, methodItem.methodTypeName, e)} >
                       <span className={`method-item-name`} n={vsItem.n}>
-                        {vsItem.class === 'icon' &&
-                          vsItem.icons &&
-                          vsItem.icons.map((iconNum: number, m: number) => (
-                            <span
-                              className={`icon-item icon-item-${iconNum}`}
-                              key={m}
-                            ></span>
-                          ))}
+                        {vsItem.class === 'icon' && vsItem.icons &&   vsItem.icons.map((iconNum: number, m: number) => (
+                          <span className={`icon-item icon-item-${iconNum}`} key={m}  ></span>
+                        ))}
                         {vsItem.class !== 'icon' && vsItem.n}
                       </span>
-                      {curMenuIndex !== 1 &&
-                        row.noodd !== true &&
-                        methodItem.posOdd !== true && (
-                          <span className={`odd`}>{vsItem.odd || ''}</span>
-                        )}
+                      {(curMenuIndex !== 1 || this.props.gameType === 'k3') && row.noodd !== true && methodItem.posOdd !== true && (<span className={`odd`}>{vsItem.odd || ''}</span>)}
                     </div>
                   </Col>
                 ))}
               </Row>
             ))}
+
           </div>
         ))}
       </article>
