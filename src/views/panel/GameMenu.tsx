@@ -52,8 +52,8 @@ class GameMenu extends React.Component<Props, object> {
       { games.map((x, i) => <div key={i} className={ (x.type === this.state.type ? 'active' : '') + ' left-item' } onClick={(e) => this.activeType(x)}>{x.name}</div>) }
       </div>
 
-      <div className="pos-a pot-128 pob-0 por-0 right list-wrapper wp_70 fs-24 o_a" onClick={this.togglePanel}>
-        { this.state.games.map((x, i) => <Link to={'/game/' + x.id} key={i}  className={ (x.id === this.state.id ? 'active c-white' : '') + ' right-item clickable effect-gray inlb wp_50 pdt-130 pdb-20 txt-c _gid' + x.id }>{x.name}</Link>) }
+      <div className="pos-a flex fw-w pot-128 pob-0 por-0 right list-wrapper wp_70 fs-24 o_a" onClick={this.togglePanel}>
+        {this.state.games.map((x, i) => <Link to={'/game/' + x.id} key={i} className={(x.id === this.state.id ? 'active c-white' : '') + ' right-item clickable effect-gray  wp_50 flex pdt-20 pdb-20 fdr-c ai-c'}><div className="logo_bg flex ai-c jc-c"><i className={`_gid${x.id} w-110 h-110`}></i></div><div>{x.name}</div></Link>)}  
       </div>
 
     </div>)
