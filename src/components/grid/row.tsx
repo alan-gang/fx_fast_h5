@@ -11,7 +11,7 @@ class Row extends PureComponent<Props, object> {
     super(props);
   }
   render() {
-    return (<div className={`ds-row ${this.props.className || ''}`} onClick={this.props.onClick}>{this.props.children}</div>)
+    return (<div className={`ds-row  ${this.props.className || ''}`} onClick={this.props.onClick}>{this.props.children}</div>)
   }
 }
 
