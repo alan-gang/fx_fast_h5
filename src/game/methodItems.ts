@@ -62,7 +62,17 @@ const methodItems: any = {
     return {
       layout: 'row',
       rows: [
-        getCommonRow({n: '总和', nonasv: true, col: 4, vs: [{s: false, n: '大', pv: '总大', oddIndex: 2, col: 5}, {s: false, n: '小', pv: '总小', oddIndex: 2, col: 5}, {s: false, n: '单', pv: '总单', oddIndex: 2, col: 5}, {s: false, n: '双', pv: '总双', oddIndex: 2, col: 5}]})
+        getCommonRow({
+          n: '总和',
+          nonasv: true,
+          col: 4,
+          vs: [
+            { s: false, n: '大', pv: '总大', oddIndex: 2, col: 5 },
+            { s: false, n: '小', pv: '总小', oddIndex: 2, col: 5 },
+            { s: false, n: '单', pv: '总单', oddIndex: 2, col: 5 },
+            { s: false, n: '双', pv: '总双', oddIndex: 2, col: 5 }
+          ]
+        })
       ]
     }
   },
@@ -202,7 +212,31 @@ const methodItems: any = {
     return {
       layout: 'row',
       rows: [
-        getCommonRow({n: '总和尾', nonasv: true, col: 4, vs: [{s: false, n: '大', pv: '和尾大', oddIndex: 3, col: 10, pn: ''}, {s: false, n: '小', pv: '和尾小', oddIndex: 2, col: 10, pn: ''}]}),
+        getCommonRow({
+          n: '总和尾',
+          nonasv: true,
+          col: 4,
+          vs: [
+            {
+              s: false,
+              n: '大',
+              pv: '和尾大',
+              oddIndex: 3,
+              col: 10,
+              class: 'double',
+              pn: ''
+            },
+            {
+              s: false,
+              n: '小',
+              pv: '和尾小',
+              oddIndex: 2,
+              col: 10,
+              class: 'double',
+              pn: ''
+            }
+          ]
+        })
       ]
     }
   },
@@ -236,7 +270,10 @@ const methodItems: any = {
   '2053:1' () {
     // 11x5
     // 龙，虎
-    let vs = [{s: false, n: '龙', col: 9}, {s: false, n: '虎', col: 9}];
+    let vs = [
+      { s: false, n: '龙', col: 9, class: 'double' },
+      { s: false, n: '虎', col: 9, class: 'double' }
+    ]
     return {
       layout: 'row',
       class: 'no-bd-b-pos-label',
@@ -257,7 +294,10 @@ const methodItems: any = {
   '2053:2' () {
     // 11x5
     // 龙，虎
-    let vs = [{s: false, n: '龙', col: 10}, {s: false, n: '虎', col: 10}];
+    let vs = [
+      { s: false, n: '龙', col: 10, class: 'double' },
+      { s: false, n: '虎', col: 10, class: 'double' }
+    ]
     return {
       layout: 'row',
       class: 'pos-label-fz24',
@@ -485,7 +525,10 @@ const methodItems: any = {
   },
   '4054:1' () {
     // PK10 龙，虎
-    let vs = [{s: false, n: '龙', col: 8}, {s: false, n: '虎', col: 8}];
+    let vs = [
+      { s: false, n: '龙', col: 8, class: 'double' },
+      { s: false, n: '虎', col: 8, class: 'double' }
+    ]
     return {
       layout: 'row',
       class: 'no-bd-b-pos-label',

@@ -41,7 +41,7 @@ class playMethodRule extends Component<Props, object> {
   }
   render() {
 
-    return (<article className="fs-28 pdl-30 pdr-30 c-3 o_a" ref={ this.dom } style={this.state.domstyle}>
+    return (<article className="fs-28 pdl-30 pdr-30 c-text-c o_a" ref={this.dom} style={this.state.domstyle}>
 
       <div className="fs-36 mgt-50 c-deeporange">时时彩</div>
       <div className="fw-b mgb-20 mgt-40">总大、总小</div>

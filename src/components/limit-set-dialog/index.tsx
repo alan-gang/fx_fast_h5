@@ -11,7 +11,7 @@ interface Props {
   gameId: number;
   limitLevelList: LimitLevelItem[];
   isShowLimitSetDialogClose: boolean; // 是否显示弹出框关闭按钮
-  onLimitChoiceCB(level: number): void;
+  onLimitChoiceCB (level: number): void;
   onCloseHandler?: () => void;
 }
 
@@ -25,7 +25,7 @@ interface State {
 @observer
 class LimitSetDialog extends Component<Props, object> {
   state: State;
-  constructor(props: Props) {
+  constructor (props: Props) {
     super(props);
     this.state = {
       limitLevelList: [],
@@ -33,10 +33,10 @@ class LimitSetDialog extends Component<Props, object> {
       level: 1
     }
   }
-  componentWillMount() {
+  componentWillMount () {
     this.init(this.props);
   }
-  init(props: Props) {
+  init (props: Props) {
     let level = ((props.store.game.getGameLimitLevelByGameId(props.gameId) || {}).level) || 1;
     let limitItem = props.store.game.getLimitListItemById(props.gameId);
     let limitLevelList: LimitLevelItem[] = limitItem ? limitItem.kqPrizeLimit : [];
@@ -47,11 +47,11 @@ class LimitSetDialog extends Component<Props, object> {
       level
     });
   }
-  componentWillReceiveProps(nextProps: Props) {
+  componentWillReceiveProps (nextProps: Props) {
     this.init(nextProps);
   }
   onLimitChoiceHandler = (level: number, index: number) => {
-    this.setState({curLimitIndex: index, level});
+    this.setState({ curLimitIndex: index, level });
   }
   onCloseHandler = () => {
     if (this.props.onCloseHandler) {
@@ -61,25 +61,27 @@ class LimitSetDialog extends Component<Props, object> {
   onConfirmHandler = () => {
     this.props.onLimitChoiceCB(this.state.level);
   }
-  render() {
+  render () {
     return (
       <section className="limit-set-dialog">
-         <Modal
+        <Modal
           className="limit-set-modal"
           visible={true}
           maskClosable={false}
           title=""
         >
-          <header className="flex ai-c jc-c limit-set-header">限红设置{this.props.isShowLimitSetDialogClose && <Icon type="cross" onClick={this.onCloseHandler} />}</header>
+          <header className="flex ai-c jc-c limit-set-header">
+                  限红设置
+                  {this.props.isShowLimitSetDialogClose && <i className="close" onClick={this.onCloseHandler} />}
+          </header>
           <div className="bg-white limit-set-content">
-            <section className="flex jc-c limit-list">
+            <section className="flex jc-c fdr-c ai-c  limit-list">
               {this.state.limitLevelList.map((item: LimitLevelItem, i: number) => (
-                <Button key={i} className={`flex jc-c ai-c btn-limit-amount ${this.state.curLimitIndex === i ? 'selected' : ''}`} onClick={()=>this.onLimitChoiceHandler(item.level, i)}>{item.minAmt}-{item.maxAmt}</Button>
+                <div key={i} className={`flex jc-c ai-c mgb-20 btn-limit-amount ${this.state.curLimitIndex === i ? 'selected' : ''}`} onClick={() => this.onLimitChoiceHandler(item.level, i)}>{item.minAmt}-{item.maxAmt}</div>
               ))}
             </section>
-            <div><Button className="flex jc-c ai-c btn-confirm" onClick={this.onConfirmHandler}>确定</Button></div>
+            <div className="flex w100 jc-c ai-c"><div className="flex jc-c ai-c btn-confirm" onClick={this.onConfirmHandler}>确认</div></div>
             <div className="limit-explain-tip">
-              <p>限红说明：</p>
               <p>当切换不同的限红模式时，再次投注同一彩种，需至少间隔1期再投注。</p>
             </div>
           </div>

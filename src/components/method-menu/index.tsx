@@ -35,6 +35,7 @@ class MethodMenu extends Component<Props, object> {
   }
   componentDidMount() {
     this.myScrollRef.current.refresh();
+
   }
   onMenuHandler = (menu: GameMethodMenu, index: number) => {
     this.props.updateMethodMenuIndex(index);

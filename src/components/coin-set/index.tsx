@@ -49,7 +49,10 @@ class CoinSet extends PureComponent<Props, {}> {
     return (
       <section className="coin-set-view">
         <ul className="flex ai-c jc-sb">
-          {this.state.coins.map((coin: Coin, i: number) => (<li key={i} className={`coin-item ${coin.class} ${this.state.selectedIndex === i ? 'selected' : ''}`} onClick={this.onCoinHandler.bind(this, coin, i)}>{coin.name}</li>)) }
+          {this.state.coins.map((coin: Coin, i: number) => (<li key={i} className={`coin-item ${coin.class} ${this.state.selectedIndex === i ? 'selected' : ''}`} onClick={this.onCoinHandler.bind(this, coin, i)}>
+            <span className="right"></span>
+            <span>{coin.name}</span>
+          </li>)) }
         </ul>
       </section>
     )

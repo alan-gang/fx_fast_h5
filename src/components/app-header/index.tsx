@@ -145,45 +145,45 @@ class AppHeader extends Component<Props, object> {
         ]}</React.Fragment>
       </Route>,
       <Route key="3" path="/betRecords">
-        <Flex.Item onClick={ this.props.history.goBack }>
-          <Icon type="left" size="lg" />
+        <Flex.Item className="pos-a" onClick={this.props.history.goBack}>
+          <i className="go-back"></i>
         </Flex.Item>
-        <Flex.Item className="txt-c fs-32">投注记录</Flex.Item>
+        <Flex.Item className="txt-c fs-32 w100">投注记录</Flex.Item>
         <Flex.Item></Flex.Item>
       </Route>,
       <Route key="4" path="/openIssueHistory">
-        <Flex.Item onClick={ this.props.history.goBack }>
-          <Icon type="left" size="lg" />
+        <Flex.Item className="pos-a"  onClick={ this.props.history.goBack }>
+          <i className="go-back"></i>
         </Flex.Item>
-        <Flex.Item className="txt-c fs-32">历史开奖</Flex.Item>
+        <Flex.Item className="txt-c fs-32  w100">历史开奖</Flex.Item>
         <Flex.Item></Flex.Item>
       </Route>,
       <Route key="5" path="/playMethodRule">
-        <Flex.Item onClick={ this.props.history.goBack }>
-          <Icon type="left" size="lg" />
+        <Flex.Item className="pos-a" onClick={ this.props.history.goBack }>
+          <i className="go-back"></i>
         </Flex.Item>
-        <Flex.Item className="txt-c fs-32">开奖说明</Flex.Item>
+        <Flex.Item className="txt-c fs-32 w100 ">开奖说明</Flex.Item>
         <Flex.Item></Flex.Item>
       </Route>,
       <Route key="6" path="/instruction">
-        <Flex.Item onClick={ this.props.history.goBack }>
-          <Icon type="left" size="lg" />
+        <Flex.Item className="pos-a" onClick={ this.props.history.goBack }>
+          <i className="go-back"></i>
         </Flex.Item>
-        <Flex.Item className="txt-c fs-32">彩种说明</Flex.Item>
+        <Flex.Item className="txt-c fs-32 w100">彩种说明</Flex.Item>
         <Flex.Item></Flex.Item>
       </Route>,
       <Route key="7" path="/BookLeadingSettings">
-        <Flex.Item onClick={ this.props.history.goBack }>
-          <Icon type="left" size="lg" />
+        <Flex.Item className="pos-a" onClick={ this.props.history.goBack }>
+          <i className="go-back"></i>
         </Flex.Item>
-        <Flex.Item className="txt-c fs-32">投注提醒</Flex.Item>
+        <Flex.Item className="txt-c fs-32 w100">投注提醒</Flex.Item>
         <Flex.Item></Flex.Item>
       </Route>,
       <Route key="8" path="/BookLeadingHistory">
-        <Flex.Item onClick={ this.props.history.goBack }>
-          <Icon type="left" size="lg" />
+        <Flex.Item className="pos-a" onClick={ this.props.history.goBack }>
+          <i className="go-back"></i>
         </Flex.Item>
-        <Flex.Item className="txt-c fs-32">投注提醒历史</Flex.Item>
+        <Flex.Item className="txt-c fs-32 w100">投注提醒历史</Flex.Item>
         <Flex.Item></Flex.Item>
       </Route>,
       

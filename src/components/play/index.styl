@@ -60,6 +60,12 @@
       justify-content: center;
       border-radius: 10px;
       flex-direction: column;
+      &.double {
+          background-image: url('~src/assets/images/lotteryCenter/ball_05@2x.png') !important;
+      &.selected {
+        background-image: url('~src/assets/images/lotteryCenter/ball_05_on@2x.png') !important;
+      }
+      }
       &.one {
         background-image: url('~src/assets/images/lotteryCenter/ball_01@2x.png');
         &.selected {
@@ -81,8 +87,8 @@
     // 玩法项圆圈样式
     .method-item-col.circle {
       &.large .method-item {
-        margin: 0 0 10px 20px;
-        methodItemcircleStyle(90px, 90px);
+        margin: 0 0 12px 20px;
+        methodItemcircleStyle(84px, 84px);
       }
       &.medium .method-item {
         margin: 0 0 10px 8px;
@@ -144,6 +150,21 @@
         border-bottom: none;
       }
     }
+    &.yzzh {
+       .method-item {
+       background-image: url('~src/assets/images/lotteryCenter/b_01@2x.png');
+      &.selected {
+        background-image: url('~src/assets/images/lotteryCenter/b_01_on@2x.png');
+      }
+
+       }
+       .pos-label {
+         margin-left: 16px;
+       }
+     .pos-name {
+       margin-top: -70px;
+     }
+    }
   }
   .no-slt-m-item {
     .method-item {
@@ -173,6 +194,7 @@
     min-width: 50px;
     color: $theme-txt-color1;
     padding: 0 4px;
+    font-size: 20px;
   }
   .row-odd {
     min-width: 100px;
@@ -240,6 +262,9 @@
     }
   }
   &.k3 {
+    .pos-name {
+      color: #9ccaf0;
+    }
     .method-item {
       height: 110px;
       background-image: url('~src/assets/images/lotteryCenter/ball_07@2x.png');
@@ -248,11 +273,38 @@
       }
       &.one {
         background-image: url('~src/assets/images/lotteryCenter/ball_08@2x.png');
-        display flex
+        display: flex;
         flex-direction: column;
         height: 134px;
         &.selected {
           background-image: url('~src/assets/images/lotteryCenter/ball_08_on@2x.png');
+        }
+      }
+    }
+    .weishaiquanshai.method {
+      .method-item {
+        &.icon {
+          display: flex;
+          flex-direction: column;
+        }
+        height: 134px;
+        background-image: url('~src/assets/images/lotteryCenter/ball_08@2x.png');
+        &.selected {
+          background-image: url('~src/assets/images/lotteryCenter/ball_08_on@2x.png');
+        }
+      }
+      .ds-row:nth-child(1) {
+        .pos-label {
+          .pos-name {
+            margin-top: -220px;
+          }
+        }
+      }
+      .ds-row:nth-child(2) {
+        .pos-label {
+          .pos-name {
+            margin-top: 10px;
+          }
         }
       }
     }
@@ -370,7 +422,7 @@
       .ncircle.xsmall {
         height: 60px;
         width: 60px;
-        margin: 0 20px 0 0;
+        margin: 0 34px 0 0;
         .method-item {
           width: 100%;
           height: 100%;
@@ -384,31 +436,42 @@
     }
     &.sebo {
       .ds-row {
-        padding: 30px 0 0 0;
+        padding: 30px 0 14px 0;
         box-sizing: border-box;
-        &:nth-child(1) .pos-label {
-          color: $play-method-name-bd-color-red;
+        background-image: url('~src/assets/images/lotteryCenter/ball_09@2x.png');
+        display: block;
+        &.selected {
+          background-image: url('~src/assets/images/lotteryCenter/ball_09_on@2x.png');
         }
-        &:nth-child(2) .pos-label {
-          color: $play-method-name-bd-color-blue;
-        }
-        &:nth-child(3) .pos-label {
-          color: $play-method-name-bd-color-green;
+        .pos-label {
+          margin-top: 16px;
         }
       }
       posLabelHeight(240px);
       .pos-label {
-        padding: 0 60px;
-        0 30px;
+        padding: 0 80px 0 48px;
+        height: 178px;
+        .row-odd {
+          padding-left: 0;
+          font-size: 20px;
+          min-width: 0;
+          margin-left: 10px;
+        }
       }
       .ncircle.xsmall {
         padding-right: 30px;
+        height: 59px;
+        width: 58px;
+        margin: 0px 21px 16px 0px;
+        .method-item {
+          width: 100%;
+          height: 100%;
+          background-image: none;
+        }
       }
     }
   }
 }
-
-
 /* alan -add */
 .k3.play-view {
   .odd {

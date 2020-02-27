@@ -1,2 +1,33 @@
-.order-content
-  word-break break-all
+.order-content {
+  word-break: break-all;
+}
+.bet-record-header {
+  border-top: 1px solid #2b729b;
+  :after {
+    display: none;
+  }
+}
+.record {
+  .am-list-body {
+    background-color: #0d2338;
+    &:before {
+      display: none !important;
+    }
+    color: #fff;
+    .list-view-section-body {
+      >div {
+        font-weight: normal;
+        padding-bottom: 40px;
+        &:before,&:after {
+          display: none;
+        }
+        &:nth-child(odd) {
+          background-color: #112d48;
+        }
+      }
+      &:after {
+        display: none;
+      }
+    }
+  }
+}

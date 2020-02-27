@@ -14,6 +14,12 @@
         clear both
         display block
       }
+      &.child-normal {
+        .menu-item {
+          flex-grow 1
+          margin: 0 14px;
+        }
+      }
     }
     .menu-item {
       height: 56px;
@@ -31,6 +37,7 @@
         color $method-menu-item-selected-txt-color
         border-radius 20px
       }
+     
     }
   }
 }

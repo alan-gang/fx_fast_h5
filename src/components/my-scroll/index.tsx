@@ -30,7 +30,12 @@ class MyScroll extends PureComponent<Props, object> {
         for (let child of children) {
           width += child.clientWidth;
         }
-        this.myScrollRef.current.children[0].setAttribute('style', `width: ${width+10}px`);
+      if (children.length > 3) {
+        this.myScrollRef.current.children[0].classList.remove('child-normal')
+        this.myScrollRef.current.children[0].setAttribute('style', `width: ${width + 10}px`);
+      }else {
+        this.myScrollRef.current.children[0].classList.add('child-normal')
+      }
     }
   }
   refresh() {

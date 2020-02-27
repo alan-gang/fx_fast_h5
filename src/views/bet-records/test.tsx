@@ -29,7 +29,7 @@ const dns = [
         return '--'
       }
       if (x.bonus > 0) {
-        return <span className="c-green">+{ temp }</span>
+        return <span className="c-white">+{temp}</span>
       }
       return temp
     }
@@ -38,7 +38,7 @@ const dns = [
     render: (x) => <span className={`inlb status-b txt-c ${ statusCls[x.stat] }`}>{ statusList[x.stat] }</span>
   },
 ]
-const statusCls = ['c-black', 'c-green', 'c-gray', 'c-red', 'c-gray']
+const statusCls = ['c-gray', 'c-red', 'c-gray', 'c-gray', 'c-gray']
 const statusList = ['未开奖', '已中奖', '未中奖', '已撤单', '平局']
 // const getStyle = (data: string) => {
 //   if (/\d/.test(data)) return '';
@@ -135,11 +135,11 @@ class test extends React.Component<Props, {}> {
   render() {
     return (
       <div className="bet-record">
-        <div className="bet-record-header pdl-10 pdr-10 fs-24 c-102 hlh-90 bgc-white b-1px-b">
+        <div className="bet-record-header pdl-10 pdr-10 fs-24 c-textc-1 hlh-90 bgc-header b-1px-b">
           { dns.map((x, i) => <span key={i} className={`inlb pdl-10 pdr-10 va-t ${x.cls || ''}`} style={x.style || {width: '20%'}}> {x.name} </span>) }
         </div>
         <ListView
-          className="fs-24 c-3 fw-b"
+          className="fs-24 c-3 fw-b record"
           key={'1'}
           ref={el => this.scrollNode = el}
           dataSource={this.state.dataSource}

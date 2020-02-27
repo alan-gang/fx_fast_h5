@@ -71,7 +71,7 @@ class Play extends PureComponent<Props, object> {
                 <Col span={row.col} className={`flex pos-label ${row.hidePos ? 'hide' : ''}`}>
                   <div className={`pos-name ${this.props.gameType !== 'ssc' ? 'c-white' : ''}`}>
                     <span>{row.n}</span>
-                    {(curMenuIndex === 1 && this.props.gameType !== 'k3') && row.posOdd !== true && (<span className="odd fs-20 mgt-6">{row.vs[0].odd}</span>)}
+                    {(curMenuIndex === 1 && this.props.gameType !== 'k3' && this.props.gameType !== 'pk10') && row.posOdd !== true && (<span className="odd fs-20 mgt-6">{row.vs[0].odd}</span>)}
                   </div>
                   {row.subpn && <div className="sub-pn">{row.subpn}</div>}
                   {row.posOdd === true && (<div className="row-odd">{row.odd}</div>)}
@@ -85,7 +85,7 @@ class Play extends PureComponent<Props, object> {
                         ))}
                         {vsItem.class !== 'icon' && vsItem.n}
                       </span>
-                      {(curMenuIndex !== 1 || this.props.gameType === 'k3') && row.noodd !== true && methodItem.posOdd !== true && (<span className={`odd`}>{vsItem.odd || ''}</span>)}
+                      {(curMenuIndex !== 1 || this.props.gameType === 'k3' || this.props.gameType === 'pk10') && row.noodd !== true && methodItem.posOdd !== true && (<span className={`odd`}>{vsItem.odd || ''}</span>)}
                     </div>
                   </Col>
                 ))}

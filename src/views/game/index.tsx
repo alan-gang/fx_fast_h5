@@ -140,7 +140,9 @@ class Game extends Component<Props, object> {
       isExpandLudan: false,
       isShowLimitSetDialog: !gameLimitLevel,
       limitLevelList: limitItem ? limitItem.kqPrizeLimit : [],
-      isShowLimitSetDialogClose: false
+      // isShowLimitSetDialog: true,
+      // isShowLimitSetDialogClose: false
+      isShowLimitSetDialogClose: true
     }
     this.init()
     Bus.emit('gameIdChanged', this.id)
@@ -735,7 +737,7 @@ class Game extends Component<Props, object> {
           this.props.store.game.limitList &&
           this.props.store.game.limitList.length > 0 && (
             <LimitSetDialog
-              isShow={this.state.isShowLimitSetDialog}
+            isShow={this.state.isShowLimitSetDialog}
               isShowLimitSetDialogClose={this.state.isShowLimitSetDialogClose}
               gameId={this.id}
               limitLevelList={this.state.limitLevelList}

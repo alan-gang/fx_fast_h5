@@ -1,50 +1,66 @@
+.limit-set-modal {
+  .am-modal-content {
+    background-image: url('../../assets/images/lotteryCenter/popup_bg@2x.png');
+    background-size: 100% 100%;
+    width: 573px;
+    height: 643px;
+    background-color: transparent;
+  }
+}
 .limit-set-content {
-  padding 66px 25px 0 25px
+  padding: 50px 25px 0 25px;
   .btn-limit-amount {
-    width 180px
-    height 120px
-    background-color $theme-btn-bg-color1
-    margin 0 8px
+    width: 453px;
+    height: 89px;
+    color: #9ccaf0;
+    background-image: url('../../assets/images/lotteryCenter/popup_noraml@2x.png');
+    background-size: 100% 100%;
+    background-color: transparent;
+    margin: 6px 0px;
     &.selected {
-      background $theme-btn-bg-color
-      color $theme-txt-color4 
+      background-image: url('../../assets/images/lotteryCenter/popup_seleted@2x.png');
+      color: $theme-txt-color4;
     }
   }
   .am-button {
-    display flex
+    display: flex;
   }
   .limit-explain-tip {
-    text-align left
-    font-size 22px
-    margin-top 30px
+    text-align: left;
+    font-size: 20px;
+    margin: 30px;
+    color: #63a7e0;
   }
   .btn-confirm {
-    background $theme-btn-bg-color
-    color $theme-txt-color4 
-    margin-top 66px
+    background-image: url('../../assets/images/lotteryCenter/button_play_01@2x.png');
+    background-size: 100% 100%;
+    width 480px
+    height: 81px;
+    color: #ffffff;
+    margin-top: 14px;
   }
 }
 .limit-set-header {
-  height 100px
-  position relative
-  background $theme-btn-bg-color
-  color $theme-txt-color4
-  font-size 32px
-  .am-icon-cross {
-    width 41px
-    height 41px
-    position absolute
-    right 20px
-    top 20px
+  position: relative;
+  // background $theme-btn-bg-color
+  color: $theme-txt-color4;
+  font-size: 28px;
+  .close {
+    width: 101px;
+    height: 59px;
+    background-image: url('../../assets/images/lotteryCenter/popup_clpse@2x.png');
+    background-size: 100% 100%;
+    position: absolute;
+    right: -4px;
+    top: -2px;
   }
 }
 .am-modal-wrap .am-modal.limit-set-modal {
-  width 620px !important
-  height 620px !important
+  width: 620px !important;
+  height: 620px !important;
   .am-modal-header {
-    padding 0
+    padding: 0;
   }
   .am-modal-content {
-    border-radius: 30px 30px 15px 15px;
   }
 }
